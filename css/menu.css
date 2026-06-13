@@ -1,8 +1,4 @@
-/* ============================================
-   menu.css — CSS riêng cho Trang Thực Đơn (Thành viên 2)
-   ============================================ */
 
-/* Page hero */
 .page-hero {
   padding: 90px 0 60px;
   background: #fff7ed;
@@ -15,7 +11,6 @@
   margin-top: 12px;
 }
 
-/* Tabs */
 .menu-section { padding: 60px 0 100px; }
 
 .menu-tabs {
@@ -45,7 +40,6 @@
 .tab-btn:hover { color: var(--color-cream); }
 .tab-btn.active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
 
-/* Menu grid */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
