@@ -1,0 +1,115 @@
+/* ============================================
+   menu.css — CSS riêng cho Trang Thực Đơn (Thành viên 2)
+   ============================================ */
+
+/* Page hero */
+.page-hero {
+  padding: 90px 0 60px;
+  background: #fff7ed;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-hero-desc {
+  color: var(--color-muted);
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+/* Tabs */
+.menu-section { padding: 60px 0 100px; }
+
+.menu-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  padding: 10px 22px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover { color: var(--color-cream); }
+.tab-btn.active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
+
+/* Menu grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.menu-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.menu-item:hover {
+  border-color: var(--color-gold-dim);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(184,137,58,0.1);
+}
+
+.menu-item.hidden { display: none; }
+
+.menu-img-wrap {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: #f0e4d0;
+}
+
+.menu-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.menu-item:hover .menu-img-wrap img { transform: scale(1.05); }
+
+.menu-info { padding: 18px 20px 22px; }
+
+.menu-info-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.menu-info-top h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--color-cream);
+  line-height: 1.3;
+}
+
+.menu-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+.menu-info p {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .menu-grid { grid-template-columns: 1fr; } }
