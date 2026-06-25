@@ -1,0 +1,128 @@
+.page-hero {
+  padding: 90px 0 60px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-hero-desc {
+  color: var(--color-muted);
+}
+
+.contact-section {
+  display: flex;
+  padding: 60px 80px;
+  gap: 50px;
+}
+
+.contact-info {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  border: 1px solid var(--color-border);
+  padding: 30px;
+  background-color: var(--color-surface);
+}
+
+.contact-form-container {
+  flex: 6;
+}
+
+.info-item {
+  display: flex;
+  gap: 20px;
+}
+
+.info-icon {
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.info-text a,
+.info-text h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--color-gold);
+  transition: color 0.25s ease;
+}
+
+.info-text a:hover {
+  color: var(--color-cream);
+}
+
+.info-text p {
+  color: var(--color-muted);
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.contact-form {
+  border: 1px solid var(--color-border);
+  padding: 30px;
+  background-color: var(--color-surface);
+}
+
+.contact-form h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-family: var(--font-body);
+  display: block;
+  font-size: 14px;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.form-group .required {
+  color: #d93838;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: none;
+}
+
+.btn-submit {
+  width: 100%;
+}
+
+.contact-map {
+  padding: 50px 80px;
+}
+
+@media (max-width: 900px) {
+  .contact-section {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
