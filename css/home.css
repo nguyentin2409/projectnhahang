@@ -93,9 +93,7 @@
   font-family: var(--font-display);
 }
 
-/* Tiện ích căn giữa - dùng cho block .featured-dishes.
-   Nếu trang khác cũng cần căn giữa, nên chuyển class này
-   sang shared.css thay vì lặp lại ở từng file *.css riêng. */
+
 .text-center {
   text-align: center;
 }
