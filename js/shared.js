@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </a>
 
         <nav class="nav-links" id="nav-links">
-          <a href="../index.html"         data-page="home">Trang Chủ</a>
-          <a href="../pages/menu.html"    data-page="menu">Thực Đơn</a>
-          <a href="../pages/reservation.html" data-page="reservation">Đặt Bàn</a>
-          <a href="../pages/about.html"   data-page="about">Giới Thiệu</a>
-          <a href="../pages/contact.html" data-page="contact">Liên Hệ</a>
+          <a href="/index.html"         data-page="home">Trang Chủ</a>
+          <a href="/pages/menu.html"    data-page="menu">Thực Đơn</a>
+          <a href="/pages/reservation.html" data-page="reservation">Đặt Bàn</a>
+          <a href="/pages/about.html"   data-page="about">Giới Thiệu</a>
+          <a href="/pages/contact.html" data-page="contact">Liên Hệ</a>
         </nav>
 
         <a href="../pages/reservation.html" class="btn-reserve">Đặt Bàn Ngay</a>
@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="footer-col">
             <h4>Khám Phá</h4>
             <ul>
-              <li><a href="../index.html">Trang Chủ</a></li>
-              <li><a href="../pages/menu.html">Thực Đơn</a></li>
-              <li><a href="../pages/reservation.html">Đặt Bàn</a></li>
-              <li><a href="../pages/about.html">Giới Thiệu</a></li>
-              <li><a href="../pages/contact.html">Liên Hệ</a></li>
+              <li><a href="/index.html">Trang Chủ</a></li>
+              <li><a href="/pages/menu.html">Thực Đơn</a></li>
+              <li><a href="/pages/reservation.html">Đặt Bàn</a></li>
+              <li><a href="/pages/about.html">Giới Thiệu</a></li>
+              <li><a href="/pages/contact.html">Liên Hệ</a></li>
             </ul>
           </div>
 
