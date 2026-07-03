@@ -98,7 +98,8 @@
     height: 160px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 20px;
 }
 
 .chef-card h3 {
