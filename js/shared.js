@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <a href="/pages/contact.html" data-page="contact">Liên Hệ</a>
         </nav>
 
-        <a href="../pages/reservation.html" class="btn-reserve">Đặt Bàn Ngay</a>
+        <a href="/pages/reservation.html" class="btn-reserve">Đặt Bàn Ngay</a>
 
         <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
           <span></span><span></span><span></span>
