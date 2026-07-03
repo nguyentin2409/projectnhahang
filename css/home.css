@@ -71,11 +71,6 @@
   color: var(--color-gold);
 }
 
-.hero-title .fix-letter-n {
-  position: relative;
-  left: -0.14em;
-}
-
 .featured-dishes {
   padding: 80px 0;
   background-color: var(--color-bg);
@@ -96,6 +91,13 @@
   font-size: 40px;
   color: var(--color-cream);
   font-family: var(--font-display);
+}
+
+/* Tiện ích căn giữa - dùng cho block .featured-dishes.
+   Nếu trang khác cũng cần căn giữa, nên chuyển class này
+   sang shared.css thay vì lặp lại ở từng file *.css riêng. */
+.text-center {
+  text-align: center;
 }
 
 .dish-grid {
@@ -168,11 +170,6 @@
   margin-top: auto;
 }
 
-.price-label {
-  font-size: 12px;
-  color: var(--color-muted);
-}
-
 .price {
   font-family: var(--font-body);
   font-size: 16px;
@@ -189,32 +186,4 @@
 
 .view-all .btn-outline {
   border-radius: 30px;
-}
-
-.site-footer .footer-brand p {
-  margin-bottom: 8px;
-  color: var(--color-muted);
-}
-
-.site-footer .footer-col h4 {
-  color: var(--color-gold);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  margin-bottom: 18px;
-}
-
-.site-footer .footer-col ul li {
-  margin-bottom: 10px;
-}
-
-.site-footer .footer-col ul li a {
-  font-size: 14px;
-  color: var(--color-muted);
-  transition: color 0.2s;
-}
-
-.site-footer .footer-col ul li a:hover {
-  color: var(--color-cream);
 }
