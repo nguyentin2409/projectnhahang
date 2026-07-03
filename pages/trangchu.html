@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà hàng Vị Ngon - Trang Chủ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,700;1,400&family=Inter:wght=400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="trangchu.css" />
+</head>
+<body>
+<header class="site-header">
+    <div class="header-logo">
+        <span class="logo-name" style="font-size: 32px; font-style: italic; color: var(--color-gold);">Vị Ngon</span>
+    </div>
+    
+    <nav class="nav-links">
+        <a href="#" class="active">Trang Chủ</a>
+        <a href="#">Thực Đơn</a>
+        <a href="#">Đặt Bàn</a>
+        <a href="#">Giới Thiệu</a>
+        <a href="#">Liên Hệ</a>
+    </nav>
+    
+    <button class="btn-reserve" style="display: inline-block; padding: 14px 36px; background: var(--color-gold); color: var(--color-white); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; border: none; border-radius: 8px;">Đặt Bàn Ngay</button>
+
+    <button class="nav-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>
+
+ <section class="hero">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <span class="discover-tag">Khám Phá</span>
+            <h1 class="hero-title">Chào mừng tới<br>Nhà hàng Vị Ngon</h1>
+            <p class="hero-subtitle">Khám phá văn hóa ẩm thực đặc sắc</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-primary" style="border-radius: 30px;">Xem Thực đơn</a>
+                <a href="#" class="btn-outline" style="border-color: #ffffff; color: #ffffff; border-radius: 30px;">Đặt bàn</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="featured-dishes" style="padding: 80px 0; background-color: var(--color-bg);">
+        <div class="container text-center">
+            <span class="section-label" style="display: block; color: var(--color-gold); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Thực đơn</span>
+            <h2 class="section-title" style="margin-bottom: 50px; font-size: 40px; color: var(--color-cream); font-family: var(--font-display);">Món nổi bật</h2>
+            
+            <div class="dish-grid">
+                <div class="dish-card">
+                    <img src="/pho-bo.jpg" alt="Phở Bò Đặt Biệt">
+                    <div class="card-content">
+                        <h3>Phở Bò Đặt Biệt</h3>
+                        <p>Phở Bò Đặt Biệt, Khám phá văn hóa thực thực ẩm hơn...</p>
+                        <div class="price-bar">
+                            <span class="price-label">Đặt Biệt</span>
+                            <span class="price">49.000 đ</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <img src="/bun-cha.jpg" alt="Bún Chả Hà Nội">
+                    <div class="card-content">
+                        <h3>Bún Chả Hà Nội</h3>
+                        <p>Bún Chả Hà Nội, Khám phá văn hóa thực.. thún chánh đặt...</p>
+                        <div class="price-bar">
+                            <span class="price-label">Hà Nội</span>
+                            <span class="price">59.000 đ</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <img src="/ca-loc-kho-to.jpg" alt="Cá Lóc Kho Tộ">
+                    <div class="card-content">
+                        <h3>Cá Lóc Kho Tộ</h3>
+                        <p>Cá Lóc Kho Tộ, món ăn vãi tật vừa đi làm phá mứ m...</p>
+                        <div class="price-bar">
+                            <span class="price-label">Nổi Bật</span>
+                            <span class="price">49.000 đ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 20px;">
+                <a href="#" class="btn-outline" style="border-radius: 30px;">Xem toàn bộ thực đơn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo-name" style="font-size: 32px; font-style: italic; color: var(--color-gold); margin-bottom: 15px;">Vị Ngon</div>
+                <p>Khám phá tinh hoa ẩm thực truyền thống mang đậm bản sắc văn hóa Việt trong không gian sang trọng và ấm cúng.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Khám Phá</h4>
+                <ul>
+                    <li><a href="#">Thực đơn</a></li>
+                    <li><a href="#">Đặt bàn</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Tin tức & Sự kiện</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Giờ Mở Cửa</h4>
+                <ul>
+                    <li style="color: var(--color-muted); font-size: 14px;">Thứ 2 - Thứ 5:<br> 11:00 AM - 10:00 PM</li>
+                    <li style="color: var(--color-muted); font-size: 14px; margin-top: 12px;">Thứ 6 - Chủ Nhật:<br> 09:00 AM - 11:00 PM</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Liên Hệ</h4>
+                <ul>
+                    <li style="color: var(--color-muted); font-size: 14px; margin-bottom: 10px;">SĐT: 0374287277</li>
+                    <li style="color: var(--color-muted); font-size: 14px; margin-bottom: 10px;">Email: vingonso1@gmail.com</li>
+                    <li style="color: var(--color-muted); font-size: 14px;">Địa chỉ: Đường 3/2, Phường Xuân Khánh, Quận Ninh Kiều, TP. Cần Thơ.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom container">
+            <div class="sub-footer-left">
+                <p>&copy; 2026 Nhà hàng Vị Ngon. Tất cả quyền được bảo lưu.</p>
+            </div>
+            <div class="sub-footer-right">
+                <p>Thanh toán | Phản hồi | Điều khoản</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top" style="position: fixed; bottom: 30px; right: 30px; background: var(--color-gold); color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">^</a>
+
+
+    <script src="main.js"></script>
+</body>
+</html>
