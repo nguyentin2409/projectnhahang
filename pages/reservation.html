@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vị Ngon — Đặt Bàn</title>
 
-    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="../css/shared.css" />
+    <link rel="stylesheet" href="../css/reservation.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,700;1,400&family=Inter:wght=400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="reservation.css" />
-    <script src="js/shared.js"></script>
-    <script src="js/reservation.js"></script>
   </head>
   <body>
     <div id="site-header"></div>
@@ -27,12 +26,9 @@
         </div>
       </section>
 
-      <div
-        class="container"
-        style="display: flex; gap: 40px; margin-top: 40px; margin-bottom: 40px"
-      >
-        <div class="information" style="flex: 1">
-          <form>
+      <div class="reservation-container container">
+        <div class="information">
+          <form id="reservationForm">
             <p>Thông Tin Khách Hàng</p>
             <p>
               <label for="fullName">Họ và Tên:</label><br />
@@ -50,7 +46,7 @@
                 type="tel"
                 id="userPhone"
                 name="userPhone"
-                placeholder="Ví dụ: 0912345678"
+                placeholder="Ví dụ: 0901234567"
                 pattern="[0-9]{10}"
                 title="Số điện thoại phải bao gồm đúng 10 chữ số từ 0-9"
                 required
@@ -62,7 +58,7 @@
                 type="email"
                 id="userEmail"
                 name="userEmail"
-                placeholder="annguyen@gmail.com"
+                placeholder="info@vingon.vn"
                 required
               />
             </p>
@@ -72,8 +68,6 @@
                 type="date"
                 id="Reserve_Date"
                 name="Reserve_Date"
-                min="2026-01-01"
-                max="2030-12-31"
                 required
               />
             </p>
@@ -84,7 +78,6 @@
                 id="appointment"
                 name="appointmentDate"
                 required
-                onchange="validateTime(this)"
               />
             </p>
             <p>
@@ -102,23 +95,30 @@
             </p>
             <p>
               <label for="note">Ghi chú:</label><br />
-              <input type="text" id="note" name="note" />
+              <input
+                type="text"
+                id="note"
+                name="note"
+                placeholder="Yêu cầu đặc biệt..."
+              />
             </p>
 
-            <button class="btn-primary">Xác Nhận</button>
+            <button type="submit" class="btn-primary">Xác Nhận Đặt Bàn</button>
           </form>
         </div>
 
-        <div class="benphai" style="flex: 1">
+        <div class="benphai">
           <div class="info">
             <p>Giờ Phục vụ:</p>
-            <p>Từ thứ 2 đến thứ 6: Phục vụ từ 10 giờ đến 22 giờ</p>
-            <p>Từ thứ 7 đến chủ nhật: Phục vụ từ 10 giờ đến 23 giờ</p>
+            <p>Thứ 2 – Thứ 5: 10:00 – 22:00</p>
+            <p>Thứ 6 – Thứ 7: 10:00 – 23:00</p>
+            <p>Chủ Nhật: 10:00 – 21:00</p>
           </div>
           <div class="info">
             <p>Liên Hệ Trực Tiếp:</p>
-            <p>Email: tinhtrongvo123@gmail.com</p>
-            <p>Số điện thoại: 0947526477</p>
+            <p>Email: info@vingon.vn</p>
+            <p>Số điện thoại: 0901 234 567</p>
+            <p>Địa chỉ: 123 Đường Ẩm Thực, Q.1, TP. HCM</p>
           </div>
           <div class="info">
             <p>Lưu ý:</p>
