@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vị Ngon — Đặt Bàn</title>
+
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,700;1,400&family=Inter:wght=400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reservation.css" />
+    <script src="js/shared.js"></script>
+    <script src="js/reservation.js"></script>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="section-label">Reservation Lounge</p>
+          <h1 class="section-title">Đặt Bàn – Nâng Tầm Trải Nghiệm Ẩm Thực</h1>
+          <div class="divider-gold"></div>
+        </div>
+      </section>
+
+      <div
+        class="container"
+        style="display: flex; gap: 40px; margin-top: 40px; margin-bottom: 40px"
+      >
+        <div class="information" style="flex: 1">
+          <form>
+            <p>Thông Tin Khách Hàng</p>
+            <p>
+              <label for="fullName">Họ và Tên:</label><br />
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Nguyễn Văn A"
+                required
+              />
+            </p>
+            <p>
+              <label for="userPhone">Số điện thoại:</label><br />
+              <input
+                type="tel"
+                id="userPhone"
+                name="userPhone"
+                placeholder="Ví dụ: 0912345678"
+                pattern="[0-9]{10}"
+                title="Số điện thoại phải bao gồm đúng 10 chữ số từ 0-9"
+                required
+              />
+            </p>
+            <p>
+              <label for="userEmail">Email liên hệ:</label><br />
+              <input
+                type="email"
+                id="userEmail"
+                name="userEmail"
+                placeholder="annguyen@gmail.com"
+                required
+              />
+            </p>
+            <p>
+              <label for="Reserve_Date">Ngày Đặt:</label><br />
+              <input
+                type="date"
+                id="Reserve_Date"
+                name="Reserve_Date"
+                min="2026-01-01"
+                max="2030-12-31"
+                required
+              />
+            </p>
+            <p>
+              <label for="appointment"> Giờ hẹn:</label><br />
+              <input
+                type="time"
+                id="appointment"
+                name="appointmentDate"
+                required
+                onchange="validateTime(this)"
+              />
+            </p>
+            <p>
+              <label for="partySize">Số lượng khách hàng:</label><br />
+              <input
+                type="number"
+                id="partySize"
+                name="partySize"
+                value="1"
+                min="1"
+                max="50"
+                step="1"
+                required
+              />
+            </p>
+            <p>
+              <label for="note">Ghi chú:</label><br />
+              <input type="text" id="note" name="note" />
+            </p>
+
+            <button class="btn-primary">Xác Nhận</button>
+          </form>
+        </div>
+
+        <div class="benphai" style="flex: 1">
+          <div class="info">
+            <p>Giờ Phục vụ:</p>
+            <p>Từ thứ 2 đến thứ 6: Phục vụ từ 10 giờ đến 22 giờ</p>
+            <p>Từ thứ 7 đến chủ nhật: Phục vụ từ 10 giờ đến 23 giờ</p>
+          </div>
+          <div class="info">
+            <p>Liên Hệ Trực Tiếp:</p>
+            <p>Email: tinhtrongvo123@gmail.com</p>
+            <p>Số điện thoại: 0947526477</p>
+          </div>
+          <div class="info">
+            <p>Lưu ý:</p>
+            <p>Xin thực khách vui lòng đến đúng giờ</p>
+            <p>Nhà hàng sẽ chỉ giữ bàn cho bạn 15 phút</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/reservation.js"></script>
+  </body>
+</html>
