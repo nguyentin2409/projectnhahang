@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const headerPlaceholder = document.getElementById('site-header');
+document.addEventListener("DOMContentLoaded", () => {
+  const headerPlaceholder = document.getElementById("site-header");
   if (headerPlaceholder) {
     headerPlaceholder.outerHTML = `
       <header class="site-header" id="site-header">
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </button>
       </header>`;
   }
-  const footerPlaceholder = document.getElementById('site-footer');
+  const footerPlaceholder = document.getElementById("site-footer");
   if (footerPlaceholder) {
     footerPlaceholder.outerHTML = `
       <footer class="site-footer" id="site-footer">
@@ -68,34 +68,37 @@ document.addEventListener('DOMContentLoaded', () => {
       </footer>`;
   }
   const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-links a[data-page]');
+  const navLinks = document.querySelectorAll(".nav-links a[data-page]");
 
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
     if (
       currentPath.endsWith(href) ||
-      (currentPath.endsWith('/') && href.includes('index.html')) ||
-      (currentPath === '/' && href.includes('index.html'))
+      (currentPath.endsWith("/") && href.includes("index.html")) ||
+      (currentPath === "/" && href.includes("index.html"))
     ) {
-      link.classList.add('active');
+      link.classList.add("active");
     }
   });
-  const navToggle = document.getElementById('nav-toggle');
+  const navToggle = document.getElementById("nav-toggle");
   if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      document.body.classList.toggle('nav-mobile-open');
-      navToggle.classList.toggle('open');
+    navToggle.addEventListener("click", () => {
+      document.body.classList.toggle("nav-mobile-open");
+      navToggle.classList.toggle("open");
     });
   }
-  const header = document.getElementById('site-header');
+  const header = document.getElementById("site-header");
   if (header) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        header.style.background = 'rgba(15,13,11,0.98)';
-      } else {
-        header.style.background = 'rgba(15,13,11,0.92)';
-      }
-    }, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (window.scrollY > 40) {
+          header.style.background = "rgba(15,13,11,0.98)";
+        } else {
+          header.style.background = "rgba(15,13,11,0.92)";
+        }
+      },
+      { passive: true },
+    );
   }
-
 });

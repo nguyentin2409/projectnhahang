@@ -10,7 +10,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,700;1,400&family=Inter:wght=400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -20,113 +20,120 @@
     <main>
       <section class="page-hero">
         <div class="container">
-          <p class="section-label">Reservation Lounge</p>
-          <h1 class="section-title">Đặt Bàn – Nâng Tầm Trải Nghiệm Ẩm Thực</h1>
+          <p class="section-label">Đặt Bàn</p>
+          <h1 class="section-title">Đặt Bàn</h1>
           <div class="divider-gold"></div>
+          <p class="page-hero-desc">Nâng Tầm Trải Nghiệm Ẩm Thực</p>
         </div>
       </section>
 
-      <div class="reservation-container container">
-        <div class="information">
-          <form id="reservationForm">
-            <p>Thông Tin Khách Hàng</p>
-            <p>
-              <label for="fullName">Họ và Tên:</label><br />
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="Nguyễn Văn A"
-                required
-              />
-            </p>
-            <p>
-              <label for="userPhone">Số điện thoại:</label><br />
-              <input
-                type="tel"
-                id="userPhone"
-                name="userPhone"
-                placeholder="Ví dụ: 0901234567"
-                pattern="[0-9]{10}"
-                title="Số điện thoại phải bao gồm đúng 10 chữ số từ 0-9"
-                required
-              />
-            </p>
-            <p>
-              <label for="userEmail">Email liên hệ:</label><br />
-              <input
-                type="email"
-                id="userEmail"
-                name="userEmail"
-                placeholder="info@vingon.vn"
-                required
-              />
-            </p>
-            <p>
-              <label for="Reserve_Date">Ngày Đặt:</label><br />
-              <input
-                type="date"
-                id="Reserve_Date"
-                name="Reserve_Date"
-                required
-              />
-            </p>
-            <p>
-              <label for="appointment"> Giờ hẹn:</label><br />
-              <input
-                type="time"
-                id="appointment"
-                name="appointmentDate"
-                required
-              />
-            </p>
-            <p>
-              <label for="partySize">Số lượng khách hàng:</label><br />
-              <input
-                type="number"
-                id="partySize"
-                name="partySize"
-                value="1"
-                min="1"
-                max="50"
-                step="1"
-                required
-              />
-            </p>
-            <p>
-              <label for="note">Ghi chú:</label><br />
-              <input
-                type="text"
-                id="note"
-                name="note"
-                placeholder="Yêu cầu đặc biệt..."
-              />
-            </p>
+      <section class="reservation-section">
+        <div class="container">
+          <div class="reservation-container">
+            <div class="information">
+              <form id="reservationForm">
+                <p>Thông Tin Khách Hàng</p>
+                <p>
+                  <label for="fullName">Họ và Tên:</label><br />
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Nguyễn Văn A"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="userPhone">Số điện thoại:</label><br />
+                  <input
+                    type="tel"
+                    id="userPhone"
+                    name="userPhone"
+                    placeholder="Ví dụ: 0901234567"
+                    pattern="[0-9]{10}"
+                    title="Số điện thoại phải bao gồm đúng 10 chữ số từ 0-9"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="userEmail">Email liên hệ:</label><br />
+                  <input
+                    type="email"
+                    id="userEmail"
+                    name="userEmail"
+                    placeholder="info@vingon.vn"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="Reserve_Date">Ngày Đặt:</label><br />
+                  <input
+                    type="date"
+                    id="Reserve_Date"
+                    name="Reserve_Date"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="appointment"> Giờ hẹn:</label><br />
+                  <input
+                    type="time"
+                    id="appointment"
+                    name="appointmentDate"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="partySize">Số lượng khách hàng:</label><br />
+                  <input
+                    type="number"
+                    id="partySize"
+                    name="partySize"
+                    value="1"
+                    min="1"
+                    max="50"
+                    step="1"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="note">Ghi chú:</label><br />
+                  <input
+                    type="text"
+                    id="note"
+                    name="note"
+                    placeholder="Yêu cầu đặc biệt..."
+                  />
+                </p>
 
-            <button type="submit" class="btn-primary">Xác Nhận Đặt Bàn</button>
-          </form>
-        </div>
+                <button type="submit" class="btn-primary">
+                  Xác Nhận Đặt Bàn
+                </button>
+              </form>
+            </div>
 
-        <div class="benphai">
-          <div class="info">
-            <p>Giờ Phục vụ:</p>
-            <p>Thứ 2 – Thứ 5: 10:00 – 22:00</p>
-            <p>Thứ 6 – Thứ 7: 10:00 – 23:00</p>
-            <p>Chủ Nhật: 10:00 – 21:00</p>
-          </div>
-          <div class="info">
-            <p>Liên Hệ Trực Tiếp:</p>
-            <p>Email: info@vingon.vn</p>
-            <p>Số điện thoại: 0901 234 567</p>
-            <p>Địa chỉ: 123 Đường Ẩm Thực, Q.1, TP. HCM</p>
-          </div>
-          <div class="info">
-            <p>Lưu ý:</p>
-            <p>Xin thực khách vui lòng đến đúng giờ</p>
-            <p>Nhà hàng sẽ chỉ giữ bàn cho bạn 15 phút</p>
+            <div class="benphai">
+              <div class="info">
+                <p>Giờ Phục vụ:</p>
+                <p>Thứ 2 – Thứ 5: 10:00 – 22:00</p>
+                <p>Thứ 6 – Thứ 7: 10:00 – 23:00</p>
+                <p>Chủ Nhật: 10:00 – 21:00</p>
+              </div>
+              <div class="info">
+                <p>Liên Hệ Trực Tiếp:</p>
+                <p>Email: info@vingon.vn</p>
+                <p>Số điện thoại: 0901 234 567</p>
+                <p>Địa chỉ: 123 Đường Ẩm Thực, Q.1, TP. HCM</p>
+              </div>
+              <div class="info">
+                <p>Lưu ý:</p>
+                <p>Xin thực khách vui lòng đến đúng giờ</p>
+                <p>Nhà hàng sẽ chỉ giữ bàn cho bạn 15 phút</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
 
     <div id="site-footer"></div>
