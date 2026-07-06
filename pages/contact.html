@@ -2,6 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vị Ngon — Liên Hệ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -10,20 +11,34 @@
     />
     <link rel="stylesheet" href="../css/shared.css" />
     <link rel="stylesheet" href="../css/contact.css" />
+    <!--
+      Trang: contact.html - Trang Liên hệ nhà hàng
+      Chức năng: hiển thị các thông tin liên hệ (địa chỉ, số điện thoại, email, thời gian, bản đồ) và
+      phần góp ý để khách hàng gửi phản hồi ý kiến.
+      Người viết: MSSV B2404886 - Họ tên: Võ Quỳnh Trân
+      Liên kết logic với: css/contact.css (giao diện) và js/contact.js (xử lý thông tin liên hệ + gửi góp ý)
+    -->
   </head>
   <body>
+    <!-- Vùng chèn header dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-header"></div>
     <main>
+      <!-- Khối giới thiệu đầu trang (hero) -->
       <section class="page-hero">
-        <div class="container">
+        <!--Tạo vùng cho nội dung không kéo dài toàn màn hình-->
+        <div class="container"> 
           <p class="section-label">Kết nối với chúng tôi</p>
           <h1 class="section-title">Liên Hệ</h1>
           <div class="divider-gold"></div>
           <p class="page-hero-desc">Chúng tôi sẵn sàng lắng nghe bạn.</p>
         </div>
       </section>
+      <!--Phần nôi dung chính cho trang liên hệ-->
       <section class="contact-section">
         <div class="contact-info">
+          <!--Các phần nội dung thông tin liên hệ kết hợp liên kết đường dẫn cho 
+          phần địa chỉ, email, số điện thoại với các ảnh biểu tượng icon cho từng thông tin.
+          Khách hàng có thể bấm vào để tìm kiếm trực tiếp -->
           <div class="info-item">
             <div class="info-icon">
               <img src="../images/contact-dia-chi.jpg" alt="Địa chỉ" />
@@ -63,18 +78,26 @@
             </div>
           </div>
         </div>
+        <!--Phần form cho khách hàng gửi góp ý cho nhà hàng-->
         <div class="contact-form-container">
+          <!--Thẻ form bao bộc phần nhập thông tin và gửi phản hồi-->
           <form class="contact-form">
             <h3>Góp ý</h3>
             <div class="divider-gold"></div>
             <div class="form-group">
+              <!--Hiện thị tên của từng ô nhập,với thuộc tính for="fullname" liên kết với input id="fullname"
+               khi người dùng click vào thì con trỏ sẽ tự động nhảy vào ô nhập tương ứng + trường bắt buộc * 
+               để người dùng biết thông tin bắt buộc phải nhập -->
               <label for="fullname"
                 >Họ và tên <span class="required">*</span></label
               >
+              <!--thẻ cho người dùng nhập thông tin từ bàn phím, 
+              thuộc tính type="text" khai báo cho nhập văn bản thông thường,
+              placeholder="Nhập họ và tên" hiển thị nội dung gợi ý-->
               <input
                 type="text"
                 id="fullname"
-                placeholder="Nhập họ và tên"
+                placeholder="Nhập họ và tên"  
                 required
               />
             </div>
@@ -89,24 +112,34 @@
             </div>
             <div class="form-group">
               <label for="subject">Chủ đề<span class="required">*</span></label>
+              <!--Tạo 1 hộp danh sách lựa chọn cho khách hàng lựa chọn chủ đề, 
+              khách chỉ có thể chọn 1 trong các lựa chọn có sẵn, name="subject" là tên dữ liệu gửi lên server
+               tương ứng với giá trị subject= response hoặc cooperatio ở phần thẻ <option> -->
               <select name="subject" size="1" id="subject" required>
+                <!--Tạo ra các lựa chọn trong hộp chọn <select>, selected đem nội dung lên đầu hộp chọn
+                gợi ý thông tin cho khách hàng, disabled làm vô hiêu hóa nội dung để khách hàng không được
+                chọn vào nội dung đó. Với value="" khi khách hàng không bấm vào lựa chọn
+                thì khi bấm gửi, HTML phát hiện value trống, ngay lập tức báo lỗi buộc khách hàng lựa chọn-->
                 <option value="" disabled selected>
                   --Chọn chủ đề liên hệ--
                 </option>
                 <option value="response">Phản hồi</option>
-                <option value="coopearation">Hợp tác</option>
+                <option value="cooperation">Hợp tác</option>
               </select>
             </div>
             <div class="form-group">
               <label for="message"
                 >Nội dung <span class="required">*</span></label
               >
+              <!--tạo ra 1 ô nhập với nội dung dài=> dùng thẻ textarea-->
               <textarea
                 id="message"
                 placeholder="Nhập nội dung"
                 required
               ></textarea>
             </div>
+            <!--Tạo 1 cái nút bấm gửi các thông tin trong form, thuộc tính type="submit" để khi nhấn gửi 
+            thì hệ thống sẽ kiểm tra các ô có chữ required và type="email" xem người dùng nhập đúng các thông tin chưa -->
             <button type="submit" class="btn-primary btn-submit">GỬI</button>
           </form>
         </div>
@@ -114,6 +147,12 @@
       <div class="contact-map">
         <div class="container">
           <div class="map-wrapper">
+            <!--Nhúng trang web từ bên ngoài vào trang liên hệ, nó sẽ hiển thị ra bản đồ
+            bao gồm có nguồn trang web src, thuộc tính style để thiết kế khung độ rộng dài của bản đồ,
+            allowfullscreen="" cho phép người dùng phóng to, thu nhỏ toàn màn hình cho bản đồ, 
+            loading="lazy" tối ưu tốc độ tải cho trang web,
+            referrerpolicy="no-referrer-when-downgrade" bảo mật cho đường link
+            -->
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d2012161.0889912995!2d106.23892140000001!3d9.93378005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sQ.1%2C%20TP.%20HCM!5e0!3m2!1svi!2s!4v1781432459920!5m2!1svi!2s"
               style="border: 0; width: 100%; height: 450px"
@@ -125,8 +164,12 @@
         </div>
       </div>
     </main>
+    <!-- Vùng chèn footer dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-footer"></div>
+    <!-- shared.js: render header/footer, xử lý menu di động, hiệu ứng cuộn,
+         và hiện số lượng món yêu thích trên icon header (dùng chung mọi trang) -->
     <script src="../js/shared.js"></script>
+    <!-- contact.js: Xử lí các mục nhập và gửi thông tin + hiển thị trang thái đã gửi thông tin (chỉ dùng riêng cho trang này) -->
     <script src="../js/contact.js"></script>
   </body>
 </html>

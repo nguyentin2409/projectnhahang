@@ -1,3 +1,11 @@
+/*
+  contact.css - Style riêng cho trang Liên hệ (contact.html)
+  MSSV: B2404886 - Họ tên: Võ Quỳnh Trân
+  Chiến lược Responsive: MOBILE-FIRST
+    - Style gốc bên dưới được viết cho màn hình nhỏ (điện thoại) trước
+    - Dùng @media (min-width: ...) để MỞ RỘNG dần layout lên tablet/desktop
+*/
+
 .page-hero {
   padding: 90px 0 60px;
   background: var(--color-surface);
@@ -8,14 +16,16 @@
   color: var(--color-muted);
 }
 
+/*Xếp thành cột dọc theo màn hình điện thoại*/
 .contact-section {
   display: flex;
+  flex-direction: column;
   padding: 60px 80px;
-  gap: 50px;
+  gap: 30px;
 }
 
+/*Dùng flex để sắp xếp các thông tin theo cột dọc*/
 .contact-info {
-  flex: 4;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -24,15 +34,12 @@
   background-color: var(--color-surface);
 }
 
-.contact-form-container {
-  flex: 6;
-}
-
 .info-item {
   display: flex;
   gap: 20px;
 }
-
+/*Cân chỉnh các ảnh icon chính giữa theo chiều dọc và ngang
+  Cố định chiều rộng và cao của icon*/
 .info-icon {
   border: 1px solid var(--color-border);
   border-radius: 50%;
@@ -42,7 +49,7 @@
   align-items: center;
   width: 50px;
   height: 50px;
-  flex-shrink: 0;
+  flex-shrink: 0; /*không cho các icon co lại khi màn hình thu nhỏ*/
 }
 
 .info-text a,
@@ -50,11 +57,12 @@
   font-family: var(--font-display);
   font-size: 16px;
   color: var(--color-gold);
-  transition: color 0.25s ease;
+  transition: color 0.25s ease; /*hiệu ứng chuyển màu chữ khi rê chuột*/
 }
-
-.info-text a:hover {
-  color: var(--color-cream);
+/*Chuyển từ màu gold sang cream khi rê chuột*/
+.info-text a:hover,
+.info-text h2:hover {
+  color: var(--color-cream); 
 }
 
 .info-text p {
@@ -74,6 +82,7 @@
   font-size: 24px;
 }
 
+/* Tạo khoảng cách cho từng khung nhập. Tại sao không dùng gap ? => Chỉ dùng khi phần tử đó có cha là Flex hoặc Grid */
 .form-group {
   margin-bottom: 20px;
 }
@@ -83,13 +92,14 @@
   display: block;
   font-size: 14px;
   color: var(--color-muted);
-  font-weight: 500;
+  font-weight: 500; 
 }
 
+/*đánh dấu cho trường bắt buột '*' thành màu đỏ*/
 .form-group .required {
   color: #d93838;
 }
-
+/* Định dạng chung có các ô nhập */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -103,7 +113,7 @@
 
 .form-group textarea {
   height: 120px;
-  resize: none;
+  resize: none; /*chặn không cho người dùng kéo dãn ô nhập */
 }
 
 .btn-submit {
@@ -114,15 +124,21 @@
   padding: 50px 80px;
 }
 
-@media (max-width: 900px) {
+/* Tablet trở lên (>= 600px): cho 2 bảng theo hàng ngang*/
+@media (min-width: 600px) {
   .contact-section {
-    gap: 20px;
+    flex-direction: row;
+  }
+  .contact-info{
+    flex: 4;
+  }
+  .contact-form-container{
+    flex: 6;
   }
 }
-
-@media (max-width: 600px) {
+/*Desktop trở lên (>= 900px): điều chỉnh khoảng cách giữa 2 bảng lớn hơn*/
+@media (min-width: 900px) {
   .contact-section {
-    flex-direction: column;
-    gap: 10px;
-  }
+    gap: 50px;
+  } 
 }
