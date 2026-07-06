@@ -1,3 +1,11 @@
+/*
+  menu.css - Style riêng cho trang Thực Đơn (menu.html)
+  MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
+  Chiến lược Responsive: MOBILE-FIRST
+    - Style gốc bên dưới được viết cho màn hình nhỏ (điện thoại) trước
+    - Dùng @media (min-width: ...) để MỞ RỘNG dần layout lên tablet/desktop
+*/
+
 .page-hero {
   padding: 90px 0 60px;
   background: #fff7ed;
@@ -18,7 +26,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   border-bottom: 1px solid var(--color-border);
   padding-bottom: 0;
 }
@@ -48,9 +56,52 @@
   border-bottom-color: var(--color-gold);
 }
 
+/* Tab "Yêu Thích" tô màu đỏ hồng riêng để phân biệt với các tab danh mục món ăn */
+.tab-btn-favorite {
+  color: #b8556a;
+}
+.tab-btn-favorite.active {
+  color: #b8556a;
+  border-bottom-color: #b8556a;
+}
+
+/* Thanh tổng hợp món yêu thích: hiện số món đã thích + tổng giá trị dự kiến.
+   Chỉ hiện khi có ít nhất 1 món được thích (menu.js gắn/gỡ class "hidden"). */
+.favorite-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: #fdf1f2;
+  border: 1px solid #f0c9cf;
+  padding: 14px 20px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: var(--color-cream);
+}
+
+.favorite-summary-total {
+  font-weight: 700;
+  color: #b8556a;
+}
+
+/* Thông báo hiển thị khi khách xem tab "Yêu Thích" nhưng chưa thích món nào */
+.empty-favorite {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 14px;
+  padding: 40px 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Mobile: base layout - 1 cột (điện thoại màn hình hẹp) */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 28px;
 }
 
@@ -75,6 +126,7 @@
 }
 
 .menu-img-wrap {
+  position: relative;
   aspect-ratio: 16/10;
   overflow: hidden;
   background: #f0e4d0;
@@ -89,6 +141,39 @@
 
 .menu-item:hover .menu-img-wrap img {
   transform: scale(1.05);
+}
+
+/* Nút ♥ nổi ở góc trên-phải ảnh món ăn, dùng để thêm/bỏ "yêu thích" */
+.btn-favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-muted);
+  font-size: 17px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    transform 0.2s,
+    background 0.2s;
+}
+
+.btn-favorite:hover {
+  transform: scale(1.1);
+}
+
+/* Trạng thái đã thích: tô đỏ hồng để khách thấy rõ món nào mình đã chọn */
+.btn-favorite.active {
+  color: #d1495b;
+  background: #ffffff;
 }
 
 .menu-info {
@@ -123,13 +208,16 @@
   line-height: 1.6;
 }
 
-@media (max-width: 900px) {
+/* Tablet trở lên (>= 580px): tăng lên 2 cột */
+@media (min-width: 580px) {
   .menu-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 580px) {
+
+/* Desktop trở lên (>= 900px): tăng lên 3 cột */
+@media (min-width: 900px) {
   .menu-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }

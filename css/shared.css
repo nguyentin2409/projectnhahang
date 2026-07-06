@@ -1,3 +1,10 @@
+/*
+  shared.css - Style dùng chung cho toàn bộ website (header, footer, nút, container...)
+  MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
+  Chiến lược Responsive: MOBILE-FIRST
+    - Toàn bộ style bên dưới (ngoài @media) là style GỐC cho MÀN HÌNH NHỎ (điện thoại)
+    - Dùng @media (min-width: ...) để MỞ RỘNG / bổ sung style cho tablet, desktop
+*/
 *,
 *::before,
 *::after {
@@ -45,6 +52,8 @@ img {
 ul {
   list-style: none;
 }
+
+/* ===== HEADER (mobile: nav-links/nút đặt bàn ẩn, thay bằng nút hamburger) ===== */
 .site-header {
   position: fixed;
   top: 0;
@@ -57,7 +66,7 @@ ul {
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 20px;
   justify-content: space-between;
   box-shadow: 0 2px 12px rgba(184, 137, 58, 0.07);
 }
@@ -99,10 +108,57 @@ ul {
   margin-top: -2px;
 }
 
+/* Mobile: menu chính ẩn, sẽ được .nav-mobile-open hiển thị dạng dropdown khi bấm hamburger */
 .nav-links {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 32px;
+}
+
+/* Nhóm các phần tử bên phải header: icon yêu thích, nút đặt bàn, nút hamburger */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Icon ♥ trên header - luôn hiện ở mọi trang, cho khách xem lại nhanh
+   danh sách món yêu thích đã đánh dấu ở trang Menu (đọc từ localStorage) */
+.btn-favorite-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 17px;
+  color: var(--color-cream);
+  transition: color 0.2s;
+}
+
+.btn-favorite-header:hover {
+  color: #d1495b;
+}
+
+/* Badge số lượng món yêu thích, hiện ở góc icon ♥. Ẩn khi chưa thích món nào. */
+.favorite-badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #d1495b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+}
+
+.favorite-badge.hidden {
+  display: none;
 }
 
 .nav-links a {
@@ -137,7 +193,9 @@ ul {
   width: 100%;
 }
 
+/* Mobile: nút Đặt Bàn trên header ẩn, chỉ hiện trong menu dropdown mobile */
 .btn-reserve {
+  display: none;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -157,8 +215,9 @@ ul {
   color: var(--color-white);
 }
 
+/* Mobile: nút hamburger hiển thị mặc định */
 .nav-toggle {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 5px;
   background: none;
@@ -187,23 +246,43 @@ ul {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Menu dropdown khi bấm hamburger trên mobile (body.nav-mobile-open do shared.js gắn) */
+.nav-mobile-open .nav-links {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 24px 32px;
+  gap: 20px;
+  z-index: 999;
+}
+
+.nav-mobile-open .btn-reserve {
+  display: inline-block;
+}
+
 main {
   flex: 1;
   padding-top: var(--nav-height);
 }
 
+/* ===== FOOTER (mobile: 1 cột) ===== */
 .site-footer {
   background: #f5ede0;
   border-top: 1px solid var(--color-border);
-  padding: 60px 40px 30px;
+  padding: 60px 20px 30px;
 }
 
 .footer-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 32px;
   padding-bottom: 48px;
   border-bottom: 1px solid var(--color-border);
 }
@@ -246,20 +325,23 @@ main {
   color: var(--color-cream);
 }
 
+/* Mobile: các thông tin cuối footer xếp dọc, canh giữa */
 .footer-bottom {
   max-width: 1200px;
   margin: 24px auto 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
   font-size: 13px;
   color: var(--color-muted);
+  text-align: center;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .section-label {
@@ -328,54 +410,54 @@ main {
   margin: 20px 0;
 }
 
-@media (max-width: 900px) {
-  .site-header {
-    padding: 0 24px;
-  }
-
-  .nav-links,
-  .btn-reserve {
-    display: none;
-  }
-
-  .nav-toggle {
-    display: flex;
-  }
-
-  .nav-mobile-open .nav-links {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: var(--nav-height);
-    left: 0;
-    right: 0;
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-    padding: 24px 32px;
-    gap: 20px;
-    z-index: 999;
-  }
-
-  .nav-mobile-open .btn-reserve {
-    display: inline-block;
-  }
-
+/* ===== Tablet trở lên (>= 600px) ===== */
+@media (min-width: 600px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
-}
-
-@media (max-width: 600px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
   .footer-bottom {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
   }
   .container {
-    padding: 0 20px;
+    padding: 0 40px;
+  }
+}
+
+/* ===== Desktop trở lên (>= 900px): hiện menu ngang, ẩn hamburger ===== */
+@media (min-width: 900px) {
+  .site-header {
+    padding: 0 40px;
+  }
+
+  .nav-links {
+    display: flex;
+  }
+
+  .btn-reserve {
+    display: inline-block;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  /* Trên desktop, menu luôn hiển thị dạng hàng ngang trong header,
+     không dùng kiểu dropdown cố định (ghi đè lại nếu class nav-mobile-open còn sót) */
+  .nav-mobile-open .nav-links {
+    position: static;
+    flex-direction: row;
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .site-footer {
+    padding: 60px 40px 30px;
   }
 }

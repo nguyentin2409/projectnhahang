@@ -1,4 +1,24 @@
+/**
+ * shared.js - Script dùng chung cho TẤT CẢ các trang trong website
+ * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
+ *
+ * Các chức năng chính:
+ *  1. Chèn header (menu điều hướng) vào mọi trang qua thẻ <div id="site-header">
+ *  2. Chèn footer vào mọi trang qua thẻ <div id="site-footer">
+ *  3. Gắn class "active" cho link điều hướng ứng với trang đang xem
+ *  4. Xử lý mở/đóng menu điều hướng trên di động (nút hamburger .nav-toggle)
+ *  5. Đổi màu nền header khi người dùng cuộn trang xuống
+ *  6. Hiện số lượng "món yêu thích" (do trang Menu lưu vào localStorage)
+ *     lên icon ♥ trên header, để khách thấy được ở BẤT KỲ trang nào,
+ *     không riêng gì trang Menu.
+ */
 document.addEventListener("DOMContentLoaded", () => {
+  const FAVORITE_STORAGE_KEY = "vingon_favorites";
+
+  // ===== 1. CHÈN HEADER =====
+  // Tìm khung chứa header (mỗi trang HTML đều có <div id="site-header">)
+  // rồi thay thế bằng nội dung header đầy đủ (logo, menu, icon yêu thích,
+  // nút đặt bàn, nút hamburger)
   const headerPlaceholder = document.getElementById("site-header");
   if (headerPlaceholder) {
     headerPlaceholder.outerHTML = `
@@ -19,13 +39,28 @@ document.addEventListener("DOMContentLoaded", () => {
           <a href="/pages/contact.html" data-page="contact">Liên Hệ</a>
         </nav>
 
-        <a href="/pages/reservation.html" class="btn-reserve">Đặt Bàn Ngay</a>
+        <div class="header-actions">
+          <a
+            href="/pages/menu.html#favorite"
+            class="btn-favorite-header"
+            id="favorite-header-btn"
+            aria-label="Xem món yêu thích"
+          >
+            ♥
+            <span class="favorite-badge hidden" id="favorite-badge">0</span>
+          </a>
 
-        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
+          <a href="/pages/reservation.html" class="btn-reserve">Đặt Bàn Ngay</a>
+
+          <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </header>`;
   }
+
+  // ===== 2. CHÈN FOOTER =====
+  // Tương tự header: tìm <div id="site-footer"> và thay bằng nội dung footer đầy đủ
   const footerPlaceholder = document.getElementById("site-footer");
   if (footerPlaceholder) {
     footerPlaceholder.outerHTML = `
@@ -67,6 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </footer>`;
   }
+
+  // ===== 3. ĐÁNH DẤU LINK ĐANG ĐƯỢC XEM (active state) =====
+  // So sánh đường dẫn URL hiện tại với thuộc tính href của từng link điều hướng
+  // Nếu trùng khớp -> thêm class "active" để CSS bôi màu/gạch chân link đó
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll(".nav-links a[data-page]");
 
@@ -80,6 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
       link.classList.add("active");
     }
   });
+
+  // ===== 4. MENU DI ĐỘNG (hamburger) =====
+  // Khi bấm nút .nav-toggle: bật/tắt class "nav-mobile-open" trên <body>
+  // (CSS dựa vào class này để hiện/ẩn menu dạng dropdown trên màn hình nhỏ)
+  // đồng thời đổi class "open" trên chính nút để tạo hiệu ứng chuyển icon hamburger -> dấu X
   const navToggle = document.getElementById("nav-toggle");
   if (navToggle) {
     navToggle.addEventListener("click", () => {
@@ -87,6 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
       navToggle.classList.toggle("open");
     });
   }
+
+  // ===== 5. HIỆU ỨNG HEADER KHI CUỘN TRANG =====
+  // Khi cuộn xuống quá 40px, header sẽ có nền tối/đậm hơn để dễ đọc chữ
+  // Dùng { passive: true } để tối ưu hiệu năng cuộn trang
   const header = document.getElementById("site-header");
   if (header) {
     window.addEventListener(
@@ -101,4 +149,31 @@ document.addEventListener("DOMContentLoaded", () => {
       { passive: true },
     );
   }
+
+  // ===== 6. SỐ LƯỢNG MÓN YÊU THÍCH TRÊN ICON HEADER =====
+  // Đọc danh sách món yêu thích (do menu.js lưu vào localStorage khi khách
+  // bấm ♥ ở trang Menu) rồi hiện số lượng lên badge cạnh icon ♥ trên header.
+  // Hàm này được gắn vào window để menu.js có thể gọi lại ngay khi khách
+  // thêm/bỏ món yêu thích, mà không cần tải lại trang.
+  function updateFavoriteBadge() {
+    const badge = document.getElementById("favorite-badge");
+    if (!badge) return;
+
+    let favorites = [];
+    try {
+      favorites = JSON.parse(localStorage.getItem(FAVORITE_STORAGE_KEY)) || [];
+    } catch (err) {
+      favorites = [];
+    }
+
+    if (favorites.length > 0) {
+      badge.textContent = favorites.length;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
+
+  window.updateFavoriteBadge = updateFavoriteBadge;
+  updateFavoriteBadge(); // Hiện đúng số lượng ngay khi vừa tải trang
 });

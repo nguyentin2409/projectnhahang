@@ -11,22 +11,35 @@
     />
     <link rel="stylesheet" href="../css/shared.css" />
     <link rel="stylesheet" href="../css/menu.css" />
+    <!--
+      Trang: menu.html - Trang Thực Đơn nhà hàng
+      Chức năng: hiển thị danh sách món ăn, cho phép lọc theo danh mục
+      (Khai vị, Món chính, Súp & Canh, Tráng miệng, Đồ uống) và theo
+      "Yêu Thích" (món khách đã đánh dấu thích để tiện gọi món tại quầy/bàn).
+      Người viết: MSSV B2405536 - Họ tên: Nguyễn Bảo Tín
+      Liên kết logic với: css/menu.css (giao diện) và js/menu.js (xử lý lọc món ăn + yêu thích)
+    -->
   </head>
   <body>
+    <!-- Vùng chèn header dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-header"></div>
     <main>
+      <!-- Khối giới thiệu đầu trang (hero) -->
       <section class="page-hero">
         <div class="container">
           <p class="section-label">Khám Phá</p>
           <h1 class="section-title">Thực Đơn</h1>
           <div class="divider-gold"></div>
           <p class="page-hero-desc">
-            Hơn 80 món ăn được chắt lọc từ tinh hoa ẩm thực ba miền
+            9 món ăn được chắt lọc từ tinh hoa ẩm thực ba miền
           </p>
         </div>
       </section>
       <section class="menu-section">
         <div class="container">
+          <!-- Thanh tab lọc món ăn theo danh mục: data-category khớp với data-category của từng .menu-item bên dưới.
+               Tab "favorite" là tab đặc biệt: không lọc theo danh mục món mà lọc theo trạng thái
+               "đã yêu thích" (lưu trong localStorage), do menu.js xử lý riêng. -->
           <div class="menu-tabs" id="menu-tabs">
             <button class="tab-btn active" data-category="all">Tất Cả</button>
             <button class="tab-btn" data-category="appetizer">Khai Vị</button>
@@ -34,11 +47,46 @@
             <button class="tab-btn" data-category="soup">Súp & Canh</button>
             <button class="tab-btn" data-category="dessert">Tráng Miệng</button>
             <button class="tab-btn" data-category="drink">Đồ Uống</button>
+            <button class="tab-btn tab-btn-favorite" data-category="favorite">
+              ♥ Yêu Thích
+            </button>
           </div>
+
+          <!-- Thanh tổng hợp món yêu thích: hiện tổng số món và tổng giá trị dự kiến,
+               giúp khách xem trước trước khi gọi món tại bàn. menu.js cập nhật nội dung này
+               mỗi khi danh sách yêu thích thay đổi. Ẩn khi chưa thích món nào. -->
+          <div class="favorite-summary hidden" id="favorite-summary">
+            <span id="favorite-summary-text">Bạn đã thích 0 món</span>
+            <span class="favorite-summary-total" id="favorite-summary-total"
+              >0₫</span
+            >
+          </div>
+
+          <!-- Thông báo hiển thị khi tab "Yêu Thích" đang chọn nhưng chưa có món nào được thích -->
+          <p class="empty-favorite hidden" id="empty-favorite-msg">
+            Bạn chưa thích món nào. Bấm ♥ trên món ăn bạn thích để lưu lại
+            nhé!
+          </p>
+
+          <!-- Danh sách 9 món ăn, mỗi món có data-category để menu.js lọc hiển thị,
+               data-id để nhận diện món (khoá lưu trong localStorage) và
+               data-price (số nguyên, đơn vị đồng) để tính tổng tiền món yêu thích -->
           <div class="menu-grid" id="menu-grid">
-            <div class="menu-item" data-category="appetizer">
+            <div
+              class="menu-item"
+              data-category="appetizer"
+              data-id="goi-cuon-tom-thit"
+              data-price="65000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/menu-1.jpg" alt="Gỏi cuốn tôm thịt" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Gỏi Cuốn Tôm Thịt"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -51,9 +99,21 @@
                 </p>
               </div>
             </div>
-             <div class="menu-item" data-category="main">
+            <div
+              class="menu-item"
+              data-category="main"
+              data-id="bun-cha-ha-noi"
+              data-price="100000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/bun-cha.jpg" alt="Bún chả Hà Nội" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Bún chả Hà Nội"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -65,9 +125,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="main">
+            <div
+              class="menu-item"
+              data-category="main"
+              data-id="bun-bo-hue"
+              data-price="120000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/menu-2.jpg" alt="Bún bò Huế" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Bún Bò Huế"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -79,9 +151,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="main">
+            <div
+              class="menu-item"
+              data-category="main"
+              data-id="com-tam-suon-bi-cha"
+              data-price="95000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/menu-3.jpg" alt="Cơm tấm sườn bì chả" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Cơm Tấm Sườn Bì Chả"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -93,9 +177,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="main">
+            <div
+              class="menu-item"
+              data-category="main"
+              data-id="pho-bo-dac-biet"
+              data-price="130000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/pho-bo.jpg" alt="Phở Bò Đặc Biệt" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Phở Bò Đặc Biệt"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -107,9 +203,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="soup">
+            <div
+              class="menu-item"
+              data-category="soup"
+              data-id="canh-chua-ca-loc"
+              data-price="80000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/menu-4.jpg" alt="Canh chua cá lóc" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Canh Chua Cá Lóc"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -121,9 +229,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="dessert">
+            <div
+              class="menu-item"
+              data-category="dessert"
+              data-id="che-ba-mau"
+              data-price="45000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/menu-5.jpg" alt="Chè ba màu" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Chè Ba Màu"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -136,9 +256,21 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="main">
+            <div
+              class="menu-item"
+              data-category="main"
+              data-id="ca-loc-kho-to"
+              data-price="159000"
+            >
               <div class="menu-img-wrap">
                 <img src="../images/ca-loc-kho-to.jpg" alt="Cá Lóc Kho Tộ" />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Cá Lóc Kho Tộ"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -150,9 +282,24 @@
                 </p>
               </div>
             </div>
-            <div class="menu-item" data-category="drink">
+            <div
+              class="menu-item"
+              data-category="drink"
+              data-id="nuoc-ep-trai-cay-tuoi"
+              data-price="55000"
+            >
               <div class="menu-img-wrap">
-                <img src="../images/menu-6.jpg" alt="Nước ép trái cây tươi" />
+                <img
+                  src="../images/menu-6.jpg"
+                  alt="Nước ép trái cây tươi"
+                />
+                <button
+                  class="btn-favorite"
+                  aria-label="Thích món Nước Ép Trái Cây Tươi"
+                  aria-pressed="false"
+                >
+                  ♥
+                </button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -168,8 +315,12 @@
         </div>
       </section>
     </main>
+    <!-- Vùng chèn footer dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-footer"></div>
+    <!-- shared.js: render header/footer, xử lý menu di động, hiệu ứng cuộn,
+         và hiện số lượng món yêu thích trên icon header (dùng chung mọi trang) -->
     <script src="../js/shared.js"></script>
+    <!-- menu.js: xử lý lọc món ăn theo danh mục + chức năng Yêu Thích (chỉ dùng riêng cho trang này) -->
     <script src="../js/menu.js"></script>
   </body>
 </html>
