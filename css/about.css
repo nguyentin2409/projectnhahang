@@ -1,5 +1,21 @@
+/*
+  about.css - Style riêng cho trang Giới Thiệu (about.html)
+    MSSV: B2408835
+    Họ tên: Trần Lý An
+  Chiến lược Responsive: MOBILE-FIRST
+    - Style gốc bên dưới được viết cho màn hình nhỏ (điện thoại) trước.
+    - Dùng @media (min-width: ...) để mở rộng dần giao diện
+      lên Tablet và Desktop.
+*/
+
+/* ==========================
+   PHẦN HERO ĐẦU TRANG
+   Hiển thị tiêu đề và mô tả
+   của trang Giới thiệu.
+========================== */
+
 .page-hero {
-  padding: 90px 0 60px;
+  padding: 70px 0 50px;
   background: #fff7ed;
   border-bottom: 1px solid var(--color-border);
 }
@@ -11,19 +27,25 @@
   color: var(--color-muted);
 }
 
+/* ==========================
+   PHẦN CÂU CHUYỆN NHÀ HÀNG
+   Hiển thị hình ảnh và nội dung
+   giới thiệu về nhà hàng.
+========================== */
+
 .about-story {
-  padding: 80px 0;
+  padding: 60px 0;
 }
 
 .story-content {
   display: flex;
-  align-items: center;
-  gap: 60px;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .story-image,
 .story-text {
-  flex: 1;
+  width: 100%;
 }
 
 .story-image {
@@ -39,6 +61,8 @@
   transition: transform 0.4s;
 }
 
+/* Phóng to nhẹ hình ảnh khi di chuột */
+
 .story-image:hover img {
   transform: scale(1.05);
 }
@@ -50,38 +74,49 @@
   color: var(--color-muted);
 }
 
+/* ==========================
+   PHẦN ĐỘI NGŨ ĐẦU BẾP
+   Hiển thị các đầu bếp của
+   nhà hàng dưới dạng lưới.
+========================== */
+
 .team {
-  padding: 80px 0;
+  padding: 60px 0;
   background: var(--color-white);
   text-align: center;
 }
 
+/* Mobile: mặc định hiển thị 1 cột */
+
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 30px;
   margin-top: 50px;
 }
 
+
+ /* Thẻ hiển thị thông tin của từng đầu bếp */
 .chef-card {
   background: var(--color-white);
   border: 1px solid var(--color-border);
   padding: 30px 20px;
-
-  opacity: 0;
-  transform: translateY(40px);
-
   transition:
-    opacity 0.6s ease,
-    transform 0.6s ease,
     border-color 0.25s,
+    transform 0.25s,
     box-shadow 0.25s;
+
 }
+
+/* JavaScript sẽ thêm class "show"
+   khi thẻ đầu bếp xuất hiện trên màn hình */
 
 .chef-card.show {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Hiệu ứng khi di chuột */
 
 .chef-card:hover {
   border-color: var(--color-gold);
@@ -89,14 +124,18 @@
   box-shadow: 0 8px 20px rgba(184, 137, 58, 0.12);
 }
 
+/* Ảnh đầu bếp */
+
 .chef-card img {
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
   margin: 0 auto 20px;
 }
+
+/* Tên đầu bếp */
 
 .chef-card h3 {
   font-family: var(--font-display);
@@ -104,6 +143,8 @@
   font-size: 22px;
   margin-bottom: 8px;
 }
+
+/* Chức vụ */
 
 .chef-card span {
   display: block;
@@ -115,79 +156,81 @@
   margin-bottom: 15px;
 }
 
+/* Mô tả */
+
 .chef-card p {
   font-size: 14px;
   line-height: 1.7;
   color: var(--color-muted);
 }
 
-.about-features {
-  padding: 70px 0;
-  border-top: 1px solid var(--color-border);
-}
+/* ==========================================
+   Tablet trở lên (>=768px)
+   - Chuyển phần câu chuyện thành 2 cột.
+   - Đội ngũ đầu bếp hiển thị 2 cột.
+========================================== */
 
-.about-features .container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
+@media (min-width: 768px) {
 
-.feature-card {
-  border: 1px solid var(--color-border);
-  padding: 35px 20px;
-  text-align: center;
-  transition: 0.3s;
-}
-
-.feature-card:hover {
-  border-color: var(--color-gold);
-  box-shadow: 0 6px 18px rgba(184, 137, 58, 0.12);
-  transform: translateY(-4px);
-}
-
-.feature-card h3 {
-  font-family: var(--font-display);
-  color: var(--color-cream);
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-
-.feature-card p {
-  color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-@media (max-width: 992px) {
-  .story-content {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .team-grid,
-  .about-features .container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
   .page-hero {
-    padding: 70px 0 50px;
+    padding: 80px 0 55px;
   }
 
   .about-story,
-  .team,
-  .about-features {
-    padding: 60px 0;
+  .team {
+    padding: 70px 0;
   }
 
-  .team-grid,
-  .about-features .container {
-    grid-template-columns: 1fr;
+  .story-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .story-image,
+  .story-text {
+    flex: 1;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .chef-card img {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
   }
+
+}
+
+/* ==========================================
+   Desktop trở lên (>=992px)
+   - Đội ngũ đầu bếp hiển thị 3 cột.
+   - Tăng khoảng cách giữa các phần.
+========================================== */
+
+@media (min-width: 992px) {
+
+  .page-hero {
+    padding: 90px 0 60px;
+  }
+
+  .about-story,
+  .team {
+    padding: 80px 0;
+  }
+
+  .story-content {
+    gap: 60px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chef-card img {
+    width: 160px;
+    height: 160px;
+  }
+
 }
