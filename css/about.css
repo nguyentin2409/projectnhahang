@@ -101,11 +101,15 @@
   background: var(--color-white);
   border: 1px solid var(--color-border);
   padding: 30px 20px;
-  transition:
-    border-color 0.25s,
-    transform 0.25s,
-    box-shadow 0.25s;
 
+  opacity: 0;
+  transform: translateY(30px);
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    border-color 0.25s,
+    box-shadow 0.25s;
 }
 
 /* JavaScript sẽ thêm class "show"
