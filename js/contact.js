@@ -12,8 +12,7 @@
   */
 
  // Dùng biến const để lưu trữ thông tin phần tử DOM,
-/** Vì sao k dùng biến let => Dùng const để lưu trữ các giá trị 
- * cố định không thay đổi trong suốt quá trình chạy, giúp code an toàn không bị ghi đè dữ liệu */
+// Vì sao k dùng biến let => Dùng const để lưu trữ các giá trị cố định không thay đổi trong suốt quá trình chạy, giúp code an toàn không bị ghi đè dữ liệu 
 //Dùng hàm querySelector để tìm tên class được định nghĩa sẳn bên contact.html 
 //Lưu thông tin tìm được vào biến contactForm, submitBnt để sử dụng cho phần dưới.
 const contactForm = document.querySelector(".contact-form"); 
