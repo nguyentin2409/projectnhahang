@@ -14,8 +14,7 @@
  *    <div id="site-header"></div> và <div id="site-footer"></div>,
  *    rồi shared.js sẽ TỰ ĐỘNG chèn đầy đủ nội dung HTML thật vào 2 chỗ
  *    trống đó ngay khi trang vừa load — đây gọi là kỹ thuật "template
- *    JavaScript" / "component dùng chung", rất phổ biến khi làm web tĩnh
- *    (không dùng framework) mà vẫn muốn tránh lặp code.
+ *    JavaScript" / "component dùng chung".
  *
  * CÁC CHỨC NĂNG CHÍNH TRONG FILE NÀY (đánh số theo từng khối code bên dưới):
  *  1. Chèn header vào mọi trang qua <div id="site-header">

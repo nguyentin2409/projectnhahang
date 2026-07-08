@@ -4,16 +4,10 @@
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  * ==========================================================================
  *
- * TẠI SAO CẦN FILE NÀY?
- *  - Thay vì danh sách 9 món ăn được viết CỨNG trực tiếp trong
- *    menu.html (mỗi món là 1 khối <div class="menu-item">...</div>).
- *  - Vấn đề: khi tách thêm trang "Món Yêu Thích" (favorite.html) riêng,
- *    trang đó KHÔNG THỂ đọc lại HTML của menu.html (2 trang độc lập,
- *    không cùng tồn tại trên 1 DOM tại cùng thời điểm).
- *  - Giải pháp: tách dữ liệu món ăn ra thành 1 MẢNG JavaScript dùng
+ * Tách dữ liệu món ăn ra thành 1 MẢNG JavaScript dùng
  *    chung, để CẢ menu.js (trang Thực Đơn) VÀ favorite.js (trang Yêu
  *    Thích) đều gọi lại được cùng 1 nguồn, rồi mỗi trang tự RENDER
- *    (vẽ) ra HTML theo cách của mình.
+ *    (vẽ) ra HTML.
  *  - Đúng kỹ thuật "tách dữ liệu khỏi giao diện, render động bằng
  *    JS" mà slide CT188-BGR dạy ngay sau Project 3 (Ví dụ 4.6).
  *
