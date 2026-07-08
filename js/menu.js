@@ -12,13 +12,6 @@
  *     (lưu trong localStorage) — xem chi tiết + tổng tiền ở trang riêng
  *     pages/favorite.html, KHÔNG xử lý ở trang này nữa.
  *
- * TẠI SAO RENDER ĐỘNG THAY VÌ VIẾT CỨNG HTML NHƯ TRƯỚC?
- *  - Trang favorite.html (Yêu Thích) cần hiển thị LẠI thông tin đầy đủ
- *    (tên, giá, ảnh, mô tả) của các món khách đã thích, nhưng nó KHÔNG
- *    THỂ đọc HTML của menu.html (2 trang độc lập).
- *  - Giải pháp: menu-data.js giữ dữ liệu DUY NHẤT, cả menu.js (trang này)
- *    và favorite.js (trang Yêu Thích) đều gọi lại rồi tự vẽ giao diện
- *    riêng của mình — không lặp lại dữ liệu ở 2 nơi.
  */
 document.addEventListener("DOMContentLoaded", () => {
   // Khoá localStorage lưu danh sách id món yêu thích. PHẢI TRÙNG KHỚP
