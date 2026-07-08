@@ -1,3 +1,13 @@
+<!--
+      Trang: menu.html - Trang Thực Đơn nhà hàng
+      Chức năng: hiển thị danh sách món ăn (RENDER ĐỘNG từ js/menu-data.js,
+      không viết cứng HTML), cho phép lọc theo danh mục, và bấm ♥ để thêm/
+      bớt "Món Yêu Thích" (xem chi tiết + tổng tiền ở trang riêng
+      pages/favorite.html).
+      Người viết: MSSV B2405536 - Họ tên: Nguyễn Bảo Tín
+      Liên kết logic với: css/menu.css (giao diện), js/menu-data.js (dữ liệu
+      món ăn dùng chung với favorite.html) và js/menu.js (render + lọc + yêu thích)
+    -->
 <!doctype html>
 <html lang="vi">
   <head>
@@ -11,14 +21,6 @@
     />
     <link rel="stylesheet" href="../css/shared.css" />
     <link rel="stylesheet" href="../css/menu.css" />
-    <!--
-      Trang: menu.html - Trang Thực Đơn nhà hàng
-      Chức năng: hiển thị danh sách món ăn, cho phép lọc theo danh mục
-      (Khai vị, Món chính, Súp & Canh, Tráng miệng, Đồ uống) và theo
-      "Yêu Thích" (món khách đã đánh dấu thích để tiện gọi món tại quầy/bàn).
-      Người viết: MSSV B2405536 - Họ tên: Nguyễn Bảo Tín
-      Liên kết logic với: css/menu.css (giao diện) và js/menu.js (xử lý lọc món ăn + yêu thích)
-    -->
   </head>
   <body>
     <!-- Vùng chèn header dùng chung, được JS (shared.js) tự động render vào đây -->
@@ -37,9 +39,8 @@
       </section>
       <section class="menu-section">
         <div class="container">
-          <!-- Thanh tab lọc món ăn theo danh mục: data-category khớp với data-category của từng .menu-item bên dưới.
-               Tab "favorite" là tab đặc biệt: không lọc theo danh mục món mà lọc theo trạng thái
-               "đã yêu thích" (lưu trong localStorage), do menu.js xử lý riêng. -->
+          <!-- Thanh tab lọc món ăn theo danh mục: data-category khớp với
+               data-category của từng .menu-item do menu.js render ra bên dưới -->
           <div class="menu-tabs" id="menu-tabs">
             <button class="tab-btn active" data-category="all">Tất Cả</button>
             <button class="tab-btn" data-category="appetizer">Khai Vị</button>
@@ -47,280 +48,25 @@
             <button class="tab-btn" data-category="soup">Súp & Canh</button>
             <button class="tab-btn" data-category="dessert">Tráng Miệng</button>
             <button class="tab-btn" data-category="drink">Đồ Uống</button>
-            <button class="tab-btn tab-btn-favorite" data-category="favorite">
-              ♥ Yêu Thích
-            </button>
           </div>
 
-          <!-- Thanh tổng hợp món yêu thích: hiện tổng số món và tổng giá trị dự kiến,
-               giúp khách xem trước trước khi gọi món tại bàn. menu.js cập nhật nội dung này
-               mỗi khi danh sách yêu thích thay đổi. Ẩn khi chưa thích món nào. -->
-          <div class="favorite-summary hidden" id="favorite-summary">
-            <span id="favorite-summary-text">Bạn đã thích 0 món</span>
-            <span class="favorite-summary-total" id="favorite-summary-total"
-              >0₫</span
-            >
-          </div>
-
-          <!-- Thông báo hiển thị khi tab "Yêu Thích" đang chọn nhưng chưa có món nào được thích -->
-          <p class="empty-favorite hidden" id="empty-favorite-msg">
-            Bạn chưa thích món nào. Bấm ♥ trên món ăn bạn thích để lưu lại
-            nhé!
-          </p>
-
-          <!-- Danh sách 9 món ăn, mỗi món có data-category để menu.js lọc hiển thị,
-               data-id để nhận diện món (khoá lưu trong localStorage) và
-               data-price (số nguyên, đơn vị đồng) để tính tổng tiền món yêu thích -->
-          <div class="menu-grid" id="menu-grid">
-            <div
-              class="menu-item"
-              data-category="appetizer"
-              data-id="goi-cuon-tom-thit"
-              data-price="65000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/menu-1.jpg" alt="Gỏi cuốn tôm thịt" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Gỏi Cuốn Tôm Thịt"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Gỏi Cuốn Tôm Thịt</h3>
-                  <span class="menu-price">65.000₫</span>
-                </div>
-                <p>
-                  Cuốn tươi với tôm, thịt heo, bún, rau sống và tương hoisin đậm
-                  vị.
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="main"
-              data-id="bun-cha-ha-noi"
-              data-price="100000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/bun-cha.jpg" alt="Bún chả Hà Nội" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Bún chả Hà Nội"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Bún chả Hà Nội</h3>
-                  <span class="menu-price">100.000₫</span>
-                </div>
-                <p>
-                  Sợi bún dai và ngon, nước đậm đà hương vị
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="main"
-              data-id="bun-bo-hue"
-              data-price="120000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/menu-2.jpg" alt="Bún bò Huế" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Bún Bò Huế"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Bún Bò Huế</h3>
-                  <span class="menu-price">120.000₫</span>
-                </div>
-                <p>
-                  Nước dùng hầm 12 giờ, thịt bò tươi mỏng, bánh phở dai mềm.
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="main"
-              data-id="com-tam-suon-bi-cha"
-              data-price="95000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/menu-3.jpg" alt="Cơm tấm sườn bì chả" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Cơm Tấm Sườn Bì Chả"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Cơm Tấm Sườn Bì Chả</h3>
-                  <span class="menu-price">95.000₫</span>
-                </div>
-                <p>
-                  Sườn nướng than hoa, bì sợi dai, chả hấp mịn, cơm tấm dẻo.
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="main"
-              data-id="pho-bo-dac-biet"
-              data-price="130000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/pho-bo.jpg" alt="Phở Bò Đặc Biệt" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Phở Bò Đặc Biệt"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Phở Bò Đặc Biệt</h3>
-                  <span class="menu-price">130.000₫</span>
-                </div>
-                <p>
-                  Sợi phở thơm, nước dùng đậm chất hương vị truyền thống
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="soup"
-              data-id="canh-chua-ca-loc"
-              data-price="80000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/menu-4.jpg" alt="Canh chua cá lóc" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Canh Chua Cá Lóc"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Canh Chua Cá Lóc</h3>
-                  <span class="menu-price">80.000₫</span>
-                </div>
-                <p>
-                  Vị chua thanh từ me, ngọt cá, thơm cà chua và giá đỗ tươi.
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="dessert"
-              data-id="che-ba-mau"
-              data-price="45000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/menu-5.jpg" alt="Chè ba màu" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Chè Ba Màu"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Chè Ba Màu</h3>
-                  <span class="menu-price">45.000₫</span>
-                </div>
-                <p>
-                  Đậu xanh, đậu đỏ, thạch pandan mướt mát trên đá bào kem cốt
-                  dừa.
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="main"
-              data-id="ca-loc-kho-to"
-              data-price="159000"
-            >
-              <div class="menu-img-wrap">
-                <img src="../images/ca-loc-kho-to.jpg" alt="Cá Lóc Kho Tộ" />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Cá Lóc Kho Tộ"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Cá Lóc Kho Tộ</h3>
-                  <span class="menu-price">159.000₫</span>
-                </div>
-                <p>
-                  Vị cá mặn mà đậm chất quê hương
-                </p>
-              </div>
-            </div>
-            <div
-              class="menu-item"
-              data-category="drink"
-              data-id="nuoc-ep-trai-cay-tuoi"
-              data-price="55000"
-            >
-              <div class="menu-img-wrap">
-                <img
-                  src="../images/menu-6.jpg"
-                  alt="Nước ép trái cây tươi"
-                />
-                <button
-                  class="btn-favorite"
-                  aria-label="Thích món Nước Ép Trái Cây Tươi"
-                  aria-pressed="false"
-                >
-                  ♥
-                </button>
-              </div>
-              <div class="menu-info">
-                <div class="menu-info-top">
-                  <h3>Nước Ép Trái Cây Tươi</h3>
-                  <span class="menu-price">55.000₫</span>
-                </div>
-                <p>
-                  Ép từ trái cây tươi mỗi ngày — cam, dưa hấu, thơm, dâu tây.
-                </p>
-              </div>
-            </div>
-          </div>
+          <!--
+            Khung RỖNG - menu.js sẽ đọc mảng MENU_ITEMS (trong menu-data.js)
+            rồi tự tạo (render) từng thẻ .menu-item bên trong div này bằng
+            JavaScript, KHÔNG viết cứng HTML từng món như bản trước.
+            Kỹ thuật này giống Ví dụ 4.6 (BGR) - render danh sách từ dữ liệu.
+          -->
+          <div class="menu-grid" id="menu-grid"></div>
         </div>
       </section>
     </main>
     <!-- Vùng chèn footer dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-footer"></div>
-    <!-- shared.js: render header/footer, xử lý menu di động, hiệu ứng cuộn,
-         và hiện số lượng món yêu thích trên icon header (dùng chung mọi trang) -->
+    <!-- shared.js: render header/footer, xử lý menu di động, hiệu ứng cuộn, badge yêu thích (dùng chung mọi trang) -->
     <script src="../js/shared.js"></script>
-    <!-- menu.js: xử lý lọc món ăn theo danh mục + chức năng Yêu Thích (chỉ dùng riêng cho trang này) -->
+    <!-- menu-data.js: mảng dữ liệu 9 món ăn - PHẢI nạp TRƯỚC menu.js vì menu.js cần dùng MENU_ITEMS -->
+    <script src="../js/menu-data.js"></script>
+    <!-- menu.js: render danh sách món + lọc theo danh mục + chức năng yêu thích (chỉ dùng riêng cho trang này) -->
     <script src="../js/menu.js"></script>
   </body>
 </html>

@@ -1,0 +1,80 @@
+/*
+  favorite.css - Style riêng cho trang Món Yêu Thích (favorite.html)
+  MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
+  Chiến lược Responsive: MOBILE-FIRST (đồng bộ với các file CSS khác)
+
+  LƯU Ý: style của THẺ MÓN ĂN (.menu-item, .menu-info, .btn-favorite...)
+  KHÔNG lặp lại ở đây - trang này link thẳng tới menu.css để tái sử dụng,
+  vì giao diện món ăn phải giống hệt bên trang Thực Đơn. File này chỉ
+  chứa phần RIÊNG của trang này: khối trống, thanh tổng kết/checkout.
+*/
+
+.favorite-section {
+  padding: 60px 0 100px;
+}
+
+/* Trạng thái CHƯA có món yêu thích nào */
+.empty-favorite-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--color-muted);
+}
+
+.empty-favorite-state p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.empty-favorite-state.hidden {
+  display: none;
+}
+
+/* Mobile: base - thanh tổng kết xếp DỌC (không đủ chỗ xếp ngang) */
+.favorite-checkout {
+  position: sticky;
+  bottom: 0;
+  margin-top: 32px;
+  padding: 18px 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 -4px 20px rgba(45, 35, 24, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.favorite-checkout.hidden {
+  display: none;
+}
+
+.favorite-checkout-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.favorite-checkout-total {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+#btn-go-reserve {
+  text-align: center;
+}
+
+/* Tablet trở lên (>= 600px): thanh tổng kết xếp NGANG, đủ chỗ 2 bên */
+@media (min-width: 600px) {
+  .favorite-checkout {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #btn-go-reserve {
+    flex-shrink: 0;
+  }
+}
