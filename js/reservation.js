@@ -1,3 +1,11 @@
+const params = new URLSearchParams(window.location.search);
+const dishes = params.get("dishes");
+if (dishes) {
+  const noteField = document.getElementById("note");
+  if (noteField) {
+    noteField.value = `Muốn đặt các món: ${decodeURIComponent(dishes)}`;
+  }
+}
 const reservationForm = document.querySelector("#reservationForm");
 const submitBtn = reservationForm.querySelector(".btn-primary");
 

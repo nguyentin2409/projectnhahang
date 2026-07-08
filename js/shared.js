@@ -77,12 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <!--
             Icon ♥ hiện SỐ LƯỢNG món yêu thích (đọc từ localStorage, do
             khối code số 6 ở cuối file này cập nhật). Bấm vào sẽ chuyển
-            tới menu.html kèm "#favorite" ở cuối URL — menu.js đọc phần
-            "#favorite" này để tự động mở đúng tab "Yêu Thích" cho khách,
-            không phải tự bấm tab thêm lần nữa.
+            thẳng tới trang RIÊNG pages/favorite.html (không còn là 1 tab
+            trong menu.html nữa) - đúng cấu trúc "trang giỏ hàng riêng
+            biệt" của Project 3 (BGR).
           -->
           <a
-            href="/pages/menu.html#favorite"
+            href="/pages/favorite.html"
             class="btn-favorite-header"
             id="favorite-header-btn"
             aria-label="Xem món yêu thích"
@@ -204,12 +204,20 @@ document.addEventListener("DOMContentLoaded", () => {
       "scroll",
       () => {
         // window.scrollY: số pixel đã cuộn xuống kể từ đầu trang.
-        // Cuộn quá 40px -> header có nền đậm/tối hơn 1 chút để chữ trong
-        // header luôn đủ tương phản, dễ đọc dù nội dung trang cuộn qua nền sáng.
+        // Header dùng nền màu KEM (khớp với --color-bg/--color-surface của
+        // toàn site, xem shared.css .site-header), CHỈ đổi độ TRONG/ĐỤC
+        // (alpha) khi cuộn — không đổi sang màu khác hẳn. Nếu đổi sang màu
+        // tối/đen sẽ lệch theme và làm chữ menu (vốn là tông nâu) bị mất
+        // tương phản trên nền đó.
+        // Cuộn quá 40px -> nền ĐỤC hơn (0.98) để chữ nổi rõ hơn khi nội
+        // dung trang đã trôi qua nhiều, giảm hiệu ứng "nhìn xuyên" (blur).
         if (window.scrollY > 40) {
-          header.style.background = "rgba(15,13,11,0.98)";
+          header.style.background = "rgba(253, 248, 242, 0.98)";
         } else {
-          header.style.background = "rgba(15,13,11,0.92)";
+          // Dưới 40px: giữ đúng độ TRONG mặc định như trong CSS ban đầu
+          // (rgba(253, 248, 242, 0.95)) -> không có cảm giác "giật" màu
+          // ngay khi vừa bắt đầu cuộn.
+          header.style.background = "rgba(253, 248, 242, 0.95)";
         }
       },
       // { passive: true }: báo cho trình duyệt biết sự kiện này KHÔNG bao
