@@ -1,186 +1,270 @@
+
+/* Phần hiển thị chính (Hero Banner) đầu trang */
 .hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-image: url("../images/hero-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
+  position: relative; /* Đặt vị trí tương đối để các phần tử con (như overlay) có thể định vị theo nó */
+  width: 100%; /* Chiều rộng chiếm toàn bộ màn hình */
+  height: 100vh; /* Chiều cao bằng 100% chiều cao của cửa sổ trình duyệt (viewport height) */
+  background-image: url("../images/hero-bg.jpg"); /* Đặt ảnh nền cho banner */
+  background-size: cover; /* Phóng to ảnh nền để phủ kín toàn bộ khu vực, không làm méo tỉ lệ */
+  background-position: center; /* Căn giữa ảnh nền */
+  overflow: hidden; /* Ẩn đi những phần bị tràn ra ngoài kích thước của hero */
 }
 
+/* Lớp phủ mờ màu tối đè lên ảnh nền để chữ hiển thị rõ hơn */
 .hero-overlay {
-  position: absolute;
+  position: absolute; /* Định vị tuyệt đối đè lên thẻ .hero */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(45, 35, 24, 0.75);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  background: rgba(45, 35, 24, 0.75); /* Màu nâu đen với độ trong suốt 75% */
+  display: flex; /* Dùng Flexbox để dễ dàng căn chỉnh nội dung bên trong */
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+  text-align: center; /* Căn giữa đoạn văn bản bên trong */
 }
 
+/* Khung chứa nội dung chữ và nút bấm trong Hero */
 .hero-content {
-  position: relative;
-  z-index: 10;
-  max-width: 800px;
+  position: relative; 
+  z-index: 10; /* Đặt chỉ số z cao hơn để nổi lên trên lớp overlay */
+  max-width: 800px; /* Giới hạn chiều rộng tối đa là 800px để văn bản không bị quá dài */
   width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  padding: 0 20px; /* Thêm khoảng cách 20px ở hai bên trái/phải để không dính sát viền màn hình */
+  box-sizing: border-box; /* Tính toán padding nằm bên trong tổng chiều rộng */
 }
 
+/* Tiêu đề chính của Hero */
 .hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 6vw, 64px);
-  color: var(--color-white);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-top: 15px;
-  margin-bottom: 25px;
-  font-kerning: none;
-  font-feature-settings: "kern" 0;
+  font-family: var(--font-display); /* Sử dụng biến font chữ dành cho tiêu đề */
+  font-size: clamp(36px, 6vw, 64px); /* Cỡ chữ linh hoạt: nhỏ nhất 36px, lớn nhất 64px, thay đổi theo 6% chiều rộng màn hình */
+  color: var(--color-white); /* Màu chữ trắng lấy từ biến hệ thống */
+  font-weight: 700; /* In đậm chữ (Bold) */
+  line-height: 1.2; /* Khoảng cách giữa các dòng là 1.2 lần cỡ chữ */
+  margin-top: 15px; 
+  margin-bottom: 25px; /* Cách phần tử bên dưới 25px */
+  font-kerning: none; /* Tắt tính năng tự điều chỉnh khoảng cách giữa các cặp chữ cái đặc biệt */
+  font-feature-settings: "kern" 0; /* Tắt tính năng kerning trong OpenType */
 }
 
+/* Tiêu đề phụ của Hero */
 .hero-subtitle {
-  font-family: var(--font-body);
-  font-size: clamp(16px, 2vw, 20px);
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 40px;
+  font-family: var(--font-body); /* Sử dụng biến font chữ dành cho nội dung văn bản */
+  font-size: clamp(16px, 2vw, 20px); /* Cỡ chữ linh hoạt: 16px - 20px */
+  color: rgba(255, 255, 255, 0.85); /* Màu trắng với độ trong suốt 85% */
+  margin-bottom: 40px; /* Tạo khoảng cách 40px với các nút bấm bên dưới */
 }
 
+/* Khu vực chứa các nút bấm trong Hero */
 .hero-btns {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+  display: flex; /* Dùng flexbox để xếp các nút nằm ngang hàng */
+  gap: 20px; /* Khoảng cách giữa các nút là 20px */
+  justify-content: center; /* Căn giữa cụm nút bấm */
 }
 
+/* Tùy chỉnh bo góc cho nút chính (Primary Button) */
 .hero-btns .btn-primary {
-  border-radius: 30px;
+  border-radius: 30px; /* Bo tròn các góc để tạo hình viên thuốc (pill shape) */
 }
 
+/* Tùy chỉnh nút viền (Outline Button) */
 .hero-btns .btn-outline {
-  border-color: var(--color-white);
-  color: var(--color-white);
-  border-radius: 30px;
+  border-color: var(--color-white); /* Viền màu trắng */
+  color: var(--color-white); /* Chữ màu trắng */
+  border-radius: 30px; /* Bo tròn các góc giống nút chính */
 }
 
+/* Hiệu ứng khi di chuột (hover) vào nút viền */
 .hero-btns .btn-outline:hover {
-  background: var(--color-white);
-  color: var(--color-gold);
+  background: var(--color-white); /* Nền đổi thành trắng */
+  color: var(--color-gold); /* Chữ đổi thành màu vàng kim */
 }
 
+/* Khu vực Món ăn nổi bật (Featured Dishes) */
 .featured-dishes {
-  padding: 80px 0;
-  background-color: var(--color-bg);
+  padding: 80px 0; /* Tạo khoảng trống 80px ở trên và dưới section */
+  background-color: var(--color-bg); /* Đặt màu nền lấy từ biến --color-bg */
 }
 
+/* Nhãn chú thích nhỏ (vd: "Menu của chúng tôi") trong khu vực Món ăn */
 .featured-dishes .section-label {
-  display: block;
-  color: var(--color-gold);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
+  display: block; 
+  color: var(--color-gold); /* Màu chữ vàng kim */
+  font-size: 14px; /* Cỡ chữ nhỏ */
+  font-weight: 600; /* In đậm vừa phải */
+  text-transform: uppercase; /* Viết hoa toàn bộ các chữ cái */
+  letter-spacing: 2px; /* Tăng khoảng cách giữa các chữ cái ra 2px */
+  margin-bottom: 10px; /* Cách tiêu đề chính bên dưới 10px */
 }
 
+/* Tiêu đề chính của khu vực Món ăn nổi bật */
 .featured-dishes .section-title {
-  margin-bottom: 50px;
-  font-size: 40px;
-  color: var(--color-cream);
-  font-family: var(--font-display);
+  margin-bottom: 50px; /* Tạo khoảng cách 50px so với danh sách món ăn */
+  font-size: 40px; /* Cỡ chữ lớn 40px */
+  color: var(--color-cream); /* Màu chữ kem/trắng ngà */
+  font-family: var(--font-display); /* Sử dụng font chữ tiêu đề */
 }
 
+/* Class tiện ích dùng để căn giữa nội dung văn bản */
 .text-center {
   text-align: center;
 }
 
+/* Lưới hiển thị danh sách món ăn */
+/* Mobile-first: Mặc định layout chỉ có 1 cột cho thiết bị di động */
 .dish-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  display: grid; /* Sử dụng CSS Grid để bố cục */
+  grid-template-columns: 1fr; /* Mặc định 1 cột chiếm toàn bộ không gian (1 phân số) */
+  gap: 30px; /* Khoảng cách giữa các thẻ món ăn (dọc & ngang) là 30px */
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-@media (max-width: 900px) {
-  .dish-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .dish-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* Thẻ bao bọc thông tin của một món ăn */
 .dish-card {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(184, 137, 58, 0.05);
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+  background-color: var(--color-white); /* Nền thẻ màu trắng */
+  border: 1px solid var(--color-border); /* Viền mỏng xung quanh thẻ */
+  border-radius: 8px; /* Bo góc thẻ 8px */
+  overflow: hidden; /* Ẩn đi phần ảnh bị chườm ra khỏi các góc bo tròn */
+  box-shadow: 0 4px 15px rgba(184, 137, 58, 0.05); /* Đổ bóng nhẹ màu vàng/nâu với độ mờ 5% */
+  transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động mượt mà trong 0.3 giây khi có sự thay đổi */
 }
 
+/* Hiệu ứng khi di chuột (hover) vào thẻ món ăn */
 .dish-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(184, 137, 58, 0.1);
+  transform: translateY(-5px); /* Đẩy thẻ dịch lên trên 5px tạo cảm giác nổi lên */
+  box-shadow: 0 8px 30px rgba(184, 137, 58, 0.1); /* Tăng độ đậm và kích thước của bóng đổ */
 }
 
+/* Hình ảnh món ăn trong thẻ */
 .dish-card img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  width: 100%; /* Hình ảnh phủ kín chiều ngang thẻ */
+  aspect-ratio: 4 / 3; /* Cố định tỉ lệ khung hình là 4:3 (ngang:dọc) */
+  object-fit: cover; /* Cắt và lấp đầy khung hình mà không làm méo ảnh */
 }
 
+/* Khu vực chứa nội dung chữ bên dưới ảnh món ăn */
 .card-content {
-  padding: 24px 20px;
+  padding: 24px 20px; /* Khoảng trống bên trong: 24px (trên/dưới), 20px (trái/phải) */
 }
 
+/* Tên món ăn */
 .card-content h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); 
   font-size: 20px;
   color: var(--color-cream);
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Cách phần mô tả bên dưới 8px */
 }
 
+/* Đoạn mô tả món ăn */
 .card-content p {
   font-family: var(--font-body);
   font-size: 14px;
-  color: var(--color-muted);
+  color: var(--color-muted); /* Chữ màu nhạt/tối (tùy biến) */
   margin-bottom: 20px;
-  height: 48px;
-  overflow: hidden;
+  height: 48px; /* Cố định chiều cao phần mô tả (thường bằng khoảng 2-3 dòng chữ) */
+  overflow: hidden; /* Ẩn đi đoạn văn bản bị quá dài vượt quá 48px */
 }
 
+/* Thanh chứa giá tiền và các thành phần khác dưới cùng của thẻ */
 .price-bar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
+  justify-content: space-between; /* Đẩy các phần tử ra 2 phía (trái/phải) */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  margin-top: auto; /* Đẩy thanh giá xuống dưới cùng của thẻ nếu thẻ bị kéo dài */
 }
 
+/* Khối hiển thị giá tiền */
 .price {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-gold);
-  background: var(--color-white);
-  padding: 4px 10px;
-  border-radius: 4px;
+  color: var(--color-gold); /* Chữ màu vàng kim */
+  background: var(--color-white); /* Nền trắng */
+  padding: 4px 10px; /* Tạo khoảng trống xung quanh chữ (tạo hình như một cái nhãn) */
+  border-radius: 4px; /* Bo góc nhãn 4px */
 }
 
+/* Khu vực nút "Xem tất cả" (View all) */
 .view-all {
-  margin-top: 20px;
+  margin-top: 20px; 
 }
 
+/* Bo tròn nút "Xem tất cả" */
 .view-all .btn-outline {
   border-radius: 30px;
+}
+
+/* ==============================
+   Nút Quay lại đầu trang (Back to top)
+   ============================== */
+.back-to-top {
+  position: fixed; /* Ghim vị trí cố định trên màn hình, không trôi theo khi cuộn trang */
+  bottom: 30px; /* Cách lề dưới 30px */
+  right: 30px; /* Cách lề phải 30px */
+  width: 45px; /* Chiều rộng 45px */
+  height: 45px; /* Chiều cao 45px */
+  background-color: var(--color-gold); /* Dùng biến --color-gold làm màu nền */
+  color: #fff; /* Màu chữ hoặc icon bên trong là màu trắng */
+  border: none; /* Bỏ viền mặc định */
+  border-radius: 50%; /* Bo góc 50% để tạo thành hình tròn hoàn hảo */
+  font-size: 20px; /* Cỡ icon/chữ bên trong */
+  cursor: pointer; /* Đổi con trỏ chuột thành hình bàn tay khi di chuột vào */
+  display: flex; 
+  justify-content: center; /* Căn giữa icon theo chiều ngang */
+  align-items: center; /* Căn giữa icon theo chiều dọc */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Đổ bóng màu đen nhẹ */
+  z-index: 999; /* Đảm bảo nút luôn nằm trên cùng các phần tử khác */
+  
+  /* Ẩn hiện khi cuộn bằng opacity và visibility (home.js sẽ add class tương ứng) */
+  opacity: 0; /* Trong suốt hoàn toàn (ẩn đi) */
+  visibility: hidden; /* Xóa khỏi luồng tương tác để không bấm nhầm khi đang ẩn */
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; /* Hiệu ứng xuất hiện, biến mất và di chuyển mượt mà */
+}
+
+/* Hiệu ứng khi di chuột vào nút Back to top */
+.back-to-top:hover {
+  transform: translateY(-3px); /* Nhích lên trên 3px */
+  filter: brightness(0.9); /* Giảm độ sáng xuống 90% (Làm màu tối đi 1 chút) */
+}
+
+/* Class được add từ JS (home.js) khi cuộn trang xuống quá một khoảng nhất định */
+.back-to-top.show {
+  opacity: 1; /* Hiển thị rõ ràng hoàn toàn */
+  visibility: visible; /* Có thể tương tác và click được */
+}
+
+/* ==============================
+   Overrides (Ghi đè thuộc tính)
+   ============================== */
+/* Xóa khoảng trắng do margin/padding mặc định hoặc từ shared.css đẩy xuống */
+main {
+  padding-top: 0 !important; /* Dùng !important để buộc loại bỏ padding top, ghi đè các luật CSS khác */
+  margin-top: 0 !important; /* Loại bỏ margin top */
+}
+
+.hero {
+  margin-top: 0 !important; /* Đảm bảo khối hero dính sát lên đầu trang */
+}
+
+
+/* ==============================
+   Tablet trở lên (Thay thế max-width: 900px cũ)
+   ============================== */
+/* Media query: Áp dụng cho màn hình có chiều rộng từ 600px trở lên (Tablet) */
+@media (min-width: 600px) {
+  .dish-grid {
+    grid-template-columns: 1fr 1fr; /* Đổi giao diện danh sách món ăn thành 2 cột bằng nhau */
+  }
+}
+
+/* ==============================
+   Desktop trở lên (Thay thế max-width: 600px cũ)
+   ============================== */
+/* Media query: Áp dụng cho màn hình có chiều rộng từ 900px trở lên (Desktop) */
+@media (min-width: 900px) {
+  .dish-grid {
+    grid-template-columns: repeat(3, 1fr); /* Đổi giao diện danh sách món ăn thành 3 cột bằng nhau */
+  }
 }
