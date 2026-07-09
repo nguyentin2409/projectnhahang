@@ -6,50 +6,56 @@
     - Dùng @media (min-width: ...) để MỞ RỘNG dần layout lên tablet/desktop
 */
 
+/* Phần đầu của trang Liên hệ chỉnh theo mặc định  */
 .page-hero {
-  padding: 90px 0 60px;
+  padding: 90px 0 60px; /*khoảng cách bên trong theo thông số trên,trái phải, dưới */
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Phẫn nhãn chú thích đầu trang */
 .page-hero-desc {
   color: var(--color-muted);
 }
 
-/*Xếp thành cột dọc theo màn hình điện thoại*/
+/*Phần thông tin chính của trang Liên hệ xếp thành cột dọc theo màn hình điện thoại*/
 .contact-section {
-  display: flex;
-  flex-direction: column;
-  padding: 60px 80px;
-  gap: 30px;
+  display: flex;  /*Sử dụng Flex layout để chia các phần thông tin theo cột*/
+  flex-direction: column; /* Quy định hướng sắp xếp các phần tử của cha là Flex*/
+  padding: 60px 80px; /*khoảng cách bên trong theo thông số trên dưới, trái phải */
+  gap: 30px; /* khoảng cách giữ các khung với nhau*/
 }
 
+/*Phần cột thông tin liên hệ*/
 /*Dùng flex để sắp xếp các thông tin theo cột dọc*/
 .contact-info {
   display: flex;
   flex-direction: column;
   gap: 50px;
   border: 1px solid var(--color-border);
-  padding: 30px;
+  padding: 30px; /*khoảng cách bên trong theo thông số duy nhất cho cả trên dưới trái phải */
   background-color: var(--color-surface);
 }
 
+/*Từng khung nội dung của phần thông tin Liên lạc*/
 .info-item {
   display: flex;
   gap: 20px;
 }
+
+/*Các biểu tượng icon thông tin*/
 /*Cân chỉnh các ảnh icon chính giữa theo chiều dọc và ngang
-  Cố định chiều rộng và cao của icon*/
+  Cố định chiều rộng và cao của icon để khi co/giãn vẫn giữ đúng kích thước*/
 .info-icon {
   border: 1px solid var(--color-border);
   border-radius: 50%;
   padding: 7px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /*Xử lí hình vào chính giữa theo chiều ngang*/
+  align-items: center; /*Xử lí hình vào chính giữa theo chiều dọc*/
   width: 50px;
   height: 50px;
-  flex-shrink: 0; /*không cho các icon co lại khi màn hình thu nhỏ*/
+  flex-shrink: 0; /*không cho các icon co lại khi màn hình thu nhỏ -> vẫn giữ được kích thước rộng và dài là 50px*/
 }
 
 .info-text a,
@@ -70,7 +76,8 @@
   line-height: 2.5;
   font-size: 13px;
 }
-
+ 
+/*Phần khung Góp ý, gửi liên hệ*/
 .contact-form {
   border: 1px solid var(--color-border);
   padding: 30px;
@@ -88,19 +95,20 @@
   margin-bottom: 20px;
 }
 
+/*Chỉnh các nhãn tên từng khung nhập*/
 .form-group label {
   font-family: var(--font-body);
-  display: block;
+  display: block; /*dùng Block các nhã thành 1 khối */
   font-size: 14px;
   color: var(--color-muted);
-  font-weight: 500; 
+  font-weight: 500; /*độ đậm của chữ*/
 }
 
 /*đánh dấu cho trường bắt buột '*' thành màu đỏ*/
 .form-group .required {
   color: #d93838;
 }
-/* Định dạng chung có các ô nhập */
+/* Định dạng chung có các ô nhập, ô lựa chọn, ô nhập nội dung dài */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -117,10 +125,12 @@
   resize: none; /*chặn không cho người dùng kéo dãn ô nhập */
 }
 
+/*Nút bấm gửi*/
 .btn-submit {
   width: 100%;
 }
 
+/*Phần bản đồ*/
 .contact-map {
   padding: 50px 80px;
 }
