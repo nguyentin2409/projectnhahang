@@ -1,0 +1,59 @@
+/* Outline */
+* {
+  outline: 2px dashed #a855f7 !important;
+  outline-offset: -2px;
+}
+
+body,
+main {
+  outline: 3px solid #06b6d4 !important;
+}
+
+header,
+footer,
+nav {
+  outline: 3px solid #22c55e !important;
+}
+
+section {
+  outline: 2px dashed #ec4899 !important;
+}
+
+.container {
+  outline: 2px dashed #3b82f6 !important;
+}
+
+h1,
+h2,
+h3,
+.section-title,
+.page-hero-desc,
+.section-label {
+  outline: 2px dashed #f97316 !important;
+}
+
+button,
+.tab-btn,
+.btn-primary,
+.btn-outline,
+.btn-reserve,
+.btn-favorite-header {
+  outline: 3px solid #ea580c !important;
+}
+
+.menu-item,
+.menu-grid > * {
+  outline: 3px solid #16a34a !important;
+}
+
+img {
+  outline: 3px solid #eab308 !important;
+}
+
+a {
+  outline: 2px dashed #6366f1 !important;
+}
+
+.divider-gold {
+  outline: 2px dotted #db2777 !important;
+}
