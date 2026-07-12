@@ -197,26 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================================================
   // 5. HIỆU ỨNG HEADER KHI CUỘN TRANG (đổi độ đậm màu nền)
   // ==========================================================================
-  const header = document.getElementById("site-header");
+   const header = document.getElementById("site-header");
   if (header) {
     window.addEventListener(
       "scroll",
       () => {
         // window.scrollY: số pixel đã cuộn xuống kể từ đầu trang.
-        // Header dùng nền màu KEM (khớp với --color-bg/--color-surface của
-        // toàn site, xem shared.css .site-header), CHỈ đổi độ TRONG/ĐỤC
-        // (alpha) khi cuộn — không đổi sang màu khác hẳn. Nếu đổi sang màu
-        // tối/đen sẽ lệch theme và làm chữ menu (vốn là tông nâu) bị mất
-        // tương phản trên nền đó.
-        // Cuộn quá 40px -> nền ĐỤC hơn (0.98) để chữ nổi rõ hơn khi nội
-        // dung trang đã trôi qua nhiều, giảm hiệu ứng "nhìn xuyên" (blur).
+        //khi cuộn quá 40px 
         if (window.scrollY > 40) {
-          header.style.background = "rgba(253, 248, 242, 0.98)";
+          header.style.background = "rgba(240, 222, 190, 0.98)";
+          header.style.boxShadow = "0 4px 20px rgba(45, 35, 24, 0.15)";
         } else {
-          // Dưới 40px: giữ đúng độ TRONG mặc định như trong CSS ban đầu
-          // (rgba(253, 248, 242, 0.95)) -> không có cảm giác "giật" màu
-          // ngay khi vừa bắt đầu cuộn.
+          // Dưới 40px: quay lại đúng trạng thái mặc định như CSS ban đầu
+          // (nền rgba(253, 248, 242, 0.95), bóng đổ rất nhẹ) -> không có
+          // cảm giác "giật" ngay khi vừa bắt đầu cuộn.
           header.style.background = "rgba(253, 248, 242, 0.95)";
+          header.style.boxShadow = "0 2px 12px rgba(184, 137, 58, 0.07)";
         }
       },
       // { passive: true }: báo cho trình duyệt biết sự kiện này KHÔNG bao
