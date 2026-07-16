@@ -1,12 +1,6 @@
 /*
   favorite.css - Style riêng cho trang Món Yêu Thích (favorite.html)
   MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
-  Chiến lược Responsive: MOBILE-FIRST (đồng bộ với các file CSS khác)
-
-  LƯU Ý: style của THẺ MÓN ĂN (.menu-item, .menu-info, .btn-favorite...)
-  KHÔNG lặp lại ở đây - trang này link thẳng tới menu.css để tái sử dụng,
-  vì giao diện món ăn phải giống hệt bên trang Thực Đơn. File này chỉ
-  chứa phần RIÊNG của trang này: khối trống, thanh tổng kết/checkout.
 */
 
 .favorite-section {

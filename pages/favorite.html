@@ -1,14 +1,11 @@
 <!--
-      Trang: favorite.html - Trang Món Yêu Thích (TRANG RIÊNG, không còn là
-      1 tab bên trong menu.html như bản trước).
+      Trang: favorite.html - Trang Món Yêu Thích
       Chức năng: hiển thị lại các món khách đã bấm ♥ ở trang Thực Đơn,
       tính tổng tiền dự kiến, và cho phép chuyển sang trang Đặt Bàn kèm
       theo TÊN CÁC MÓN đã chọn qua query-string (?dishes=...).
-      Đây là bước "checkout" tương đương Project 3 (BGR): xem lại giỏ ->
-      chuyển sang bước tiếp theo mang theo dữ liệu qua URL.
       Người viết: MSSV B2405536 - Họ tên: Nguyễn Bảo Tín
-      Liên kết logic với: js/menu-data.js (nguồn dữ liệu món ăn dùng
-      chung với menu.html) và js/favorite.js (đọc localStorage + render)
+      Liên kết logic với: js/favorite.js (đọc trực tiếp object đầy đủ
+      thông tin món ăn đã lưu sẵn trong localStorage bởi menu.js
     -->
 <!doctype html>
 <html lang="vi">
@@ -70,9 +67,6 @@
     </main>
     <div id="site-footer"></div>
     <script src="../js/shared.js"></script>
-    <!-- menu-data.js: PHẢI nạp trước favorite.js vì favorite.js cần MENU_ITEMS
-         để tra cứu tên/giá/ảnh của từng id đã lưu trong localStorage -->
-    <script src="../js/menu-data.js"></script>
     <script src="../js/favorite.js"></script>
   </body>
 </html>

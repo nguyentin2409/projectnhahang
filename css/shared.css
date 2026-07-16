@@ -1,160 +1,102 @@
 /*
   ==========================================================================
-  shared.css - Style dùng chung cho toàn bộ website (header, footer, nút,
-  container, biến màu/font...)
+  shared.css - Style dùng chung cho toàn site (header, footer, nút, container...)
   MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
   ==========================================================================
-
-  CHIẾN LƯỢC RESPONSIVE: MOBILE-FIRST
-    - Toàn bộ style bên dưới (NGOÀI @media) là style GỐC cho MÀN HÌNH NHỎ
-      (điện thoại) — layout "nền" áp dụng cho MỌI kích thước màn hình.
-    - Dùng @media (min-width: ...) để MỞ RỘNG / bổ sung style cho tablet,
-      desktop — càng lên màn hình lớn thì @media sau càng "ghi đè" thêm
-      style mới (không xóa đi style gốc, chỉ bổ sung/thay đổi 1 vài thuộc tính).
-
-  FILE NÀY ĐƯỢC NẠP (link) TRƯỚC TIÊN Ở MỌI TRANG HTML, vì:
-    1. Chứa CSS Reset (chuẩn hoá cách trình duyệt hiển thị mặc định)
-    2. Chứa biến màu/font dùng CHUNG (:root) mà các file CSS khác (menu.css,
-       home.css, about.css...) đều gọi lại qua var(--ten-bien)
-    3. Chứa style của header + footer — 2 khối HTML do shared.js tự chèn
-       vào MỌI trang, nên CSS của chúng cũng phải nằm ở file dùng chung.
 */
 
-/* ==========================================================================
-   CSS RESET — chuẩn hoá lại mặc định của trình duyệt
-   ========================================================================== */
+/* ===== RESET mặc định trình duyệt ===== */
 *,
 *::before,
 *::after {
-  /* Chọn TẤT CẢ phần tử + các phần tử "ảo" (::before/::after do CSS/JS tạo thêm) */
-
-  box-sizing: border-box;
-  /* Đổi cách tính kích thước: width/height khai báo đã BAO GỒM LUÔN padding
-     và border, không bị cộng thêm ra ngoài. Nhờ vậy viết "width: 100%;
-     padding: 12px;" (như .form-group input) sẽ không bị vỡ ra ngoài khung
-     chứa — nếu không có dòng này, phần tử sẽ RỘNG HƠN 100% một cách âm thầm. */
-
+  box-sizing: border-box; /* width/height tính luôn cả padding + border */
   margin: 0;
-  padding: 0;
-  /* Mỗi trình duyệt tự đặt margin/padding mặc định khác nhau cho từng thẻ
-     (h1, p, ul, button...). Reset về 0 để loại bỏ khoảng trống "vô hình"
-     ngoài ý muốn, rồi tự set lại margin/padding theo ý riêng ở từng phần
-     CSS cụ thể — tránh layout bị lệch khó kiểm soát giữa các trình duyệt. */
+  padding: 0; /* xoá margin/padding mặc định của trình duyệt */
 }
 
-/* ==========================================================================
-   BIẾN CSS DÙNG CHUNG (CSS Custom Properties) — khai báo 1 lần, dùng ở
-   MỌI file CSS khác trong dự án qua cú pháp var(--ten-bien)
-   ========================================================================== */
+/* ===== BIẾN DÙNG CHUNG (CSS variables) ===== */
 :root {
-  /* :root = toàn bộ trang <html> -> biến khai báo ở đây có phạm vi TOÀN CỤC,
-     mọi file CSS (miễn shared.css được nạp trước) đều gọi lại được. */
+  --color-bg: #fdf8f2;        /* nền chính */
+  --color-surface: #fff7ed;   /* nền khối nổi (card, form...) */
+  --color-border: #e8ddd0;    /* màu viền chung */
+  --color-gold: #b8893a;      /* vàng chủ đạo */
+  --color-gold-dim: #d4a85a;  /* vàng nhạt (hover) */
+  --color-cream: #2d2318;     /* chữ chính */
+  --color-muted: #7a6a58;     /* chữ phụ/mờ */
+  --color-white: #ffffff;
 
-  --color-bg: #fdf8f2; /* màu nền CHÍNH của toàn trang (kem nhạt) */
-  --color-surface: #fff7ed; /* màu nền các khối "nổi" lên trên nền chính (card, form, hero...) */
-  --color-border: #e8ddd0; /* màu viền dùng chung cho mọi đường kẻ/khung */
-  --color-gold: #b8893a; /* màu vàng CHỦ ĐẠO — thể hiện tinh thần "fine dining" sang trọng */
-  --color-gold-dim: #d4a85a; /* màu vàng NHẠT hơn, dùng cho trạng thái hover/viền phụ */
-  --color-cream: #2d2318; /* màu chữ CHÍNH (nâu đậm gần đen, không dùng đen thuần #000 cho dịu mắt hơn) */
-  --color-muted: #7a6a58; /* màu chữ PHỤ/mờ — dùng cho mô tả, ghi chú, thông tin ít quan trọng hơn */
-  --color-white: #ffffff; /* tách riêng thành biến để dễ đổi đồng bộ nếu cần, thay vì viết #fff rải rác */
+  --font-display: "Playfair Display", Georgia, serif; /* font tiêu đề */
+  --font-body: "Inter", system-ui, sans-serif;         /* font nội dung */
 
-  --font-display: "Playfair Display", Georgia, serif;
-  /* Font cho TIÊU ĐỀ (h1, h2, tên món ăn...) — chữ có chân (serif), tạo cảm
-     giác sang trọng, cổ điển. "Georgia, serif" là font DỰ PHÒNG (fallback):
-     nếu Google Fonts (Playfair Display) load lỗi/chậm, trình duyệt tự
-     dùng Georgia (có sẵn trên máy) hoặc font serif mặc định bất kỳ. */
-
-  --font-body: "Inter", system-ui, sans-serif;
-  /* Font cho NỘI DUNG thường (đoạn văn, nút, menu...) — chữ không chân
-     (sans-serif), dễ đọc ở kích thước nhỏ. "system-ui" là font hệ thống
-     của chính thiết bị người dùng, dùng làm dự phòng tiếp theo Inter. */
-
-  --nav-height: 72px;
-  /* Chiều cao CỐ ĐỊNH của thanh header. Vì .site-header dùng
-     position: fixed (nổi đè lên nội dung), nên .main phải có
-     padding-top đúng bằng giá trị này (xem khối "main" bên dưới) để
-     nội dung trang KHÔNG bị header che mất phần đầu. */
+  --nav-height: 72px; /* chiều cao header, dùng để bù padding-top cho main */
 }
 
-/* ==========================================================================
-   STYLE MẶC ĐỊNH CHO CÁC THẺ HTML CƠ BẢN
-   ========================================================================== */
+/* ===== Style thẻ HTML cơ bản ===== */
 html {
-  scroll-behavior: smooth;
-  /* Khi bấm link nội bộ trỏ tới 1 vị trí trong trang (vd "#favorite"),
-     trang tự CUỘN MƯỢT tới đó thay vì nhảy giật cục ngay lập tức. */
+  scroll-behavior: smooth; /* cuộn mượt khi bấm link neo (#id) */
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-cream);
-  font-family: var(--font-body); /* font mặc định cho MỌI chữ trong trang,
-                                     trừ khi bị ghi đè riêng (vd h1 dùng --font-display) */
+  font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.6; /* khoảng cách giữa các dòng chữ = 1.6 lần cỡ chữ, giúp đoạn văn dễ đọc, thoáng mắt */
-  min-height: 100vh; /* body LUÔN cao tối thiểu bằng đúng 1 màn hình, để footer không bị "trồi" lên
-                         giữa trang khi nội dung trang quá ít (ít món, ít đoạn văn...) */
+  line-height: 1.6;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  /* body là flex container xếp DỌC (header/main/footer nối tiếp nhau),
-     kết hợp với "main { flex: 1 }" bên dưới để đẩy footer luôn nằm ở
-     ĐÁY trang dù nội dung main ngắn hay dài (kỹ thuật "sticky footer"). */
+  flex-direction: column; /* header/main/footer xếp dọc, kỹ thuật sticky footer */
 }
 
 a {
-  color: inherit; /* link chữ mặc định LẤY LUÔN màu chữ của thẻ cha, không bị màu xanh/tím mặc định của trình duyệt */
-  text-decoration: none; /* bỏ gạch chân mặc định của link */
+  color: inherit;
+  text-decoration: none;
 }
 img {
-  max-width: 100%; /* ảnh KHÔNG BAO GIỜ vượt quá chiều rộng khung chứa nó -> luôn responsive, không tràn layout */
-  display: block; /* ảnh mặc định là inline (dính vào dòng chữ, có khoảng trống thừa dưới ảnh do baseline) ->
-                      đổi thành block để loại bỏ khoảng trống thừa đó, ảnh nằm độc lập 1 khối */
+  max-width: 100%; /* ảnh responsive, không tràn khung */
+  display: block;
 }
 ul {
-  list-style: none; /* bỏ dấu chấm/số thứ tự mặc định của danh sách (dùng cho menu, footer...) */
+  list-style: none;
 }
 
 /* ==========================================================================
-   HEADER — thanh điều hướng trên cùng (do shared.js tự chèn HTML vào)
-   Mobile: chỉ hiện logo + icon yêu thích + nút hamburger (menu/nút đặt bàn ẩn)
+   HEADER — Mobile: chỉ hiện logo + icon yêu thích + nút hamburger
    ========================================================================== */
 .site-header {
-  position: fixed; /* header LUÔN đứng yên ở đầu màn hình, không bị cuộn theo nội dung trang */
+  position: fixed; /* luôn dính đầu trang */
   top: 0;
   left: 0;
-  right: 0; /* 3 dòng top/left/right = 0 -> header trải dài hết chiều ngang, dính sát mép trên */
-  z-index: 1000; /* số lớn để header LUÔN nổi lên TRÊN các phần tử khác (không bị nội dung trang che mất) */
-  height: var(--nav-height); /* dùng đúng biến đã khai báo ở :root, đồng bộ với padding-top của <main> */
-  background: rgba(253, 248, 242, 0.95); /* nền màu kem, hơi TRONG (95% đục) để thấy mờ mờ nội dung phía sau khi cuộn */
-  backdrop-filter: blur(12px); /* làm MỜ (blur) phần nội dung nằm NGAY PHÍA SAU header khi nó trong suốt 1 phần,
-                                    tạo hiệu ứng "kính mờ" (frosted glass) hiện đại, sang trọng */
+  right: 0;
+  z-index: 1000; /* nổi trên mọi phần tử khác */
+  height: var(--nav-height);
+  background: rgba(253, 248, 242, 0.95);
+  backdrop-filter: blur(12px); /* hiệu ứng kính mờ */
   border-bottom: 1px solid var(--color-border);
   display: flex;
-  align-items: center; /* logo, menu, nút... đều canh giữa theo chiều CAO của header */
+  align-items: center;
   padding: 0 20px;
-  justify-content: space-between; /* logo đẩy về bên trái, nhóm nút/menu đẩy về bên phải, 2 đầu đối xứng */
-  box-shadow: 0 2px 12px rgba(184, 137, 58, 0.07); /* đổ bóng nhẹ dưới header, tách lớp với nội dung phía dưới */
+  justify-content: space-between; /* logo trái, actions phải */
+  box-shadow: 0 2px 12px rgba(184, 137, 58, 0.07);
 }
 
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 10px; /* khoảng cách giữa icon logo tròn và khối chữ "Vị Ngon / Fine Dining" */
+  gap: 10px;
 }
 
 .header-logo .logo-icon {
   width: 36px;
   height: 36px;
   border: 1.5px solid var(--color-gold);
-  border-radius: 50%; /* bo tròn hoàn toàn -> hình tròn chứa chữ "V" */
+  border-radius: 50%; /* hình tròn chứa chữ "V" */
   display: flex;
   align-items: center;
-  justify-content: center; /* canh chữ "V" nằm chính giữa hình tròn */
+  justify-content: center;
   font-family: var(--font-display);
   color: var(--color-gold);
   font-size: 18px;
-  font-style: italic; /* chữ "V" nghiêng, tạo nét riêng cho logo giống kiểu chữ ký thương hiệu */
+  font-style: italic;
 }
 
 .header-logo .logo-name {
@@ -167,38 +109,33 @@ ul {
 
 .header-logo .logo-sub {
   font-size: 10px;
-  letter-spacing: 0.2em; /* giãn chữ RẤT rộng, kiểu chữ phụ đề thường thấy ở logo nhà hàng cao cấp */
+  letter-spacing: 0.2em; /* chữ phụ đề giãn rộng */
   text-transform: uppercase;
   color: var(--color-gold);
-  display: block; /* xuống dòng riêng, nằm dưới "Vị Ngon" (mặc định span là inline, nằm cùng dòng) */
-  margin-top: -2px; /* kéo sát lên gần dòng "Vị Ngon" phía trên, 2 dòng chữ logo không bị cách quá xa */
+  display: block;
+  margin-top: -2px; /* sát lên dòng logo chính */
 }
 
-/* Mobile: menu chính (Trang Chủ/Thực Đơn/...) ẨN mặc định, sẽ hiện dạng
-   dropdown khi bấm hamburger (class .nav-mobile-open do shared.js gắn vào body) */
+/* Mobile: menu chính ẩn mặc định, hiện dạng dropdown khi bấm hamburger */
 .nav-links {
   display: none;
   align-items: center;
   gap: 32px;
 }
 
-/* Nhóm các phần tử BÊN PHẢI header: icon yêu thích, nút đặt bàn, nút hamburger.
-   Gom vào 1 div riêng để dễ canh khoảng cách (gap) giữa 3 phần tử này bằng
-   flexbox, mà KHÔNG ảnh hưởng tới flexbox chính của .site-header (justify-content) */
+/* Nhóm nút bên phải header: icon yêu thích, đặt bàn, hamburger */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Icon ♥ trên header — LUÔN hiện ở MỌI trang (vì nằm trong header dùng
-   chung), cho khách xem lại nhanh số món yêu thích đã đánh dấu ở trang
-   Menu (dữ liệu đọc từ localStorage, do shared.js cập nhật). */
+/* Icon ♥ luôn hiện ở mọi trang, hiển thị số món yêu thích đã lưu (localStorage) */
 .btn-favorite-header {
-  position: relative; /* làm điểm neo để .favorite-badge (position: absolute) định vị đúng góc icon này */
+  position: relative; /* điểm neo cho .favorite-badge */
   display: flex;
   align-items: center;
-  justify-content: center; /* canh icon ♥ nằm chính giữa vùng bấm 38x38px, dễ bấm trên di động */
+  justify-content: center;
   width: 38px;
   height: 38px;
   font-size: 17px;
@@ -207,25 +144,24 @@ ul {
 }
 
 .btn-favorite-header:hover {
-  color: #d1495b; /* rê chuột vào -> chuyển màu đỏ hồng, gợi ý đây là icon liên quan tới "yêu thích" */
+  color: #d1495b; /* đỏ hồng khi hover */
 }
 
-/* Badge (chấm tròn nhỏ) hiện SỐ LƯỢNG món yêu thích, đặt ở góc icon ♥.
-   Ẩn hẳn khi chưa thích món nào (class "hidden" gắn sẵn, gỡ bằng JS khi có dữ liệu) */
+/* Badge số lượng món yêu thích, ẩn khi chưa có món nào */
 .favorite-badge {
-  position: absolute; /* định vị theo góc của .btn-favorite-header (phần tử cha có position: relative) */
+  position: absolute;
   top: -2px;
-  right: -4px; /* đẩy badge ra một chút NGOÀI góc trên-phải của icon, kiểu "chấm thông báo" quen thuộc */
+  right: -4px;
   min-width: 17px;
   height: 17px;
-  padding: 0 4px; /* padding ngang để số 2 chữ số (vd "12") không bị bó chật, badge tự giãn rộng ra thêm */
-  border-radius: 999px; /* số cực lớn -> luôn bo tròn hoàn toàn 2 đầu, kể cả khi badge giãn rộng ra vì số dài */
+  padding: 0 4px;
+  border-radius: 999px; /* luôn bo tròn 2 đầu */
   background: #d1495b;
   color: #fff;
   font-size: 10px;
   font-weight: 700;
-  line-height: 17px; /* bằng đúng height -> chữ số căn giữa theo chiều cao badge */
-  text-align: center; /* chữ số căn giữa theo chiều ngang badge */
+  line-height: 17px;
+  text-align: center;
 }
 
 .favorite-badge.hidden {
@@ -238,38 +174,34 @@ ul {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-muted);
-  position: relative; /* làm điểm neo cho ::after (gạch chân chạy khi hover) định vị đúng bên trong link này */
-  padding-bottom: 4px; /* chừa khoảng trống dưới chữ để gạch chân (::after) không dính sát vào chữ */
+  position: relative; /* điểm neo cho gạch chân ::after */
+  padding-bottom: 4px;
   transition: color 0.25s;
 }
 
 .nav-links a::after {
-  /* Đường gạch chân chạy dần từ trái sang phải khi hover — tạo bằng
-     pseudo-element ::after (không cần thêm thẻ HTML nào) */
-  content: ""; /* bắt buộc phải có content (dù để rỗng) thì pseudo-element mới hiển thị được */
+  /* gạch chân chạy khi hover, tạo bằng pseudo-element */
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 0; /* mặc định RỘNG = 0 (không thấy gì) */
+  width: 0;
   height: 1px;
   background: var(--color-gold);
-  transition: width 0.3s ease; /* khi width đổi (ở trạng thái hover bên dưới), nó "chạy" dần ra chứ không hiện ngay tức thì */
+  transition: width 0.3s ease;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  /* Link đang được RÊ CHUỘT vào, hoặc link của TRANG ĐANG XEM (class "active"
-     do shared.js tự gắn) -> chữ chuyển màu đậm hơn */
-  color: var(--color-cream);
+  color: var(--color-cream); /* hover hoặc đang ở trang này */
 }
 
 .nav-links a:hover::after,
 .nav-links a.active::after {
-  width: 100%; /* gạch chân giãn hết chiều rộng chữ -> kết hợp transition ở trên tạo hiệu ứng "chạy" ra */
+  width: 100%; /* gạch chân chạy hết chiều rộng chữ */
 }
 
-/* Mobile: nút "Đặt Bàn Ngay" trên header ẨN mặc định (không đủ chỗ ở màn
-   hình hẹp), chỉ hiện lại bên trong menu dropdown khi bấm hamburger */
+/* Mobile: nút Đặt Bàn trên header ẩn, chỉ hiện trong menu dropdown */
 .btn-reserve {
   display: none;
   font-size: 12px;
@@ -288,15 +220,14 @@ ul {
 
 .btn-reserve:hover {
   background: var(--color-gold);
-  color: var(--color-white); /* hover: đảo màu — nền tô vàng đặc, chữ chuyển trắng (hiệu ứng "fill" thường gặp ở nút outline) */
+  color: var(--color-white); /* đảo màu khi hover */
 }
 
-/* Mobile: nút hamburger (3 gạch ngang) HIỂN THỊ mặc định, vì đây là cách
-   duy nhất để mở menu điều hướng trên màn hình hẹp */
+/* Mobile: nút hamburger 3 gạch, hiện mặc định */
 .nav-toggle {
   display: flex;
-  flex-direction: column; /* 3 <span> (3 gạch) xếp CHỒNG DỌC lên nhau, không nằm ngang hàng */
-  gap: 5px; /* khoảng cách đều giữa 3 gạch, tạo hình hamburger chuẩn */
+  flex-direction: column; /* 3 span xếp chồng dọc */
+  gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
@@ -306,58 +237,50 @@ ul {
 .nav-toggle span {
   display: block;
   width: 24px;
-  height: 2px; /* mỗi <span> là 1 "gạch" mỏng 2px */
+  height: 2px;
   background: var(--color-cream);
   transition:
     transform 0.3s,
-    opacity 0.3s; /* 2 dòng dưới (.open) sẽ đổi transform/opacity, transition này làm hiệu ứng chạy mượt */
+    opacity 0.3s;
 }
 
-/* Khi nav-toggle có class "open" (do shared.js toggle khi bấm) -> biến đổi
-   3 gạch ngang thành hình dấu "X", báo hiệu bấm lần nữa sẽ ĐÓNG menu */
+/* Khi có class "open" -> biến 3 gạch thành dấu X */
 .nav-toggle.open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg); /* gạch 1: dịch xuống rồi xoay 45 độ -> thành nửa trên dấu X */
+  transform: translateY(7px) rotate(45deg);
 }
 .nav-toggle.open span:nth-child(2) {
-  opacity: 0; /* gạch 2 (giữa): ẩn hẳn đi, dấu X chỉ cần 2 gạch chéo */
+  opacity: 0;
 }
 .nav-toggle.open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg); /* gạch 3: dịch lên rồi xoay ngược 45 độ -> thành nửa dưới dấu X */
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Menu dạng DROPDOWN hiện ra khi bấm hamburger trên mobile.
-   class "nav-mobile-open" được shared.js gắn/gỡ trên <body> (không phải
-   trên chính .nav-links), nên selector ở đây phải viết dạng
-   ".nav-mobile-open .nav-links" (chọn .nav-links nằm BÊN TRONG body có class đó) */
+/* Menu dropdown mobile, bật/tắt qua class "nav-mobile-open" trên <body> */
 .nav-mobile-open .nav-links {
   display: flex;
-  flex-direction: column; /* các link menu xếp DỌC (khác với hàng ngang trên desktop) */
-  position: fixed; /* dropdown nổi đè lên nội dung trang, không đẩy nội dung xuống */
-  top: var(--nav-height); /* nằm ngay DƯỚI header, không che mất header */
+  flex-direction: column;
+  position: fixed; /* nổi đè lên nội dung */
+  top: var(--nav-height);
   left: 0;
   right: 0;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   padding: 24px 32px;
   gap: 20px;
-  z-index: 999; /* thấp hơn header (1000) 1 chút, nhưng vẫn cao hơn nội dung trang bên dưới */
+  z-index: 999;
 }
 
 .nav-mobile-open .btn-reserve {
-  display: inline-block; /* trong menu dropdown mobile, nút Đặt Bàn được hiện lại (khác mặc định display:none ở trên) */
+  display: inline-block; /* hiện lại nút Đặt Bàn trong dropdown */
 }
 
 main {
-  flex: 1; /* main "giãn nở" chiếm hết khoảng trống còn lại giữa header và footer
-              (kết hợp với body { display:flex; flex-direction:column } ở trên)
-              -> đây là kỹ thuật "sticky footer": dù nội dung trang ngắn,
-              footer vẫn luôn bị đẩy xuống ĐÁY màn hình, không trồi lên giữa. */
-  padding-top: var(--nav-height); /* bù đúng phần header (position: fixed) đang "che" phía trên,
-                                       để nội dung đầu trang không bị header đè lên. */
+  flex: 1; /* chiếm hết khoảng trống còn lại -> sticky footer */
+  padding-top: var(--nav-height); /* bù phần header fixed đang che phía trên */
 }
 
 /* ==========================================================================
-   FOOTER — Mobile: xếp 1 cột (do footer-grid dùng grid-template-columns: 1fr)
+   FOOTER — Mobile: xếp 1 cột
    ========================================================================== */
 .site-footer {
   background: #f5ede0;
@@ -366,11 +289,10 @@ main {
 }
 
 .footer-grid {
-  max-width: 1200px; /* nội dung footer không giãn quá rộng trên màn hình cực lớn, giữ dễ đọc */
-  margin: 0 auto; /* margin trái/phải = auto -> tự động canh giữa khối theo chiều ngang trang */
+  max-width: 1200px;
+  margin: 0 auto; /* canh giữa */
   display: grid;
-  grid-template-columns: 1fr; /* Mobile: 1 CỘT duy nhất — các khối (brand, khám phá, giờ mở cửa, liên hệ)
-                                   xếp CHỒNG DỌC lên nhau lần lượt */
+  grid-template-columns: 1fr; /* Mobile: 1 cột */
   gap: 32px;
   padding-bottom: 48px;
   border-bottom: 1px solid var(--color-border);
@@ -388,7 +310,7 @@ main {
   font-size: 14px;
   color: var(--color-muted);
   line-height: 1.7;
-  max-width: 280px; /* giới hạn chiều rộng đoạn giới thiệu, tránh dòng chữ kéo quá dài khó đọc trên màn hình rộng */
+  max-width: 280px; /* giới hạn chiều rộng đoạn giới thiệu */
 }
 
 .footer-col h4 {
@@ -414,7 +336,7 @@ main {
   color: var(--color-cream);
 }
 
-/* Mobile: dòng cuối footer (bản quyền...) xếp DỌC, canh giữa */
+/* Mobile: dòng cuối footer xếp dọc, canh giữa */
 .footer-bottom {
   max-width: 1200px;
   margin: 24px auto 0;
@@ -428,20 +350,18 @@ main {
 }
 
 /* ==========================================================================
-   CÁC CLASS TIỆN ÍCH DÙNG CHUNG (container, nút, tiêu đề section...)
-   Các trang khác (menu.html, about.html...) đều dùng lại các class này
-   thay vì tự định nghĩa riêng, để đồng bộ khoảng cách/kiểu chữ toàn site.
+   CLASS TIỆN ÍCH DÙNG CHUNG (container, nút, tiêu đề section...)
    ========================================================================== */
 .container {
-  max-width: 1200px; /* giới hạn chiều rộng nội dung, không để chữ/ảnh kéo dài hết màn hình cực rộng */
-  margin: 0 auto; /* canh giữa khối theo chiều ngang */
-  padding: 0 20px; /* đệm 2 bên để nội dung không dính sát mép màn hình trên mobile */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; /* đệm 2 bên tránh dính mép mobile */
 }
 
 .section-label {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.22em; /* giãn chữ rất rộng — kiểu "nhãn" nhỏ phía trên tiêu đề chính (vd "KHÁM PHÁ") */
+  letter-spacing: 0.22em; /* nhãn nhỏ trên tiêu đề chính */
   text-transform: uppercase;
   color: var(--color-gold);
   margin-bottom: 14px;
@@ -449,12 +369,7 @@ main {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
-  /* clamp(nhỏ_nhất, giá_trị_linh_hoạt, lớn_nhất): cỡ chữ tiêu đề TỰ CO GIÃN
-     theo chiều rộng màn hình (4vw = 4% chiều rộng viewport), nhưng
-     KHÔNG BAO GIỜ nhỏ hơn 28px (màn hình rất hẹp) và KHÔNG BAO GIỜ lớn
-     hơn 48px (màn hình rất rộng) — 1 dòng CSS thay cho việc phải viết
-     nhiều @media chỉ để chỉnh cỡ chữ tiêu đề theo từng breakpoint. */
+  font-size: clamp(28px, 4vw, 48px); /* cỡ chữ co giãn theo màn hình, min 28px - max 48px */
   font-weight: 700;
   color: var(--color-cream);
   line-height: 1.2;
@@ -463,7 +378,7 @@ main {
 .btn-primary {
   display: inline-block;
   padding: 14px 36px;
-  background: var(--color-gold); /* nút CHÍNH: nền vàng đặc, dùng cho hành động quan trọng nhất (vd "Đặt Bàn Ngay") */
+  background: var(--color-gold); /* nút chính, nền vàng đặc */
   color: var(--color-white);
   font-size: 13px;
   font-weight: 700;
@@ -477,15 +392,14 @@ main {
 }
 
 .btn-primary:hover {
-  background: #a07730; /* hover: tối màu nền hơn 1 chút, báo hiệu đang được tương tác */
-  transform: translateY(-1px); /* nhô lên nhẹ 1px, tạo cảm giác nút "phản hồi" khi rê chuột vào */
+  background: #a07730;
+  transform: translateY(-1px); /* nhô nhẹ lên khi hover */
 }
 
 .btn-outline {
   display: inline-block;
   padding: 13px 35px;
-  border: 1px solid var(--color-gold); /* nút PHỤ: chỉ có viền, nền trong suốt — ít "nặng" hơn btn-primary,
-                                            dùng cho hành động thứ 2 (vd "Xem Thực đơn" cạnh "Đặt bàn") */
+  border: 1px solid var(--color-gold); /* nút phụ, chỉ viền */
   color: var(--color-gold);
   background: transparent;
   font-size: 13px;
@@ -499,74 +413,69 @@ main {
 }
 
 .btn-outline:hover {
-  background: var(--color-gold); /* hover: đảo màu — nền tô vàng đặc, chữ chuyển trắng, giống hiệu ứng "fill" của btn-reserve */
+  background: var(--color-gold); /* đảo màu khi hover */
   color: var(--color-white);
 }
 
 .divider-gold {
   width: 48px;
   height: 1px;
-  background: var(--color-gold);
-  margin: 20px 0; /* đường kẻ vàng ngắn, trang trí phân cách giữa tiêu đề và nội dung phía dưới nó */
+  background: var(--color-gold); /* đường kẻ trang trí phân cách */
+  margin: 20px 0;
 }
 
 /* ==========================================================================
-   MEDIA QUERY — MỞ RỘNG LAYOUT CHO MÀN HÌNH LỚN HƠN (đúng tinh thần MOBILE-FIRST)
+   MEDIA QUERY — mobile-first, mở rộng dần cho màn hình lớn
    ========================================================================== */
 
-/* ===== Tablet trở lên (màn hình rộng >= 600px) ===== */
+/* Tablet (>=600px) */
 @media (min-width: 600px) {
   .footer-grid {
-    grid-template-columns: 1fr 1fr; /* footer tăng từ 1 cột lên 2 cột */
+    grid-template-columns: 1fr 1fr; /* footer 2 cột */
   }
   .footer-bottom {
-    flex-direction: row; /* dòng cuối footer chuyển từ xếp dọc sang xếp NGANG (đủ chỗ hơn ở tablet) */
+    flex-direction: row; /* dòng cuối footer nằm ngang */
     justify-content: space-between;
     text-align: left;
   }
   .container {
-    padding: 0 40px; /* màn hình rộng hơn -> tăng đệm 2 bên cho thoáng, thay vì giữ 20px như mobile */
+    padding: 0 40px; /* đệm rộng hơn */
   }
 }
 
-/* ===== Desktop trở lên (màn hình rộng >= 900px): hiện menu ngang, ẩn hamburger ===== */
+/* Desktop (>=900px): hiện menu ngang, ẩn hamburger */
 @media (min-width: 900px) {
   .site-header {
-    padding: 0 40px; /* đệm 2 bên header rộng hơn, đồng bộ với .container ở breakpoint 600px */
+    padding: 0 40px;
   }
 
   .nav-links {
-    display: flex; /* ĐỦ CHỖ hiển thị menu ngang đầy đủ -> hiện lại (mobile đang ẩn ở phần code gốc) */
+    display: flex; /* hiện menu ngang */
   }
 
   .btn-reserve {
-    display: inline-block; /* nút Đặt Bàn cũng hiện thẳng trên header, không cần giấu trong dropdown nữa */
+    display: inline-block; /* hiện thẳng trên header */
   }
 
   .nav-toggle {
-    display: none; /* ĐỦ CHỖ hiện menu ngang rồi -> không cần nút hamburger nữa, ẩn hẳn đi */
+    display: none; /* không cần hamburger nữa */
   }
 
-  /* Trên desktop, menu LUÔN hiển thị ngang cố định trong header (không
-     phải dạng dropdown), nên phải "ghi đè" lại các style dành riêng cho
-     dropdown mobile — phòng trường hợp class "nav-mobile-open" vẫn còn
-     sót lại trên <body> (vd khách bấm hamburger ở mobile rồi resize
-     cửa sổ lên desktop mà chưa reload trang). */
+  /* Ghi đè style dropdown mobile phòng khi resize từ mobile lên desktop
+     mà class "nav-mobile-open" chưa được gỡ */
   .nav-mobile-open .nav-links {
-    position: static; /* bỏ position:fixed của dropdown, cho menu trở lại nằm trong luồng bình thường của header */
-    flex-direction: row; /* chuyển lại thành hàng ngang */
+    position: static;
+    flex-direction: row;
     padding: 0;
     border-bottom: none;
     background: transparent;
   }
 
   .footer-grid {
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    /* Desktop: 4 cột, cột đầu (brand) RỘNG GẤP ĐÔI (2fr) 3 cột còn lại (1fr)
-       vì cột brand chứa đoạn giới thiệu dài, cần nhiều không gian hơn. */
+    grid-template-columns: 2fr 1fr 1fr 1fr; /* cột brand rộng gấp đôi 3 cột còn lại */
   }
 
   .site-footer {
-    padding: 60px 40px 30px; /* đệm 2 bên rộng hơn, đồng bộ với .container và .site-header ở desktop */
+    padding: 60px 40px 30px;
   }
 }

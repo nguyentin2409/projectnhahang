@@ -1,9 +1,6 @@
 /*
   menu.css - Style riêng cho trang Thực Đơn (menu.html)
   MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
-  Chiến lược Responsive: MOBILE-FIRST
-    - Style gốc bên dưới được viết cho màn hình nhỏ (điện thoại) trước
-    - Dùng @media (min-width: ...) để MỞ RỘNG dần layout lên tablet/desktop
 */
 
 .page-hero {
