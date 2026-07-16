@@ -1,42 +1,25 @@
 /**
- * ==========================================================================
  * menu.js - Trang Thực Đơn (menu.html)
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
- * ==========================================================================
  *
- * CHỨC NĂNG CỦA FILE NÀY:
- *  1) Lọc món ăn theo danh mục khi bấm tab (Khai vị, Món chính...)
- *  2) Bấm ♥ trên món ăn để thêm/bớt khỏi danh sách "Yêu Thích" (lưu
- *     trong localStorage) — xem chi tiết + tổng tiền ở trang riêng
- *     pages/favorite.html.
- *
+ * - Lọc món ăn theo danh mục khi bấm tab.
+ * - Bấm ♥ để thêm/bớt món khỏi "Yêu Thích" (lưu localStorage), đọc trực
+ *   tiếp tên/giá/ảnh/mô tả từ chính thẻ HTML của món đó (không có mảng
+ *   dữ liệu JS riêng - danh sách món ăn viết cứng trong menu.html).
  */
 document.addEventListener("DOMContentLoaded", () => {
-  // Khoá localStorage lưu danh sách món yêu thích.
-  // TRÙNG KHỚP TUYỆT ĐỐI với khoá dùng trong js/favorite.js và js/shared.js.
-  const STORAGE_KEY = "vingon_favorites";
+  const STORAGE_KEY = "vingon_favorites"; // phải trùng khoá với favorite.js/shared.js
 
   const tabs = document.querySelectorAll(".tab-btn");
   const items = document.querySelectorAll(".menu-item");
 
-  // ==========================================================================
-  // NHÓM HÀM 1: ĐỌC / GHI danh sách yêu thích vào localStorage
-  // ==========================================================================
-  /**
-   * localStorage giờ lưu MẢNG CÁC OBJECT ĐẦY ĐỦ THÔNG TIN món ăn
-   * (vd: [{id, name, price, image, description}, ...])
-   */
   function getFavorites() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-      // Lọc bỏ mục KHÔNG ĐÚNG ĐỊNH DẠNG (dữ liệu rác/cũ còn sót
-      // từ bản lưu id dạng chuỗi thô thay vì object đầy đủ) -
-      // tránh crash khi bấm ♥ hoặc khi tô lại trạng thái tim lúc tải trang.
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      // Lọc bỏ mục sai định dạng (dữ liệu cũ/hỏng), tự lưu lại bản sạch
       const cleaned = parsed.filter(
         (item) =>
-          item &&
-          typeof item === "object" &&
+          item && typeof item === "object" &&
           typeof item.id === "string" &&
           typeof item.name === "string" &&
           typeof item.price === "number",
@@ -46,22 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       return cleaned;
     } catch (err) {
-      console.error("Lỗi đọc dữ liệu yêu thích từ localStorage:", err);
+      console.error("Lỗi đọc dữ liệu yêu thích:", err);
       return [];
     }
   }
 
   function saveFavorites(favorites) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
-    // Báo cho shared.js vẽ lại badge số lượng trên icon header ngay lập tức
-    if (typeof window.updateFavoriteBadge === "function") {
-      window.updateFavoriteBadge();
-    }
+    if (typeof window.updateFavoriteBadge === "function") window.updateFavoriteBadge();
   }
 
-  // ==========================================================================
-  // NHÓM HÀM 2: LỌC món ăn theo danh mục
-  // ==========================================================================
+  // ===== Lọc theo danh mục =====
   function applyFilter(category) {
     items.forEach((item) => {
       const show = category === "all" || item.dataset.category === category;
@@ -77,14 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ==========================================================================
-  // NHÓM HÀM 3: XỬ LÝ NÚT ♥ - đọc trực tiếp thông tin món từ DOM
-  // ==========================================================================
-  /**
-   * Từ 1 nút ♥ vừa bấm, TÌM NGƯỢC LÊN thẻ cha ".menu-item" chứa nó
-   * (closest()), rồi ĐỌC ra tên/ảnh/mô tả từ chính các thẻ con bên trong
-   * (h3, img, p) và giá từ thuộc tính data-price viết sẵn trong HTML.
-   */
+  // ===== Xử lý nút ♥ =====
+  // Đọc trực tiếp thông tin món từ DOM (h3, img, data-price, mô tả)
+  // thay vì tra cứu 1 mảng dữ liệu riêng - vì HTML đã viết cứng sẵn.
   function readItemDataFromDOM(menuItemEl) {
     return {
       id: menuItemEl.dataset.id,
@@ -101,15 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.setAttribute("aria-pressed", isFavorite ? "true" : "false");
   }
 
-  // Khởi tạo: tô đỏ sẵn các nút ♥ của những món ĐÃ được thích từ trước
-  // (đọc localStorage lúc tải trang, khớp theo id đã lưu)
+  // Tô đỏ sẵn các nút ♥ của món đã thích từ trước khi vừa tải trang
   const savedFavorites = getFavorites();
   document.querySelectorAll(".btn-favorite").forEach((btn) => {
-    const isFavorite = savedFavorites.some((f) => f.id === btn.dataset.id);
-    setFavoriteButtonState(btn, isFavorite);
+    setFavoriteButtonState(btn, savedFavorites.some((f) => f.id === btn.dataset.id));
   });
 
-  // Gắn sự kiện click cho từng nút ♥ có sẵn trong HTML
   document.querySelectorAll(".btn-favorite").forEach((btn) => {
     btn.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -119,10 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const index = favorites.findIndex((f) => f.id === btn.dataset.id);
 
       if (index === -1) {
-        // Chưa thích -> đọc đầy đủ thông tin từ DOM rồi thêm vào mảng
         favorites.push(readItemDataFromDOM(menuItemEl));
       } else {
-        // Đã thích rồi -> bấm lại để BỎ thích
         favorites.splice(index, 1);
       }
 
@@ -131,6 +99,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Mặc định hiện tất cả món khi vừa vào trang (khớp tab "Tất Cả" đang active)
   applyFilter("all");
 });

@@ -1,95 +1,72 @@
 /**
- * ==========================================================================
- * shared.js - Script dùng chung cho TẤT CẢ các trang trong website
+ * shared.js - Header/footer dùng chung cho mọi trang + các xử lý chung
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
- * ==========================================================================
- * CÁC CHỨC NĂNG CHÍNH TRONG FILE NÀY (đánh số theo từng khối code bên dưới):
- *  1. Chèn header vào mọi trang qua <div id="site-header">
- *  2. Chèn footer vào mọi trang qua <div id="site-footer">
- *  3. Tự động gắn class "active" cho link điều hướng của TRANG ĐANG XEM
- *  4. Xử lý mở/đóng menu điều hướng trên di động (nút hamburger)
- *  5. Đổi màu nền header khi cuộn trang (hiệu ứng thẩm mỹ)
- *  6. Hiện số lượng "món yêu thích" lên icon ♥ trên header
+ *
+ * Mỗi trang chỉ để 2 chỗ trống <div id="site-header"> và <div id="site-footer">,
+ * file này dựng header/footer bằng DOM API
+ * rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
+ *
+ * Nội dung file:
+ *  1. Dựng + chèn header
+ *  2. Dựng + chèn footer
+ *  3. Gắn class "active" cho link của trang đang xem
+ *  4. Mở/đóng menu mobile (hamburger)
+ *  5. Đổi màu nền header khi cuộn trang
+ *  6. Hiện số lượng món yêu thích trên icon header
  */
 document.addEventListener("DOMContentLoaded", () => {
   const FAVORITE_STORAGE_KEY = "vingon_favorites";
 
-  // ==========================================================================
-  // HÀM TIỆN ÍCH DÙNG CHUNG: tạo 1 phần tử bằng DOM API (KHÔNG dùng chuỗi HTML)
-  // ==========================================================================
-  /**
-   * createEl(tag, attrs, text): tạo và trả về 1 phần tử HTML mới.
-   * - tag: tên thẻ, vd "div", "a", "span"
-   * - attrs: object chứa các thuộc tính cần gắn, vd { href: "...", class: "..." }
-   *   (dùng setAttribute cho từng cặp key-value, KHÔNG parse chuỗi HTML)
-   * - text: chữ hiển thị bên trong thẻ (gán bằng textContent, an toàn, không
-   *   parse HTML nên không lo lỗi XSS như khi dùng innerHTML)
-   * Hàm này giúp code ngắn gọn hơn thay vì phải gọi createElement +
-   * setAttribute lặp lại nhiều lần cho mỗi phần tử.
-   */
+  // Tạo 1 phần tử bằng DOM API: createElement + setAttribute + textContent
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
-    Object.keys(attrs).forEach((key) => {
-      el.setAttribute(key, attrs[key]);
-    });
-    if (text) {
-      el.textContent = text;
-    }
+    Object.keys(attrs).forEach((key) => el.setAttribute(key, attrs[key]));
+    if (text) el.textContent = text;
     return el;
   }
 
-  // ==========================================================================
-  // 1. DỰNG HEADER bằng DOM API rồi chèn vào <div id="site-header">
-  // ==========================================================================
+  // Thay 1 phần tử placeholder bằng phần tử mới, dùng parentNode.replaceChild
+  // (API DOM cơ bản - Chương 5) thay vì outerHTML/replaceWith.
+  function replaceElement(oldEl, newEl) {
+    oldEl.parentNode.replaceChild(newEl, oldEl);
+  }
+
+  // ===== 1. HEADER =====
   function buildHeader() {
     const header = createEl("header", { class: "site-header", id: "site-header" });
 
-    // ----- Logo -----
     const logoLink = createEl("a", { href: "../index.html", class: "header-logo" });
-    const logoIcon = createEl("div", { class: "logo-icon" }, "V");
     const logoTextWrap = document.createElement("div");
     logoTextWrap.appendChild(createEl("span", { class: "logo-name" }, "Vị Ngon"));
     logoTextWrap.appendChild(createEl("span", { class: "logo-sub" }, "Fine Dining"));
-    logoLink.appendChild(logoIcon);
+    logoLink.appendChild(createEl("div", { class: "logo-icon" }, "V"));
     logoLink.appendChild(logoTextWrap);
 
-    // ----- Menu điều hướng -----
     const nav = createEl("nav", { class: "nav-links", id: "nav-links" });
-    const navItems = [
+    [
       { href: "/index.html", page: "home", text: "Trang Chủ" },
       { href: "/pages/menu.html", page: "menu", text: "Thực Đơn" },
       { href: "/pages/reservation.html", page: "reservation", text: "Đặt Bàn" },
       { href: "/pages/about.html", page: "about", text: "Giới Thiệu" },
       { href: "/pages/contact.html", page: "contact", text: "Liên Hệ" },
-    ];
-    navItems.forEach(({ href, page, text }) => {
-      nav.appendChild(createEl("a", { href, "data-page": page }, text));
-    });
+    ].forEach(({ href, page, text }) => nav.appendChild(createEl("a", { href, "data-page": page }, text)));
 
-    // ----- Nhóm bên phải: icon yêu thích, nút đặt bàn, nút hamburger -----
     const actions = createEl("div", { class: "header-actions" });
 
-    // Icon ♥ hiện SỐ LƯỢNG món yêu thích (khối số 6 bên dưới cập nhật).
-    // Bấm vào chuyển thẳng tới trang riêng pages/favorite.html.
+    // Icon ♥ + badge số lượng món yêu thích -> trỏ sang trang favorite.html
     const favLink = createEl("a", {
       href: "/pages/favorite.html",
       class: "btn-favorite-header",
       id: "favorite-header-btn",
       "aria-label": "Xem món yêu thích",
     });
-    // Icon ♥ là 1 text node, badge số lượng là 1 <span> riêng - phải
-    // appendChild từng phần, không thể gộp thành 1 chuỗi textContent vì
-    // sẽ mất đi thẻ <span id="favorite-badge"> cần cho khối số 6.
     favLink.appendChild(document.createTextNode("♥ "));
     favLink.appendChild(createEl("span", { class: "favorite-badge hidden", id: "favorite-badge" }, "0"));
 
     const reserveLink = createEl("a", { href: "/pages/reservation.html", class: "btn-reserve" }, "Đặt Bàn Ngay");
 
     const navToggle = createEl("button", { class: "nav-toggle", id: "nav-toggle", "aria-label": "Menu" });
-    // 3 gạch ngang của icon hamburger - mỗi gạch là 1 thẻ <span> rỗng
-    navToggle.appendChild(document.createElement("span"));
-    navToggle.appendChild(document.createElement("span"));
-    navToggle.appendChild(document.createElement("span"));
+    for (let i = 0; i < 3; i++) navToggle.appendChild(document.createElement("span"));
 
     actions.appendChild(favLink);
     actions.appendChild(reserveLink);
@@ -98,49 +75,35 @@ document.addEventListener("DOMContentLoaded", () => {
     header.appendChild(logoLink);
     header.appendChild(nav);
     header.appendChild(actions);
-
     return header;
   }
 
   const headerPlaceholder = document.getElementById("site-header");
-  if (headerPlaceholder) {
-    // replaceWith(): thay THẲNG phần tử <div id="site-header"> bằng thẻ
-    // <header> vừa dựng xong - đây là phương thức DOM thật (Node.replaceWith),
-    // KHÔNG phải gán chuỗi HTML như outerHTML trước đây.
-    headerPlaceholder.replaceWith(buildHeader());
+  if (headerPlaceholder) replaceElement(headerPlaceholder, buildHeader());
+
+  // ===== 2. FOOTER =====
+  function buildFooterColumn(title, linkItems) {
+    const col = createEl("div", { class: "footer-col" });
+    col.appendChild(createEl("h4", {}, title));
+    const ul = document.createElement("ul");
+    linkItems.forEach(({ href, text }) => {
+      const li = document.createElement("li");
+      li.appendChild(href ? createEl("a", { href }, text) : createEl("a", {}, text));
+      ul.appendChild(li);
+    });
+    col.appendChild(ul);
+    return col;
   }
 
-  // ==========================================================================
-  // 2. DỰNG FOOTER bằng DOM API rồi chèn vào <div id="site-footer">
-  // ==========================================================================
   function buildFooter() {
     const footer = createEl("footer", { class: "site-footer", id: "site-footer" });
     const grid = createEl("div", { class: "footer-grid" });
 
-    // ----- Cột giới thiệu thương hiệu -----
     const brandCol = createEl("div", { class: "footer-brand" });
     brandCol.appendChild(createEl("div", { class: "logo-name" }, "Vị Ngon"));
     brandCol.appendChild(
-      createEl(
-        "p",
-        {},
-        "Nơi ẩm thực truyền thống Việt Nam gặp gỡ nghệ thuật bếp núc hiện đại. Trải nghiệm từng bữa ăn như một hành trình.",
-      ),
+      createEl("p", {}, "Nơi ẩm thực truyền thống Việt Nam gặp gỡ nghệ thuật bếp núc hiện đại."),
     );
-
-    // Hàm dùng chung: tạo 1 cột footer có tiêu đề <h4> + danh sách <ul><li><a>
-    function buildFooterColumn(title, linkItems) {
-      const col = createEl("div", { class: "footer-col" });
-      col.appendChild(createEl("h4", {}, title));
-      const ul = document.createElement("ul");
-      linkItems.forEach(({ href, text }) => {
-        const li = document.createElement("li");
-        li.appendChild(href ? createEl("a", { href }, text) : createEl("a", {}, text));
-        ul.appendChild(li);
-      });
-      col.appendChild(ul);
-      return col;
-    }
 
     const exploreCol = buildFooterColumn("Khám Phá", [
       { href: "/index.html", text: "Trang Chủ" },
@@ -156,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
       { href: "", text: "Chủ Nhật: 10:00 – 21:00" },
     ]);
 
-    // ----- Cột liên hệ (địa chỉ có xuống dòng <br>, cần dựng riêng) -----
     const contactCol = createEl("div", { class: "footer-col" });
     contactCol.appendChild(createEl("h4", {}, "Liên Hệ"));
     const contactList = document.createElement("ul");
@@ -169,9 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     emailLi.appendChild(createEl("a", { href: "mailto:info@vingon.vn" }, "info@vingon.vn"));
     contactList.appendChild(emailLi);
 
-    // Địa chỉ có 1 dấu xuống dòng <br> ở giữa - không thể gán bằng
-    // textContent (sẽ mất định dạng xuống dòng), nên phải dựng bằng 2
-    // text node + 1 thẻ <br> nối lại bằng appendChild.
+    // Địa chỉ có xuống dòng <br> - dựng bằng text node + <br> thay vì innerHTML
     const addressLi = document.createElement("li");
     const addressLink = document.createElement("a");
     addressLink.appendChild(document.createTextNode("123 Đường Ẩm Thực,"));
@@ -179,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addressLink.appendChild(document.createTextNode("Q.1, TP. HCM"));
     addressLi.appendChild(addressLink);
     contactList.appendChild(addressLi);
-
     contactCol.appendChild(contactList);
 
     grid.appendChild(brandCol);
@@ -187,22 +146,15 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.appendChild(hoursCol);
     grid.appendChild(contactCol);
     footer.appendChild(grid);
-
     return footer;
   }
 
   const footerPlaceholder = document.getElementById("site-footer");
-  if (footerPlaceholder) {
-    footerPlaceholder.replaceWith(buildFooter());
-  }
+  if (footerPlaceholder) replaceElement(footerPlaceholder, buildFooter());
 
-  // ==========================================================================
-  // 3. ĐÁNH DẤU LINK ĐANG ĐƯỢC XEM (active state trên menu điều hướng)
-  // ==========================================================================
+  // ===== 3. ACTIVE LINK theo trang đang xem =====
   const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll(".nav-links a[data-page]");
-
-  navLinks.forEach((link) => {
+  document.querySelectorAll(".nav-links a[data-page]").forEach((link) => {
     const href = link.getAttribute("href");
     if (
       currentPath.endsWith(href) ||
@@ -213,9 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ==========================================================================
-  // 4. MENU DI ĐỘNG (hamburger) — ẨN/HIỆN menu dạng dropdown trên màn hình nhỏ
-  // ==========================================================================
+  // ===== 4. MENU MOBILE (hamburger) =====
   const navToggle = document.getElementById("nav-toggle");
   if (navToggle) {
     navToggle.addEventListener("click", () => {
@@ -224,29 +174,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ==========================================================================
-  // 5. HIỆU ỨNG HEADER KHI CUỘN TRANG (đổi độ đậm màu nền)
-  // ==========================================================================
+  // ===== 5. HIỆU ỨNG HEADER KHI CUỘN TRANG =====
   const header = document.getElementById("site-header");
   if (header) {
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (window.scrollY > 40) {
-          header.style.background = "rgba(240, 222, 190, 0.98)";
-          header.style.boxShadow = "0 4px 20px rgba(45, 35, 24, 0.15)";
-        } else {
-          header.style.background = "rgba(253, 248, 242, 0.95)";
-          header.style.boxShadow = "0 2px 12px rgba(184, 137, 58, 0.07)";
-        }
-      },
-      { passive: true },
-    );
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        header.style.background = "rgba(240, 222, 190, 0.98)";
+        header.style.boxShadow = "0 4px 20px rgba(45, 35, 24, 0.15)";
+      } else {
+        header.style.background = "rgba(253, 248, 242, 0.95)";
+        header.style.boxShadow = "0 2px 12px rgba(184, 137, 58, 0.07)";
+      }
+    });
   }
 
-  // ==========================================================================
-  // 6. SỐ LƯỢNG MÓN YÊU THÍCH TRÊN ICON HEADER (đồng bộ với trang Menu)
-  // ==========================================================================
+  // ===== 6. BADGE SỐ LƯỢNG MÓN YÊU THÍCH TRÊN HEADER =====
   function updateFavoriteBadge() {
     const badge = document.getElementById("favorite-badge");
     if (!badge) return;
@@ -254,9 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let favorites = [];
     try {
       const parsed = JSON.parse(localStorage.getItem(FAVORITE_STORAGE_KEY)) || [];
-      favorites = parsed.filter(
-        (item) => item && typeof item === "object" && typeof item.id === "string",
-      );
+      // Chỉ đếm mục đúng định dạng object, tránh đếm nhầm dữ liệu cũ/hỏng
+      favorites = parsed.filter((item) => item && typeof item === "object" && typeof item.id === "string");
     } catch (err) {
       favorites = [];
     }
