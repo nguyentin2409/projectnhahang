@@ -44,7 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function formatCurrency(amount) {
-    return amount.toLocaleString("vi-VN") + "₫";
+    // Dùng ngôn ngữ trình duyệt của khách (navigator.language)
+    const locale = navigator.language || "vi-VN";
+    return amount.toLocaleString(locale) + " ₫";
   }
 
   // Tạo 1 phần tử bằng DOM API (giống hàm createEl trong shared.js)

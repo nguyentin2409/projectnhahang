@@ -49,19 +49,18 @@
           </div>
 
           <!--
-            Danh sách 9 món ăn - VIẾT CỨNG (hardcoded) trực tiếp trong HTML.
+            Danh sách 9 món ăn
             Mỗi món có:
             - data-category: để menu.js lọc theo danh mục
             - data-id: định danh duy nhất, dùng làm khoá khi lưu vào
               danh sách yêu thích (localStorage)
-            - data-price: giá trị SỐ thô (không có dấu chấm/₫) để menu.js
-              đọc và cộng tổng tiền khi hiển thị ở trang Yêu Thích
+            - data-price: giá trị SỐ thô
           -->
           <div class="menu-grid" id="menu-grid">
-            <div class="menu-item" data-category="appetizer" data-id="goi-cuon-tom-thit" data-price="65000">
+            <div class="menu-item" data-category="appetizer" data-id="MON01" data-price="65000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-1.jpg" alt="Gỏi cuốn tôm thịt" />
-                <button class="btn-favorite" data-id="goi-cuon-tom-thit" aria-label="Thích món Gỏi Cuốn Tôm Thịt" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON01" aria-label="Thích món Gỏi Cuốn Tôm Thịt" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -72,10 +71,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="main" data-id="bun-cha-ha-noi" data-price="100000">
+            <div class="menu-item" data-category="main" data-id="MON02" data-price="100000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-2.jpg" alt="Bún chả Hà Nội" />
-                <button class="btn-favorite" data-id="bun-cha-ha-noi" aria-label="Thích món Bún chả Hà Nội" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON02" aria-label="Thích món Bún chả Hà Nội" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -86,10 +85,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="main" data-id="bun-bo-hue" data-price="120000">
+            <div class="menu-item" data-category="main" data-id="MON03" data-price="120000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-3.jpg" alt="Bún bò Huế" />
-                <button class="btn-favorite" data-id="bun-bo-hue" aria-label="Thích món Bún Bò Huế" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON03" aria-label="Thích món Bún Bò Huế" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -100,10 +99,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="main" data-id="com-tam-suon-bi-cha" data-price="95000">
+            <div class="menu-item" data-category="main" data-id="MON04" data-price="95000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-4.jpg" alt="Cơm tấm sườn bì chả" />
-                <button class="btn-favorite" data-id="com-tam-suon-bi-cha" aria-label="Thích món Cơm Tấm Sườn Bì Chả" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON04" aria-label="Thích món Cơm Tấm Sườn Bì Chả" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -114,10 +113,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="main" data-id="pho-bo-dac-biet" data-price="130000">
+            <div class="menu-item" data-category="main" data-id="MON05" data-price="130000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-5.jpg" alt="Phở Bò Đặc Biệt" />
-                <button class="btn-favorite" data-id="pho-bo-dac-biet" aria-label="Thích món Phở Bò Đặc Biệt" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON05" aria-label="Thích món Phở Bò Đặc Biệt" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -128,10 +127,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="soup" data-id="canh-chua-ca-loc" data-price="80000">
+            <div class="menu-item" data-category="soup" data-id="MON06" data-price="80000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-6.jpg" alt="Canh chua cá lóc" />
-                <button class="btn-favorite" data-id="canh-chua-ca-loc" aria-label="Thích món Canh Chua Cá Lóc" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON06" aria-label="Thích món Canh Chua Cá Lóc" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -142,10 +141,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="dessert" data-id="che-ba-mau" data-price="45000">
+            <div class="menu-item" data-category="dessert" data-id="MON07" data-price="45000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-7.jpg" alt="Chè ba màu" />
-                <button class="btn-favorite" data-id="che-ba-mau" aria-label="Thích món Chè Ba Màu" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON07" aria-label="Thích món Chè Ba Màu" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -156,10 +155,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="main" data-id="ca-loc-kho-to" data-price="159000">
+            <div class="menu-item" data-category="main" data-id="MON08" data-price="159000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-8.jpg" alt="Cá Lóc Kho Tộ" />
-                <button class="btn-favorite" data-id="ca-loc-kho-to" aria-label="Thích món Cá Lóc Kho Tộ" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON08" aria-label="Thích món Cá Lóc Kho Tộ" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
@@ -170,10 +169,10 @@
               </div>
             </div>
 
-            <div class="menu-item" data-category="drink" data-id="nuoc-ep-trai-cay-tuoi" data-price="55000">
+            <div class="menu-item" data-category="drink" data-id="MON09" data-price="55000">
               <div class="menu-img-wrap">
                 <img src="../images/menu-9.jpg" alt="Nước ép trái cây tươi" />
-                <button class="btn-favorite" data-id="nuoc-ep-trai-cay-tuoi" aria-label="Thích món Nước Ép Trái Cây Tươi" aria-pressed="false">♡</button>
+                <button class="btn-favorite" data-id="MON09" aria-label="Thích món Nước Ép Trái Cây Tươi" aria-pressed="false">♡</button>
               </div>
               <div class="menu-info">
                 <div class="menu-info-top">
