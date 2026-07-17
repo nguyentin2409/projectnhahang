@@ -23,7 +23,7 @@ const submitBtn = document.querySelector(".btn-submit");
  * khi người dùng bấm gửi thông tin hàm xử lí sẽ được kích hoạt và chạy các lệnh bên trong hàm*/
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault(); // Gọi hàm ngăn chặn chế độ chuyển trang hay tải trang web sau khi nhấn submit
-  const originalText = submitBtn.innerHTML; //Dùng thuộc tính innerHTML lấy dòng chữ bên trong nút submit vào biến originalText
+  const originalText = submitBtn.textContent; //Dùng thuộc tính textContent lấy dòng chữ bên trong nút submit vào biến originalText
 
   submitBtn.innerHTML = " Đã gửi thành công ✓"; //Thay đổi phần dòng chữ bên trong nút submit -> Đã gửi thành công ✓
   // Dùng thuộc tính style để trực tiếp thao tác vào phần contact.css
@@ -31,13 +31,14 @@ contactForm.addEventListener("submit", (event) => {
   submitBtn.style.color = "var(--color-white)"; //Đổi màu chữ sang màu trắng
   submitBtn.style.pointerEvents = "none"; // Thuộc tính pointerEvents = "none" khóa nút submit lại không cho người dùng nhấn vào khi đã bấm gửi
 
-  // Sau khi bấm gửi tạo 1 hàm đếm thời gian (4s) quay lại trang thái nút ban đầu
+  // Sau khi bấm gửi tạo 1 hàm đếm thời gian (4s) quay lại trang thái nút ban đầu với hàm setTimeout() 
+  // với 2 tham số là hàm xử lí và thời gian 4s là 4000 
   setTimeout(() => {
     //Thay đổi giao diện nút submit gồm (dòng chữ bên trong, màu nền, màu chữ) và mở khóa nút về lại ban đầu
-    submitBtn.innerHTML = originalText; 
+    submitBtn.textContent = originalText; 
     submitBtn.style.backgroundColor = "";
     submitBtn.style.color = "";
     submitBtn.style.pointerEvents = "auto";
-    contactForm.reset(); //Xóa toàn bộ dữ liệu đã nhập trong biểu mãu
+    contactForm.reset(); //Xóa toàn bộ dữ liệu đã nhập trong biểu mãu vs hàm reset() 
   }, 4000);
 });

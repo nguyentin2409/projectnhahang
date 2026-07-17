@@ -23,6 +23,7 @@
   <body>
     <!-- Vùng chèn header dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-header"></div>
+
     <main>
       <!-- Khối giới thiệu đầu trang (hero) -->
       <section class="page-hero">
@@ -34,11 +35,13 @@
           <p class="page-hero-desc">Chúng tôi sẵn sàng lắng nghe bạn.</p>
         </div>
       </section>
+
       <!--Phần nôi dung chính cho trang liên hệ-->
       <section class="contact-section">
+        <!--Phần chứa các thông tin như địa chỉ, email, sđt, giờ mở cửa-->
         <div class="contact-info">
-          <!--Các phần nội dung thông tin liên hệ kết hợp liên kết đường dẫn cho 
-          phần địa chỉ, email, số điện thoại với các ảnh biểu tượng icon cho từng thông tin.
+          <!--Các phần cấu trúc cho từng nội dung thông tin liên hệ gồm liên kết đường dẫn cho 
+          phần địa chỉ, email, số điện thoại + các ảnh biểu tượng cho từng thông tin.
           Khách hàng có thể bấm vào để tìm kiếm trực tiếp -->
           <div class="info-item">
             <div class="info-icon">
@@ -79,14 +82,16 @@
             </div>
           </div>
         </div>
+
         <!--Phần form cho khách hàng gửi góp ý cho nhà hàng-->
         <div class="contact-form-container">
           <!--Thẻ form bao bộc phần nhập thông tin và gửi phản hồi-->
           <form class="contact-form">
             <h3>Góp ý</h3>
-            <div class="divider-gold"></div>
+            <div class="divider-gold"></div> 
+            <!--Phần cấu trúc dùng cho từng giá trị dữ liệu nhập vào gồm họ tên, email, chủ đề, nội dung góp ý -->
             <div class="form-group">
-              <!--Hiện thị tên của từng ô nhập,với thuộc tính for="fullname" liên kết với input id="fullname"
+              <!-- label: Hiển thị tên của từng ô nhập,với thuộc tính for="fullname" liên kết với input id="fullname"
                khi người dùng click vào thì con trỏ sẽ tự động nhảy vào ô nhập tương ứng + trường bắt buộc * 
                để người dùng biết thông tin bắt buộc phải nhập -->
               <label for="fullname"
@@ -165,6 +170,7 @@
         </div>
       </div>
     </main>
+    
     <!-- Vùng chèn footer dùng chung, được JS (shared.js) tự động render vào đây -->
     <div id="site-footer"></div>
     <!-- shared.js: render header/footer, xử lý menu di động, hiệu ứng cuộn,
