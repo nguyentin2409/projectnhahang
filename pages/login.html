@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập | Vị Ngon Restaurant</title>
+
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="../css/login.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<main class="login-page">
+
+    <div class="login-card">
+
+        <h1>Đăng nhập</h1>
+
+        <p class="subtitle">
+            Chào mừng bạn đến với Nhà hàng Vị Ngon.
+        </p>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Nhập địa chỉ Email">
+
+                <small id="emailError"></small>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Mật khẩu</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Nhập mật khẩu">
+
+                <small id="passwordError"></small>
+
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Đăng nhập
+            </button>
+
+        </form>
+
+        <div class="divider">
+            <span>Hoặc</span>
+        </div>
+
+        <p class="register">
+            Chưa có tài khoản?
+            <a href="register.html">Đăng ký ngay</a>
+        </p>
+
+        <a href="../index.html" class="back-home">
+            ← Quay về Trang chủ
+        </a>
+
+    </div>
+
+</main>
+
+<script src="../js/login.js"></script>
+
+</body>
+
+</html>
