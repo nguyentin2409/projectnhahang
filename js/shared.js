@@ -52,7 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ].forEach(({ href, page, text }) => nav.appendChild(createEl("a", { href, "data-page": page }, text)));
 
     const actions = createEl("div", { class: "header-actions" });
-
+// Nút đăng nhập
+const loginLink = createEl("a", {
+  href: "/pages/login.html",
+  class: "btn-login-header",
+  id: "login-btn",
+  "aria-label": "Đăng nhập",
+}, "Đăng nhập");
     // Icon ♥ + badge số lượng món yêu thích -> trỏ sang trang favorite.html
     const favLink = createEl("a", {
       href: "/pages/favorite.html",
@@ -68,9 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const navToggle = createEl("button", { class: "nav-toggle", id: "nav-toggle", "aria-label": "Menu" });
     for (let i = 0; i < 3; i++) navToggle.appendChild(document.createElement("span"));
 
-    actions.appendChild(favLink);
-    actions.appendChild(reserveLink);
-    actions.appendChild(navToggle);
+actions.appendChild(loginLink);
+actions.appendChild(favLink);
+actions.appendChild(reserveLink);
+actions.appendChild(navToggle);
 
     header.appendChild(logoLink);
     header.appendChild(nav);
@@ -211,5 +218,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.updateFavoriteBadge = updateFavoriteBadge;
+  // ===== 7. HIỂN THỊ ĐĂNG NHẬP / ĐĂNG XUẤT =====
+const loginBtn = document.getElementById("login-btn");
+
+if (loginBtn) {
+  const isLoggedIn = localStorage.getItem("vingon_logged_in") === "true";
+
+  if (isLoggedIn) {
+    loginBtn.textContent = "Đăng xuất";
+    loginBtn.href = "#";
+
+    loginBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (confirm("Bạn có muốn đăng xuất không?")) {
+        localStorage.removeItem("vingon_logged_in");
+        localStorage.removeItem("vingon_username");
+
+        location.reload();
+      }
+    });
+  } else {
+    loginBtn.textContent = "Đăng nhập";
+    loginBtn.href = "/pages/login.html";
+  }
+}
   updateFavoriteBadge();
-});
+}); 
