@@ -2,10 +2,10 @@
  * favorite.js - Trang Món Yêu Thích (favorite.html)
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  *
- * - Đọc danh sách món yêu thích (mảng object đầy đủ) từ localStorage,
- *   do menu.js lưu sẵn lúc bấm ♥ ở trang Thực Đơn.
- * - Dựng lại từng thẻ món bằng DOM API , tính tổng
- *   tiền, và tạo link "Đặt Bàn" kèm tên món qua query-string (?dishes=...).
+ * - Đọc danh sách món yêu thích (mảng OBJECT THÔ) từ localStorage, do
+ *   menu.js lưu sẵn lúc bấm ♥ ở trang Thực Đơn.
+ * - Dựng lại từng thẻ món bằng DOM API, tính tổng tiền, và tạo link
+ *   "Đặt Bàn" kèm tên món qua query-string (?dishes=...).
  */
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "vingon_favorites"; // phải trùng khoá với menu.js/shared.js
@@ -17,27 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalText = document.getElementById("favorite-total-text");
   const goReserveBtn = document.getElementById("btn-go-reserve");
 
+  // JSON.parse trả về NGAY mảng object thô - toàn bộ hàm bên dưới chỉ
+  // thao tác trên object (item.name, item.price...)
   function getFavorites() {
     try {
-      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      // Lọc bỏ mục sai định dạng (dữ liệu cũ/hỏng), tự lưu lại bản sạch
-      const cleaned = parsed.filter(
-        (item) =>
-          item && typeof item === "object" &&
-          typeof item.id === "string" &&
-          typeof item.name === "string" &&
-          typeof item.price === "number",
-      );
-      if (cleaned.length !== parsed.length) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned));
-      }
-      return cleaned;
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     } catch (err) {
       console.error("Lỗi đọc dữ liệu yêu thích:", err);
       return [];
     }
   }
 
+  // JSON.stringify chỉ dùng ĐÚNG lúc ghi vào localStorage
   function saveFavorites(favorites) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
     if (typeof window.updateFavoriteBadge === "function") window.updateFavoriteBadge();
@@ -49,26 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return amount.toLocaleString(locale) + " ₫";
   }
 
-  // Tạo 1 phần tử bằng DOM API (giống hàm createEl trong shared.js)
+  // Tạo 1 phần tử bằng DOM API thuần (giống hàm createEl trong shared.js):
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
-    Object.keys(attrs).forEach((key) => el.setAttribute(key, attrs[key]));
-    if (text) el.textContent = text;
+    Object.keys(attrs).forEach((key) => {
+      const attrName = key.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase());
+      el.setAttribute(attrName, attrs[key]);
+    });
+    if (text) el.appendChild(document.createTextNode(text));
     return el;
   }
 
-  // Dựng 1 thẻ món yêu thích bằng DOM API, gắn sẵn sự kiện "Bỏ thích"
+  // Dựng 1 thẻ món yêu thích bằng DOM API, gắn sẵn sự kiện "Bỏ thích".
   function createFavoriteCard(item) {
-    const card = createEl("div", { class: "menu-item", "data-id": item.id });
+    const card = createEl("div", { class: "menu-item", dataId: item.id });
 
     const imgWrap = createEl("div", { class: "menu-img-wrap" });
     imgWrap.appendChild(createEl("img", { src: item.image, alt: item.name }));
 
     const btn = createEl("button", {
       class: "btn-favorite active",
-      "data-id": item.id,
-      "aria-label": "Bỏ khỏi món yêu thích",
-      "aria-pressed": "true",
+      dataId: item.id,
+      ariaLabel: "Bỏ khỏi món yêu thích",
+      ariaPressed: "true",
     }, "♥");
     btn.addEventListener("click", () => {
       const remaining = getFavorites().filter((f) => f.id !== item.id);
@@ -90,10 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return card;
   }
 
-  function render() {
-    const favoriteItems = getFavorites();
+  // Đặt lại text hiển thị của 1 phần tử bằng DOM API
+  function setText(el, text) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.appendChild(document.createTextNode(text));
+  }
 
-    // Xoá nội dung cũ trong grid bằng DOM API (không dùng innerHTML = "")
+  function render() {
+    const favoriteItems = getFavorites(); // mảng object thô
+
+    // Xoá nội dung cũ trong grid bằng DOM API 
     while (grid.firstChild) grid.removeChild(grid.firstChild);
 
     if (favoriteItems.length === 0) {
@@ -107,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     checkoutBar.classList.remove("hidden");
 
     const total = favoriteItems.reduce((sum, item) => sum + item.price, 0);
-    countText.textContent = `${favoriteItems.length} món`;
-    totalText.textContent = `Tổng dự kiến: ${formatCurrency(total)}`;
+    setText(countText, `${favoriteItems.length} món`);
+    setText(totalText, `Tổng dự kiến: ${formatCurrency(total)}`);
 
     const dishNames = favoriteItems.map((item) => item.name).join(", ");
     goReserveBtn.href = `/pages/reservation.html?dishes=${encodeURIComponent(dishNames)}`;

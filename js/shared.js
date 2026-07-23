@@ -3,9 +3,7 @@
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  *
  * Mỗi trang chỉ để 2 chỗ trống <div id="site-header"> và <div id="site-footer">,
- * file này dựng header/footer bằng DOM API
- * rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
- *
+ * file này dựng header/footer bằng DOM API rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
  * Nội dung file:
  *  1. Dựng + chèn header
  *  2. Dựng + chèn footer
@@ -17,16 +15,18 @@
 document.addEventListener("DOMContentLoaded", () => {
   const FAVORITE_STORAGE_KEY = "vingon_favorites";
 
-  // Tạo 1 phần tử bằng DOM API: createElement + setAttribute + textContent
+  // Tạo 1 phần tử bằng DOM API thuần: createElement + setAttribute + createTextNode
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
-    Object.keys(attrs).forEach((key) => el.setAttribute(key, attrs[key]));
-    if (text) el.textContent = text;
+    Object.keys(attrs).forEach((key) => {
+      const attrName = key.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase());
+      el.setAttribute(attrName, attrs[key]);
+    });
+    if (text) el.appendChild(document.createTextNode(text));
     return el;
   }
 
   // Thay 1 phần tử placeholder bằng phần tử mới, dùng parentNode.replaceChild
-  // (API DOM cơ bản - Chương 5) thay vì outerHTML/replaceWith.
   function replaceElement(oldEl, newEl) {
     oldEl.parentNode.replaceChild(newEl, oldEl);
   }
@@ -49,35 +49,35 @@ document.addEventListener("DOMContentLoaded", () => {
       { href: "/pages/reservation.html", page: "reservation", text: "Đặt Bàn" },
       { href: "/pages/about.html", page: "about", text: "Giới Thiệu" },
       { href: "/pages/contact.html", page: "contact", text: "Liên Hệ" },
-    ].forEach(({ href, page, text }) => nav.appendChild(createEl("a", { href, "data-page": page }, text)));
+    ].forEach(({ href, page, text }) => nav.appendChild(createEl("a", { href, dataPage: page }, text)));
 
     const actions = createEl("div", { class: "header-actions" });
-// Nút đăng nhập
-const loginLink = createEl("a", {
-  href: "/pages/login.html",
-  class: "btn-login-header",
-  id: "login-btn",
-  "aria-label": "Đăng nhập",
-}, "Đăng nhập");
+    // Nút đăng nhập
+    const loginLink = createEl("a", {
+      href: "/pages/login.html",
+      class: "btn-login-header",
+      id: "login-btn",
+      ariaLabel: "Đăng nhập",
+    }, "Đăng nhập");
     // Icon ♥ + badge số lượng món yêu thích -> trỏ sang trang favorite.html
     const favLink = createEl("a", {
       href: "/pages/favorite.html",
       class: "btn-favorite-header",
       id: "favorite-header-btn",
-      "aria-label": "Xem món yêu thích",
+      ariaLabel: "Xem món yêu thích",
     });
     favLink.appendChild(document.createTextNode("♥ "));
     favLink.appendChild(createEl("span", { class: "favorite-badge hidden", id: "favorite-badge" }, "0"));
 
     const reserveLink = createEl("a", { href: "/pages/reservation.html", class: "btn-reserve" }, "Đặt Bàn Ngay");
 
-    const navToggle = createEl("button", { class: "nav-toggle", id: "nav-toggle", "aria-label": "Menu" });
+    const navToggle = createEl("button", { class: "nav-toggle", id: "nav-toggle", ariaLabel: "Menu" });
     for (let i = 0; i < 3; i++) navToggle.appendChild(document.createElement("span"));
 
-actions.appendChild(loginLink);
-actions.appendChild(favLink);
-actions.appendChild(reserveLink);
-actions.appendChild(navToggle);
+    actions.appendChild(loginLink);
+    actions.appendChild(favLink);
+    actions.appendChild(reserveLink);
+    actions.appendChild(navToggle);
 
     header.appendChild(logoLink);
     header.appendChild(nav);
@@ -138,7 +138,6 @@ actions.appendChild(navToggle);
     emailLi.appendChild(createEl("a", { href: "mailto:info@vingon.vn" }, "info@vingon.vn"));
     contactList.appendChild(emailLi);
 
-    // Địa chỉ có xuống dòng <br> - dựng bằng text node + <br> thay vì innerHTML
     const addressLi = document.createElement("li");
     const addressLink = document.createElement("a");
     addressLink.appendChild(document.createTextNode("123 Đường Ẩm Thực,"));
@@ -209,39 +208,50 @@ actions.appendChild(navToggle);
       favorites = [];
     }
 
+    // Xoá nội dung số cũ rồi thêm text node mới
+    while (badge.firstChild) badge.removeChild(badge.firstChild);
+
     if (favorites.length > 0) {
-      badge.textContent = favorites.length;
+      badge.appendChild(document.createTextNode(String(favorites.length)));
       badge.classList.remove("hidden");
     } else {
+      badge.appendChild(document.createTextNode("0"));
       badge.classList.add("hidden");
     }
   }
 
   window.updateFavoriteBadge = updateFavoriteBadge;
+
   // ===== 7. HIỂN THỊ ĐĂNG NHẬP / ĐĂNG XUẤT =====
-const loginBtn = document.getElementById("login-btn");
+  const loginBtn = document.getElementById("login-btn");
 
-if (loginBtn) {
-  const isLoggedIn = localStorage.getItem("vingon_logged_in") === "true";
+  if (loginBtn) {
+    const isLoggedIn = localStorage.getItem("vingon_logged_in") === "true";
 
-  if (isLoggedIn) {
-    loginBtn.textContent = "Đăng xuất";
-    loginBtn.href = "#";
+    function setLoginBtnText(text) {
+      while (loginBtn.firstChild) loginBtn.removeChild(loginBtn.firstChild);
+      loginBtn.appendChild(document.createTextNode(text));
+    }
 
-    loginBtn.addEventListener("click", (e) => {
-      e.preventDefault();
+    if (isLoggedIn) {
+      setLoginBtnText("Đăng xuất");
+      loginBtn.href = "#";
 
-      if (confirm("Bạn có muốn đăng xuất không?")) {
-        localStorage.removeItem("vingon_logged_in");
-        localStorage.removeItem("vingon_username");
+      loginBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-        location.reload();
-      }
-    });
-  } else {
-    loginBtn.textContent = "Đăng nhập";
-    loginBtn.href = "/pages/login.html";
+        if (confirm("Bạn có muốn đăng xuất không?")) {
+          localStorage.removeItem("vingon_logged_in");
+          localStorage.removeItem("vingon_username");
+
+          location.reload();
+        }
+      });
+    } else {
+      setLoginBtnText("Đăng nhập");
+      loginBtn.href = "/pages/login.html";
+    }
   }
-}
+
   updateFavoriteBadge();
-}); 
+});
