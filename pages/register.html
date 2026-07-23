@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng ký | Vị Ngon Restaurant</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/debug-outline.css" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <div class="login-container">
+
+            <div class="login-card">
+
+                <h1>Đăng ký</h1>
+
+                <p class="subtitle">
+                    Tạo tài khoản để đặt bàn và thưởng thức các món ăn tại Vị Ngon Restaurant
+                </p>
+
+                <form id="registerForm">
+
+                    <div class="form-group">
+
+                        <label for="fullname">Họ và tên</label>
+
+                        <input
+                            type="text"
+                            id="fullname"
+                            placeholder="Nhập họ và tên">
+
+                        <small id="fullnameError"></small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="email">Email</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Nhập Email">
+
+                        <small id="emailError"></small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="phone">Số điện thoại</label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="Nhập số điện thoại">
+
+                        <small id="phoneError"></small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="password">Mật khẩu</label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Nhập mật khẩu">
+
+                        <small id="passwordError"></small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">Xác nhận mật khẩu</label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Nhập lại mật khẩu">
+
+                        <small id="confirmError"></small>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn-primary">
+
+                        Đăng ký
+
+                    </button>
+
+                </form>
+
+                <p class="register">
+
+                    Đã có tài khoản?
+
+                    <a href="login.html">
+                        Đăng nhập
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../js/register.js"></script>
+
+</body>
+
+</html>

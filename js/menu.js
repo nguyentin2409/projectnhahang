@@ -3,9 +3,8 @@
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  *
  * - Lọc món ăn theo danh mục khi bấm tab.
- * - Bấm ♥ để thêm/bớt món khỏi "Yêu Thích" (lưu localStorage), đọc trực
- *   tiếp tên/giá/ảnh/mô tả từ chính thẻ HTML của món đó (không có mảng
- *   dữ liệu JS riêng - danh sách món ăn viết cứng trong menu.html).
+ * - Bấm ♥ để thêm/bớt món khỏi "Yêu Thích" 
+ *
  */
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "vingon_favorites"; // phải trùng khoá với favorite.js/shared.js
@@ -13,27 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabs = document.querySelectorAll(".tab-btn");
   const items = document.querySelectorAll(".menu-item");
 
+  // Đọc danh sách yêu thích -> JSON.parse trả về NGAY 1 mảng OBJECT thô,
+  // toàn bộ code phía dưới chỉ thao tác trên object này (item.id, item.name...),
   function getFavorites() {
     try {
-      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      // Lọc bỏ mục sai định dạng (dữ liệu cũ/hỏng), tự lưu lại bản sạch
-      const cleaned = parsed.filter(
-        (item) =>
-          item && typeof item === "object" &&
-          typeof item.id === "string" &&
-          typeof item.name === "string" &&
-          typeof item.price === "number",
-      );
-      if (cleaned.length !== parsed.length) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned));
-      }
-      return cleaned;
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     } catch (err) {
       console.error("Lỗi đọc dữ liệu yêu thích:", err);
       return [];
     }
   }
 
+  // Ghi lại -> JSON.stringify chỉ dùng ĐÚNG lúc lưu vào localStorage
+  // (bắt buộc, vì localStorage chỉ lưu được chuỗi, không lưu được object).
   function saveFavorites(favorites) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
     if (typeof window.updateFavoriteBadge === "function") window.updateFavoriteBadge();
@@ -56,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== Xử lý nút ♥ =====
-  // Đọc trực tiếp thông tin món từ DOM (h3, img, data-price, mô tả)
-  // thay vì tra cứu 1 mảng dữ liệu riêng - vì HTML đã viết cứng sẵn.
+  // Đọc trực tiếp thông tin món từ DOM (h3, img, data-price, mô tả),
+  // trả về 1 OBJECT THÔ 
   function readItemDataFromDOM(menuItemEl) {
     return {
       id: menuItemEl.dataset.id,
@@ -68,9 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  // Đặt lại icon (♥/♡) trong nút bằng DOM API thuần
+  function setButtonIcon(btn, icon) {
+    while (btn.firstChild) btn.removeChild(btn.firstChild);
+    btn.appendChild(document.createTextNode(icon));
+  }
+
   function setFavoriteButtonState(btn, isFavorite) {
     btn.classList.toggle("active", isFavorite);
-    btn.textContent = isFavorite ? "♥" : "♡";
+    setButtonIcon(btn, isFavorite ? "♥" : "♡");
     btn.setAttribute("aria-pressed", isFavorite ? "true" : "false");
   }
 
@@ -85,13 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
       event.stopPropagation();
 
       const menuItemEl = btn.closest(".menu-item");
-      const favorites = getFavorites();
+      const favorites = getFavorites(); // mảng object thô
       const index = favorites.findIndex((f) => f.id === btn.dataset.id);
 
       if (index === -1) {
-        favorites.push(readItemDataFromDOM(menuItemEl));
+        favorites.push(readItemDataFromDOM(menuItemEl)); // thêm 1 object
       } else {
-        favorites.splice(index, 1);
+        favorites.splice(index, 1); // bớt 1 object
       }
 
       saveFavorites(favorites);
