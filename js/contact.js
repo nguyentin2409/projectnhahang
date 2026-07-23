@@ -7,8 +7,8 @@
  * CHỨC NĂNG CỦA FILE NÀY:
  * Xử lí thao tác cho khách hàng gửi các thông tin cần liên hệ.
  * Khi khách hàng nhập các thông tin trong biểu mẫu (họ tên, email, chủ đề, nôi dung phản hồi) 
- * và bấm gửi thì dao diện nút gửi sẽ chuyển thành "Đã gửi thành công ✓"  
- * và đổi màu giúp khách hàng nhận biết thông tin mình gửi đã được hệ thống ghi nhận thành công.
+ * và bấm gửi thì giao diện sẽ hiện lên bảng thông báo "Đã gửi góp ý thành công. Cảm ơn Thực Khách." giúp khách hàng 
+ * xác nhận thông tin của mình đã được gửi.
   */
 
  // Dùng biến const để lưu trữ thông tin phần tử DOM,
@@ -22,23 +22,6 @@ const submitBtn = document.querySelector(".btn-submit");
 /**  Hàm addEventListener có 2 tham số *(tên sự kiện, hàm xử lí) có chức năng lắng nghe sự kiện "submit",
  * khi người dùng bấm gửi thông tin hàm xử lí sẽ được kích hoạt và chạy các lệnh bên trong hàm*/
 contactForm.addEventListener("submit", (event) => {
-  event.preventDefault(); // Gọi hàm ngăn chặn chế độ chuyển trang hay tải trang web sau khi nhấn submit
-  const originalText = submitBtn.textContent; //Dùng thuộc tính textContent lấy dòng chữ bên trong nút submit vào biến originalText
-
-  submitBtn.innerHTML = " Đã gửi thành công ✓"; //Thay đổi phần dòng chữ bên trong nút submit -> Đã gửi thành công ✓
-  // Dùng thuộc tính style để trực tiếp thao tác vào phần contact.css
-  submitBtn.style.backgroundColor = "var(--color-gold-dim)"; //Đổi màu nền ô submit thành màu nhạt hơn
-  submitBtn.style.color = "var(--color-white)"; //Đổi màu chữ sang màu trắng
-  submitBtn.style.pointerEvents = "none"; // Thuộc tính pointerEvents = "none" khóa nút submit lại không cho người dùng nhấn vào khi đã bấm gửi
-
-  // Sau khi bấm gửi tạo 1 hàm đếm thời gian (4s) quay lại trang thái nút ban đầu với hàm setTimeout() 
-  // với 2 tham số là hàm xử lí và thời gian 4s là 4000 
-  setTimeout(() => {
-    //Thay đổi giao diện nút submit gồm (dòng chữ bên trong, màu nền, màu chữ) và mở khóa nút về lại ban đầu
-    submitBtn.textContent = originalText; 
-    submitBtn.style.backgroundColor = "";
-    submitBtn.style.color = "";
-    submitBtn.style.pointerEvents = "auto";
-    contactForm.reset(); //Xóa toàn bộ dữ liệu đã nhập trong biểu mãu vs hàm reset() 
-  }, 4000);
+  event.preventDefault(); // Gọi hàm ngăn chặn chế độ chuyển trang hay tải trang web sau khi nhấn submit.
+  alert("Đã gửi góp ý thành công. Cảm ơn Thực Khách.") //hàm alert() hiển thị bảng thông báo khi khách hàng nhấn Gửi.
 });
