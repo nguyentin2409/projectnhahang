@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Xử lý nút ♥ =====
   // Đọc trực tiếp thông tin món từ DOM (h3, img, data-price, mô tả)
-  // thay vì tra cứu 1 mảng dữ liệu riêng - vì HTML đã viết cứng sẵn.
   function readItemDataFromDOM(menuItemEl) {
     return {
       id: menuItemEl.dataset.id,
