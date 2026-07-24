@@ -6,7 +6,10 @@
  * - Bấm ♥ để thêm/bớt món khỏi "Yêu Thích"
  */
 document.addEventListener("DOMContentLoaded", () => {
-  const STORAGE_KEY = "vingon_favorites"; // phải trùng khoá với favorite.js/shared.js
+ const username = localStorage.getItem("vingon_username");
+const STORAGE_KEY = username
+    ? `vingon_favorites_${username}`
+    : "vingon_favorites_guest"; // phải trùng khoá với favorite.js/shared.js
 
   const tabs = document.querySelectorAll(".tab-btn");
   const items = document.querySelectorAll(".menu-item");
