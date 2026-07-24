@@ -205,7 +205,7 @@ const STORAGE_KEY = username
 
     let favorites = [];
     try {
-      const parsed = JSON.parse(localStorage.getItem(FAVORITE_STORAGE_KEY)) || [];
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
       favorites = parsed.filter((item) => item && typeof item === "object" && typeof item.id === "string");
     } catch (err) {
       favorites = [];
