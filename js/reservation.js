@@ -5,9 +5,9 @@
 
 // CHỨC NĂNG BỔ SUNG: Tự động lấy danh sách món ăn từ trang Yêu Thích truyền sang qua URL
 window.addEventListener("DOMContentLoaded", () => {
-  // Đọc các tham số tìm kiếm từ URL (Ví dụ: reservation.html?items=Món%20Ăn%20A,%20Món%20B)
+  // Đọc các tham số tìm kiếm từ URL (Ví dụ: reservation.html?dishes=Món%20Ăn%20A,%20Món%20B)
   const urlParams = new URLSearchParams(window.location.search);
-  const items = urlParams.get("items"); // Nhận diện từ khóa 'items' được truyền qua
+  const items = urlParams.get("dishes"); // Nhận diện từ khóa 'dishes' được truyền qua (khớp với favorite.js)
 
   if (items) {
     const noteInput = document.querySelector("#note");
@@ -30,12 +30,13 @@ reservationForm.addEventListener("submit", (e) => {
   // Ngăn chặn hành vi mặc định của trình duyệt (Tải lại trang hoặc chuyển trang)
   e.preventDefault();
 
-  // Lưu lại nội dung văn bản ban đầu của nút bấm ("Xác Nhận Đặt Bàn") bằng textContent
-  const originalText = submitBtn.textContent;
+  // Lưu lại các node con ban đầu của nút bấm ("Xác Nhận Đặt Bàn")
+  const originalChildren = Array.from(submitBtn.childNodes);
 
-  // Thay đổi nội dung hiển thị sang trạng thái thông báo thành công
-  submitBtn.textContent = "Đặt Bàn Thành Công ✓";
-  submitBtn.style.backgroundColor = "var(--color-muted)"; // Áp dụng biến màu nền trạng thái mờ của nhóm
+  // Thay đổi nội dung hiển thị sang trạng thái thông báo thành công 
+  while (submitBtn.firstChild) submitBtn.removeChild(submitBtn.firstChild);
+  submitBtn.appendChild(document.createTextNode("Đặt Bàn Thành Công ✓"));
+  submitBtn.style.backgroundColor = "var(--color-muted)";
   submitBtn.style.color = "var(--color-surface)";
 
   // Vô hiệu hóa khả năng tương tác chuột vào nút bấm
@@ -48,7 +49,9 @@ reservationForm.addEventListener("submit", (e) => {
    * Sử dụng hàm setTimeout để trì hoãn việc khôi phục trạng thái nút bấm sau 4000 mili-giây (4 giây)
    */
   setTimeout(() => {
-    submitBtn.textContent = originalText; // Trả lại đoạn văn bản ban đầu bằng textContent
+    // Xoá chữ vừa gán, gắn lại đúng các node con ban đầu 
+    while (submitBtn.firstChild) submitBtn.removeChild(submitBtn.firstChild);
+    originalChildren.forEach((node) => submitBtn.appendChild(node));
     submitBtn.style.backgroundColor = ""; // Xóa inline style để CSS kế thừa lại định dạng gốc
     submitBtn.style.color = "";
     submitBtn.style.pointerEvents = "auto"; // Mở khóa cho phép tương tác chuột trở lại
