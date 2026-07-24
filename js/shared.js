@@ -6,8 +6,10 @@
  * file này dựng header/footer bằng DOM API rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
  */
 document.addEventListener("DOMContentLoaded", () => {
-  const FAVORITE_STORAGE_KEY = "vingon_favorites";
-
+ const username = localStorage.getItem("vingon_username");
+const STORAGE_KEY = username
+    ? `vingon_favorites_${username}`
+    : "vingon_favorites_guest";
   // Tạo 1 phần tử DOM: gán các thuộc tính trong "attrs" (key camelCase tự đổi
   // sang kebab-case) và thêm chữ bằng createTextNode 
   function createEl(tag, attrs = {}, text = "") {

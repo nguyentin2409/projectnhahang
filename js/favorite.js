@@ -3,8 +3,10 @@
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  */
 document.addEventListener("DOMContentLoaded", () => {
-  const STORAGE_KEY = "vingon_favorites";
-
+ const username = localStorage.getItem("vingon_username");
+const STORAGE_KEY = username
+    ? `vingon_favorites_${username}`
+    : "vingon_favorites_guest";
   const grid = document.getElementById("favorite-grid");
   const emptyState = document.getElementById("empty-state");
   const checkoutBar = document.getElementById("favorite-checkout");
