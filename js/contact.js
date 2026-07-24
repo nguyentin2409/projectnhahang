@@ -16,12 +16,12 @@
 //Dùng hàm querySelector để tìm tên class được định nghĩa sẳn bên contact.html 
 //Lưu thông tin tìm được vào biến contactForm, submitBnt để sử dụng cho phần dưới.
 const contactForm = document.querySelector(".contact-form"); 
-const submitBtn = document.querySelector(".btn-submit");
 
 //Thông tin vừa tìm kiếm trong biến contactForm gọi hàm addEventListener
-/**  Hàm addEventListener có 2 tham số *(tên sự kiện, hàm xử lí) có chức năng lắng nghe sự kiện "submit",
+/**  Hàm addEventListener có 2 tham số (tên sự kiện, hàm xử lí) có chức năng lắng nghe sự kiện "submit",
  * khi người dùng bấm gửi thông tin hàm xử lí sẽ được kích hoạt và chạy các lệnh bên trong hàm*/
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault(); // Gọi hàm ngăn chặn chế độ chuyển trang hay tải trang web sau khi nhấn submit.
   alert("Đã gửi góp ý thành công. Cảm ơn Thực Khách.") //hàm alert() hiển thị bảng thông báo khi khách hàng nhấn Gửi.
+  contactForm.reset(); //Sau khi bảng thông báo hiện thông tin đã xác nhận thì hàm reset() sẽ làm mới các ô nhập thông tin như ban đầu.
 });

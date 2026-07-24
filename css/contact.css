@@ -131,8 +131,10 @@
 }
 
 /*Phần bản đồ*/
-.contact-map {
-  padding: 50px 80px;
+.contact-map iframe {
+  width: 100%;
+  height: 450px;
+  margin: auto; /* Tự cân chỉnh sao cho khung bảng đổ chính giữa*/
 }
 
 /* Tablet trở lên (>= 600px): cho 2 bảng theo hàng ngang*/
