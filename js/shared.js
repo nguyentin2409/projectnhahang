@@ -4,18 +4,12 @@
  *
  * Mỗi trang chỉ để 2 chỗ trống <div id="site-header"> và <div id="site-footer">,
  * file này dựng header/footer bằng DOM API rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
- * Nội dung file:
- *  1. Dựng + chèn header
- *  2. Dựng + chèn footer
- *  3. Gắn class "active" cho link của trang đang xem
- *  4. Mở/đóng menu mobile (hamburger)
- *  5. Đổi màu nền header khi cuộn trang
- *  6. Hiện số lượng món yêu thích trên icon header
  */
 document.addEventListener("DOMContentLoaded", () => {
   const FAVORITE_STORAGE_KEY = "vingon_favorites";
 
-  // Tạo 1 phần tử bằng DOM API thuần: createElement + setAttribute + createTextNode
+  // Tạo 1 phần tử DOM: gán các thuộc tính trong "attrs" (key camelCase tự đổi
+  // sang kebab-case) và thêm chữ bằng createTextNode 
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
     Object.keys(attrs).forEach((key) => {
@@ -26,12 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return el;
   }
 
-  // Thay 1 phần tử placeholder bằng phần tử mới, dùng parentNode.replaceChild
+  // Thay 1 phần tử placeholder (VD <div id="site-header">) bằng phần tử mới dựng xong
   function replaceElement(oldEl, newEl) {
     oldEl.parentNode.replaceChild(newEl, oldEl);
   }
 
   // ===== 1. HEADER =====
+  // Dựng toàn bộ thanh header: logo, menu điều hướng, nút đăng nhập, icon
+  // yêu thích + badge, nút "Đặt Bàn Ngay", nút hamburger cho mobile
   function buildHeader() {
     const header = createEl("header", { class: "site-header", id: "site-header" });
 
@@ -89,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (headerPlaceholder) replaceElement(headerPlaceholder, buildHeader());
 
   // ===== 2. FOOTER =====
+  // Dựng 1 cột footer gồm tiêu đề + danh sách link (dùng lại cho "Khám Phá", "Giờ Mở Cửa"...)
   function buildFooterColumn(title, linkItems) {
     const col = createEl("div", { class: "footer-col" });
     col.appendChild(createEl("h4", {}, title));
@@ -102,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return col;
   }
 
+  // Dựng toàn bộ footer: cột thương hiệu, khám phá, giờ mở cửa, liên hệ
   function buildFooter() {
     const footer = createEl("footer", { class: "site-footer", id: "site-footer" });
     const grid = createEl("div", { class: "footer-grid" });
@@ -159,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (footerPlaceholder) replaceElement(footerPlaceholder, buildFooter());
 
   // ===== 3. ACTIVE LINK theo trang đang xem =====
+  // So khớp URL hiện tại với href của từng link nav, gắn class "active" cho link đúng trang
   const currentPath = window.location.pathname;
   document.querySelectorAll(".nav-links a[data-page]").forEach((link) => {
     const href = link.getAttribute("href");
@@ -172,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== 4. MENU MOBILE (hamburger) =====
+  // Bấm nút hamburger thì mở/đóng menu điều hướng trên mobile
   const navToggle = document.getElementById("nav-toggle");
   if (navToggle) {
     navToggle.addEventListener("click", () => {
@@ -181,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== 5. HIỆU ỨNG HEADER KHI CUỘN TRANG =====
+  // Cuộn xuống quá 40px thì đổi nền header đậm hơn + thêm bóng đổ
   const header = document.getElementById("site-header");
   if (header) {
     window.addEventListener("scroll", () => {
@@ -195,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== 6. BADGE SỐ LƯỢNG MÓN YÊU THÍCH TRÊN HEADER =====
+  // Đọc localStorage, đếm số món yêu thích hợp lệ, cập nhật số + ẩn/hiện badge
   function updateFavoriteBadge() {
     const badge = document.getElementById("favorite-badge");
     if (!badge) return;
@@ -202,13 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let favorites = [];
     try {
       const parsed = JSON.parse(localStorage.getItem(FAVORITE_STORAGE_KEY)) || [];
-      // Chỉ đếm mục đúng định dạng object, tránh đếm nhầm dữ liệu cũ/hỏng
       favorites = parsed.filter((item) => item && typeof item === "object" && typeof item.id === "string");
     } catch (err) {
       favorites = [];
     }
 
-    // Xoá nội dung số cũ rồi thêm text node mới
     while (badge.firstChild) badge.removeChild(badge.firstChild);
 
     if (favorites.length > 0) {
@@ -220,14 +220,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Cho phép các file JS khác (menu.js, favorite.js) gọi lại hàm cập nhật badge
   window.updateFavoriteBadge = updateFavoriteBadge;
 
   // ===== 7. HIỂN THỊ ĐĂNG NHẬP / ĐĂNG XUẤT =====
+  // Dựa vào trạng thái đăng nhập lưu trong localStorage để đổi nút thành
+  // "Đăng nhập" hoặc "Đăng xuất" (đăng xuất thì xoá localStorage + tải lại trang)
   const loginBtn = document.getElementById("login-btn");
 
   if (loginBtn) {
     const isLoggedIn = localStorage.getItem("vingon_logged_in") === "true";
 
+    // Đổi chữ hiển thị trên nút đăng nhập/đăng xuất (không dùng textContent)
     function setLoginBtnText(text) {
       while (loginBtn.firstChild) loginBtn.removeChild(loginBtn.firstChild);
       loginBtn.appendChild(document.createTextNode(text));

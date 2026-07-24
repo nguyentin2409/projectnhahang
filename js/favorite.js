@@ -1,14 +1,9 @@
 /**
  * favorite.js - Trang Món Yêu Thích (favorite.html)
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
- *
- * - Đọc danh sách món yêu thích (mảng OBJECT THÔ) từ localStorage, do
- *   menu.js lưu sẵn lúc bấm ♥ ở trang Thực Đơn.
- * - Dựng lại từng thẻ món bằng DOM API, tính tổng tiền, và tạo link
- *   "Đặt Bàn" kèm tên món qua query-string (?dishes=...).
  */
 document.addEventListener("DOMContentLoaded", () => {
-  const STORAGE_KEY = "vingon_favorites"; // phải trùng khoá với menu.js/shared.js
+  const STORAGE_KEY = "vingon_favorites";
 
   const grid = document.getElementById("favorite-grid");
   const emptyState = document.getElementById("empty-state");
@@ -17,8 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalText = document.getElementById("favorite-total-text");
   const goReserveBtn = document.getElementById("btn-go-reserve");
 
-  // JSON.parse trả về NGAY mảng object thô - toàn bộ hàm bên dưới chỉ
-  // thao tác trên object (item.name, item.price...)
+  // Đọc mảng món yêu thích từ localStorage (JSON -> object), lỗi thì trả về []
   function getFavorites() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -28,19 +22,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // JSON.stringify chỉ dùng ĐÚNG lúc ghi vào localStorage
+  // Ghi mảng món yêu thích xuống localStorage (object -> JSON) và cập nhật badge header
   function saveFavorites(favorites) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
     if (typeof window.updateFavoriteBadge === "function") window.updateFavoriteBadge();
   }
 
-  function formatCurrency(amount) {
-    // Dùng ngôn ngữ trình duyệt của khách (navigator.language)
-    const locale = navigator.language || "vi-VN";
-    return amount.toLocaleString(locale) + " ₫";
+  // Xoá nội dung chữ cũ và gán nội dung chữ mới cho 1 phần tử 
+  function setText(el, text) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.appendChild(document.createTextNode(text));
   }
 
-  // Tạo 1 phần tử bằng DOM API thuần (giống hàm createEl trong shared.js):
+  const ATTR_NAME_MAP = {
+    dataId: "data-id",
+    ariaLabel: "aria-label",
+    ariaPressed: "aria-pressed",
+  };
+
+  // Tạo 1 phần tử DOM: gán các thuộc tính trong "attrs" (key camelCase tự đổi
+  // sang kebab-case) và thêm chữ bằng createTextNode 
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
     Object.keys(attrs).forEach((key) => {
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return el;
   }
 
-  // Dựng 1 thẻ món yêu thích bằng DOM API, gắn sẵn sự kiện "Bỏ thích".
+  // Dựng 1 thẻ món yêu thích hoàn chỉnh (ảnh, nút ♥ bỏ thích, tên, giá, mô tả)
   function createFavoriteCard(item) {
     const card = createEl("div", { class: "menu-item", dataId: item.id });
 
@@ -73,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const infoTop = createEl("div", { class: "menu-info-top" });
     infoTop.appendChild(createEl("h3", {}, item.name));
-    infoTop.appendChild(createEl("span", { class: "menu-price" }, formatCurrency(item.price)));
+    infoTop.appendChild(createEl("span", { class: "menu-price" }, item.price.toLocaleString("vi-VN") + " ₫"));
 
     const info = createEl("div", { class: "menu-info" });
     info.appendChild(infoTop);
@@ -84,16 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return card;
   }
 
-  // Đặt lại text hiển thị của 1 phần tử bằng DOM API
-  function setText(el, text) {
-    while (el.firstChild) el.removeChild(el.firstChild);
-    el.appendChild(document.createTextNode(text));
-  }
-
+  // Vẽ lại toàn bộ trang: xoá grid cũ, hiện trạng thái rỗng hoặc danh sách
+  // món yêu thích, tính tổng tiền, và cập nhật link "Đặt Bàn"
   function render() {
-    const favoriteItems = getFavorites(); // mảng object thô
+    const favoriteItems = getFavorites();
 
-    // Xoá nội dung cũ trong grid bằng DOM API 
     while (grid.firstChild) grid.removeChild(grid.firstChild);
 
     if (favoriteItems.length === 0) {
@@ -108,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const total = favoriteItems.reduce((sum, item) => sum + item.price, 0);
     setText(countText, `${favoriteItems.length} món`);
-    setText(totalText, `Tổng dự kiến: ${formatCurrency(total)}`);
+    setText(totalText, `Tổng dự kiến: ${total.toLocaleString("vi-VN")} ₫`);
 
     const dishNames = favoriteItems.map((item) => item.name).join(", ");
     goReserveBtn.href = `/pages/reservation.html?dishes=${encodeURIComponent(dishNames)}`;
