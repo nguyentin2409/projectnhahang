@@ -6,12 +6,13 @@
  * file này dựng header/footer bằng DOM API rồi thay vào 2 chỗ trống đó bằng parentNode.replaceChild().
  */
 document.addEventListener("DOMContentLoaded", () => {
- const username = localStorage.getItem("vingon_username");
-const STORAGE_KEY = username
-    ? `vingon_favorites_${username}`
-    : "vingon_favorites_guest";
+  // Mỗi user đăng nhập có 1 danh sách yêu thích riêng; chưa đăng nhập thì
+  // dùng chung khoá "guest". Phải khớp với STORAGE_KEY trong favorite.js/menu.js.
+  const username = localStorage.getItem("vingon_username");
+  const STORAGE_KEY = username ? `vingon_favorites_${username}` : "vingon_favorites_guest";
+
   // Tạo 1 phần tử DOM: gán các thuộc tính trong "attrs" (key camelCase tự đổi
-  // sang kebab-case) và thêm chữ bằng createTextNode 
+  // sang kebab-case) và thêm chữ bằng createTextNode
   function createEl(tag, attrs = {}, text = "") {
     const el = document.createElement(tag);
     Object.keys(attrs).forEach((key) => {
@@ -233,7 +234,7 @@ const STORAGE_KEY = username
   if (loginBtn) {
     const isLoggedIn = localStorage.getItem("vingon_logged_in") === "true";
 
-    // Đổi chữ hiển thị trên nút đăng nhập/đăng xuất (không dùng textContent)
+    // Đổi chữ hiển thị trên nút đăng nhập/đăng xuất 
     function setLoginBtnText(text) {
       while (loginBtn.firstChild) loginBtn.removeChild(loginBtn.firstChild);
       loginBtn.appendChild(document.createTextNode(text));
