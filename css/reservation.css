@@ -136,7 +136,7 @@
 }
 
 /* ------ HỖ TRỢ HIỂN THỊ TRÊN ĐIỆN THOẠI ------ */
-@media (max-width: 900px) {
+@media (min-width: 900px) {
   .reservation-container {
     flex-direction: column;
     align-items: stretch;
