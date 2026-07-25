@@ -7,35 +7,58 @@
 
     <title>Đăng ký | Vị Ngon Restaurant</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/shared.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/debug-outline.css" />
+    <!--
+        Trang: register.html - Trang Đăng ký
+        Chức năng:
+        - Cho phép người dùng tạo tài khoản mới.
+        - Kiểm tra dữ liệu nhập và lưu tài khoản vào localStorage.
+        Người viết: MSSV B2408835 - Họ tên: Trần Lý An
+        Liên kết:
+        - css/login.css: Giao diện trang đăng ký.
+        - js/register.js: Xử lý đăng ký và kiểm tra dữ liệu.
+    -->
 
-    <!-- Font -->
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" href="../css/shared.css">
+
+    <!-- CSS riêng của trang Đăng ký -->
+    <link rel="stylesheet" href="../css/login.css">
+
+    <!-- <link rel="stylesheet" href="../css/debug-outline.css" /> -->
+    
+
+    <!-- Kết nối Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!-- Font chữ sử dụng -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
+    <!-- Khu vực chính của trang đăng ký -->
     <main class="login-page">
 
+        <!-- Khung chứa biểu mẫu đăng ký -->
         <div class="login-container">
 
+            <!-- Thẻ chứa nội dung đăng ký -->
             <div class="login-card">
 
+                <!-- Tiêu đề -->
                 <h1>Đăng ký</h1>
 
+                <!-- Mô tả -->
                 <p class="subtitle">
                     Tạo tài khoản để đặt bàn và thưởng thức các món ăn tại Vị Ngon Restaurant
                 </p>
 
+                <!-- Biểu mẫu đăng ký -->
                 <form id="registerForm">
 
+                    <!-- Họ và tên -->
                     <div class="form-group">
 
                         <label for="fullname">Họ và tên</label>
@@ -45,10 +68,12 @@
                             id="fullname"
                             placeholder="Nhập họ và tên">
 
+                        <!-- Hiển thị lỗi họ và tên -->
                         <small id="fullnameError"></small>
 
                     </div>
 
+                    <!-- Email -->
                     <div class="form-group">
 
                         <label for="email">Email</label>
@@ -58,10 +83,12 @@
                             id="email"
                             placeholder="Nhập Email">
 
+                        <!-- Hiển thị lỗi Email -->
                         <small id="emailError"></small>
 
                     </div>
 
+                    <!-- Số điện thoại -->
                     <div class="form-group">
 
                         <label for="phone">Số điện thoại</label>
@@ -71,10 +98,12 @@
                             id="phone"
                             placeholder="Nhập số điện thoại">
 
+                        <!-- Hiển thị lỗi số điện thoại -->
                         <small id="phoneError"></small>
 
                     </div>
 
+                    <!-- Mật khẩu -->
                     <div class="form-group">
 
                         <label for="password">Mật khẩu</label>
@@ -84,10 +113,12 @@
                             id="password"
                             placeholder="Nhập mật khẩu">
 
+                        <!-- Hiển thị lỗi mật khẩu -->
                         <small id="passwordError"></small>
 
                     </div>
 
+                    <!-- Xác nhận mật khẩu -->
                     <div class="form-group">
 
                         <label for="confirmPassword">Xác nhận mật khẩu</label>
@@ -97,10 +128,12 @@
                             id="confirmPassword"
                             placeholder="Nhập lại mật khẩu">
 
+                        <!-- Hiển thị lỗi xác nhận mật khẩu -->
                         <small id="confirmError"></small>
 
                     </div>
 
+                    <!-- Nút đăng ký -->
                     <button
                         type="submit"
                         class="btn-primary">
@@ -111,6 +144,7 @@
 
                 </form>
 
+                <!-- Liên kết sang trang đăng nhập -->
                 <p class="register">
 
                     Đã có tài khoản?
