@@ -4,82 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Đăng nhập | Vị Ngon Restaurant</title>
 
-    <link rel="stylesheet" href="../css/shared.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/debug-outline.css" />
+    <!--
+        Trang: login.html - Trang Đăng nhập
+        Chức năng:
+        - Cho phép người dùng đăng nhập vào hệ thống.
+        - Kiểm tra thông tin tài khoản trước khi truy cập.
+        Người viết: MSSV B2408835 - Họ tên: Trần Lý An
+        Liên kết:
+        - css/login.css: Giao diện trang đăng nhập.
+        - js/login.js: Xử lý đăng nhập và kiểm tra dữ liệu.
+    -->
 
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" href="../css/shared.css">
+
+    <!-- CSS riêng của trang đăng nhập -->
+    <link rel="stylesheet" href="../css/login.css">
+
+    <!-- <link rel="stylesheet" href="../css/debug-outline.css" /> -->
+    
+
+    <!-- Kết nối Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!-- Font chữ sử dụng -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-<main class="login-page">
+    <!-- Khu vực chính của trang đăng nhập -->
+    <main class="login-page">
 
-    <div class="login-card">
+        <!-- Thẻ chứa biểu mẫu đăng nhập -->
+        <div class="login-card">
 
-        <h1>Đăng nhập</h1>
+            <!-- Tiêu đề -->
+            <h1>Đăng nhập</h1>
 
-        <p class="subtitle">
-            Chào mừng bạn đến với Nhà hàng Vị Ngon.
-        </p>
+            <!-- Mô tả ngắn -->
+            <p class="subtitle">
+                Chào mừng bạn đến với Nhà hàng Vị Ngon.
+            </p>
 
-        <form id="loginForm">
+            <!-- Biểu mẫu đăng nhập -->
+            <form id="loginForm">
 
-            <div class="form-group">
+                <!-- Ô nhập Email -->
+                <div class="form-group">
 
-                <label>Email</label>
+                    <label>Email</label>
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Nhập địa chỉ Email">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Nhập địa chỉ Email">
 
-                <small id="emailError"></small>
+                    <!-- Hiển thị lỗi Email -->
+                    <small id="emailError"></small>
 
+                </div>
+
+                <!-- Ô nhập Mật khẩu -->
+                <div class="form-group">
+
+                    <label>Mật khẩu</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Nhập mật khẩu">
+
+                    <!-- Hiển thị lỗi Mật khẩu -->
+                    <small id="passwordError"></small>
+
+                </div>
+
+                <!-- Nút đăng nhập -->
+                <button type="submit" class="btn-primary">
+                    Đăng nhập
+                </button>
+
+            </form>
+
+            <!-- Đường phân cách -->
+            <div class="divider">
+                <span>Hoặc</span>
             </div>
 
-            <div class="form-group">
+            <!-- Liên kết sang trang đăng ký -->
+            <p class="register">
+                Chưa có tài khoản?
+                <a href="register.html">Đăng ký ngay</a>
+            </p>
 
-                <label>Mật khẩu</label>
+            <!-- Quay về trang chủ -->
+            <a href="../index.html" class="back-home">
+                ← Quay về Trang chủ
+            </a>
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Nhập mật khẩu">
-
-                <small id="passwordError"></small>
-
-            </div>
-
-            <button type="submit" class="btn-primary">
-                Đăng nhập
-            </button>
-
-        </form>
-
-        <div class="divider">
-            <span>Hoặc</span>
         </div>
 
-        <p class="register">
-            Chưa có tài khoản?
-            <a href="register.html">Đăng ký ngay</a>
-        </p>
+    </main>
 
-        <a href="../index.html" class="back-home">
-            ← Quay về Trang chủ
-        </a>
-
-    </div>
-
-</main>
-
-<script src="../js/login.js"></script>
+ 
+    <script src="../js/login.js"></script>
 
 </body>
 
