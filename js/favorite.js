@@ -3,10 +3,11 @@
  * MSSV: B2405536 - Họ tên: Nguyễn Bảo Tín
  */
 document.addEventListener("DOMContentLoaded", () => {
- const username = localStorage.getItem("vingon_username");
-const STORAGE_KEY = username
-    ? `vingon_favorites_${username}`
-    : "vingon_favorites_guest";
+  // Mỗi user đăng nhập có 1 danh sách yêu thích riêng; chưa đăng nhập thì
+  // dùng chung khoá "guest". Phải khớp với STORAGE_KEY trong shared.js/menu.js.
+  const username = localStorage.getItem("vingon_username");
+  const STORAGE_KEY = username ? `vingon_favorites_${username}` : "vingon_favorites_guest";
+
   const grid = document.getElementById("favorite-grid");
   const emptyState = document.getElementById("empty-state");
   const checkoutBar = document.getElementById("favorite-checkout");
