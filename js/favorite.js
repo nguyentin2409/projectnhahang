@@ -36,12 +36,6 @@ const STORAGE_KEY = username
     el.appendChild(document.createTextNode(text));
   }
 
-  const ATTR_NAME_MAP = {
-    dataId: "data-id",
-    ariaLabel: "aria-label",
-    ariaPressed: "aria-pressed",
-  };
-
   // Tạo 1 phần tử DOM: gán các thuộc tính trong "attrs" (key camelCase tự đổi
   // sang kebab-case) và thêm chữ bằng createTextNode 
   function createEl(tag, attrs = {}, text = "") {

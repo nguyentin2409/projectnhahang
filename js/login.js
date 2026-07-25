@@ -38,7 +38,8 @@ form.addEventListener("submit", function (e) {
 
         localStorage.setItem("vingon_logged_in", "true");
         localStorage.setItem("vingon_username", account.fullname);
-
+        localStorage.removeItem("vingon_favorites_guest");
+        if (typeof window.updateFavoriteBadge === "function") window.updateFavoriteBadge();
         alert("Đăng nhập thành công!");
 
         window.location.href = "../index.html";
