@@ -1,5 +1,5 @@
 /** * home.js - Xử lý tương tác menu trên thiết bị di động và hiệu ứng nút quay lại đầu trang
- * MSSV: [Điền MSSV] - Họ tên: [Điền Họ Tên] 
+ * NGUYEN QUOC BAO - B2405486
  */
 
 document.addEventListener("DOMContentLoaded", () => {
