@@ -1,4 +1,4 @@
-
+/* NGUYEN QUOC BAO - B2405486 */
 /* Phần hiển thị chính (Hero Banner) đầu trang */
 .hero {
   position: relative; /* Đặt vị trí tương đối để các phần tử con (như overlay) có thể định vị theo nó */
