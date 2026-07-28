@@ -22,7 +22,7 @@
 .contact-section {
   display: flex;  /*Sử dụng Flex layout để chia các phần thông tin theo cột*/
   flex-direction: column; /* Quy định hướng sắp xếp các phần tử của cha là Flex*/
-  padding: 60px 80px; /*khoảng cách bên trong theo thông số trên dưới, trái phải */
+  padding: 45px 30px; /*khoảng cách bên trong theo thông số trên dưới, trái phải */
   gap: 30px; /* khoảng cách giữ các khung với nhau*/
 }
 
