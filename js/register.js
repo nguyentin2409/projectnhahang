@@ -65,11 +65,17 @@ form.addEventListener("submit", function (e) {
 
     }
 
-    // Kiểm tra số điện thoại.
+  // Kiểm tra số điện thoại.
     if (phone === "") {
         document.getElementById("phoneError").textContent =
             "Vui lòng nhập số điện thoại";
         valid = false;
+    } else if (!/^0\d{9}$/.test(phone)) {
+        document.getElementById("phoneError").textContent =
+            "Số điện thoại không đúng định dạng";
+        valid = false;
+    } else {
+        document.getElementById("phoneError").textContent = "";
     }
 
     // Kiểm tra mật khẩu.
