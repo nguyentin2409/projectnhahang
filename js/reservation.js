@@ -3,21 +3,11 @@
  * MSSV: B2410751 - Họ tên: Võ Trọng Tình
  */
 
-// Lấy món ăn từ trang yêu thích và kiểm tra đăng nhập khi DOM đã sẵn sàng
+// Lấy món ăn từ trang yêu thích khi DOM đã sẵn sàng
 window.addEventListener("DOMContentLoaded", () => {
-  // 1. Kiểm tra chính xác trạng thái đăng nhập dựa trên key 'vingon_logged_in' từ login.js
-  const isLoggedIn = localStorage.getItem("vingon_logged_in");
-
-  // Nếu chưa đăng nhập hoặc giá trị không phải là "true"
-  if (isLoggedIn !== "true") {
-    alert("Vui lòng đăng nhập để thực hiện đặt bàn!");
-    window.location.href = "login.html"; // Chuyển hướng sang trang đăng nhập
-    return;
-  }
-
-  // 2. Quét truy vấn trên thanh địa chỉ bằng URLSearchParams
+  // Quét truy vấn trên thanh địa chỉ bằng URLSearchParams
   const urlParams = new URLSearchParams(window.location.search);
-  // Lấy danh sách món ăn từ tham số 'dishes' 
+  // Lấy danh sách món ăn từ tham số 'dishes'
   const dishes = urlParams.get("dishes");
 
   if (dishes) {
@@ -36,24 +26,34 @@ const submitBtn = reservationForm
   : null;
 
 /**
- * Lắng nghe sự kiện 'submit' (gửi form).
+ * Lắng hệ sự kiện 'submit' (gửi form).
  */
 if (reservationForm) {
   reservationForm.addEventListener("submit", (e) => {
     // Ngăn chặn hành vi mặc định của trình duyệt (Tải lại trang)
     e.preventDefault();
 
+    // 1. Kiểm tra chính xác trạng thái đăng nhập dựa trên key 'vingon_logged_in' từ login.js
+    const isLoggedIn = localStorage.getItem("vingon_logged_in");
+
+    // Nếu chưa đăng nhập hoặc giá trị không phải là "true"
+    if (isLoggedIn !== "true") {
+      alert("Vui lòng đăng nhập để thực hiện đặt bàn!");
+      window.location.href = "login.html"; // Chuyển hướng sang trang đăng nhập
+      return;
+    }
+
     if (!submitBtn) return;
 
-    // 1. Xóa danh sách món ăn yêu thích trong localStorage sau khi đã đặt thành công
+    // 2. Xóa danh sách món ăn yêu thích trong localStorage sau khi đã đặt thành công
     localStorage.removeItem("vingon_favorites");
 
-    // 2. Cập nhật badge trên Header về 0
+    // 3. Cập nhật badge trên Header về 0
     if (typeof window.updateFavoriteBadge === "function") {
       window.updateFavoriteBadge();
     }
 
-    // 3. Xử lý giao diện nút và Reset Form
+    // 4. Xử lý giao diện nút và Reset Form
     const originalText = submitBtn.textContent;
 
     // Thay đổi trạng thái hiển thị của nút bấm
