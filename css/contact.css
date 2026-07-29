@@ -20,8 +20,8 @@
 
 /*Phần thông tin chính của trang Liên hệ xếp thành cột dọc theo màn hình điện thoại*/
 .contact-section {
-  display: flex;  /*Sử dụng Flex layout để chia các phần thông tin theo cột*/
-  flex-direction: column; /* Quy định hướng sắp xếp các phần tử của cha là Flex*/
+  display: flex;  /*Sử dụng Flex layout để chia các phần thông tin*/
+  flex-direction: column; /* Quy định hướng sắp xếp các phần tử của cha là Flex theo côt*/
   padding: 45px 30px; /*khoảng cách bên trong theo thông số trên dưới, trái phải */
   gap: 30px; /* khoảng cách giữ các khung với nhau*/
 }
@@ -98,7 +98,7 @@
 /*Chỉnh các nhãn tên từng khung nhập*/
 .form-group label {
   font-family: var(--font-body);
-  display: block; /*dùng Block các nhã thành 1 khối */
+  display: block; /*dùng Block các nhãn thành 1 khối */
   font-size: 14px;
   color: var(--color-muted);
   font-weight: 500; /*độ đậm của chữ*/

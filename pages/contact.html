@@ -46,11 +46,11 @@
           phần địa chỉ, email, số điện thoại + các ảnh biểu tượng cho từng thông tin.
           Khách hàng có thể bấm vào để tìm kiếm trực tiếp -->
           <div class="info-item">
-            <!--Lớp cho phần biểu tuợng-->
+            <!--Lớp giao diện cho phần biểu tuợng-->
             <div class="info-icon">
               <img src="../images/contact-dia-chi.jpg" alt="Địa chỉ" />
             </div>
-            <!--Lớp cho phần thông tin văn bản-->
+            <!--Lớp giao diện cho phần thông tin văn bản-->
             <div class="info-text">
               <a href="https://maps.app.goo.gl/okcmNnH1BtmJ7JXNA">ĐỊA CHỈ</a>
               <p>123 Đường Ẩm Thực, Q.1, TP. HCM</p>
@@ -93,20 +93,24 @@
           <form class="contact-form">
             <h3>Góp ý</h3>
             <div class="divider-gold"></div> 
-            <!--Phần cấu trúc lớp dùng cho từng giá trị dữ liệu nhập vào gồm họ tên, email, chủ đề, nội dung góp ý -->
+            <!--Phần cấu trúc lớp dùng cho từng dữ liệu nhập vào gồm họ tên, email, chủ đề, nội dung góp ý -->
             <div class="form-group">
-              <!-- label: Hiển thị tên nhãn của từng ô nhập,với thuộc tính for="fullname" liên kết với input id="fullname"
-               khi người dùng click vào thì con trỏ sẽ tự động nhảy vào ô nhập tương ứng + lớp bắt buộc * 
+              <!-- label: tên nhãn của từng ô nhập,với thuộc tính for="fullname" liên kết với input id="fullname"
+               khi người dùng click vào thì con trỏ sẽ tự động nhảy vào ô nhập tương ứng 
                để người dùng biết thông tin bắt buộc phải nhập -->
               <label for="fullname"
                 >Họ và tên <span class="required">*</span></label
               >
-              <!-- input: thẻ cho người dùng nhập thông tin từ bàn phím, 
-              thuộc tính type="text" khai báo cho nhập văn bản thông thường,
-              placeholder="Nhập họ và tên" hiển thị nội dung gợi ý-->
+              <!-- input: thẻ cho người dùng nhập thông tin từ bàn phím
+              thuộc tính type="text" khai báo cho nhập văn bản thông thường
+              name dùng trong <form> dùng để tham chiếu dữ liệu được gửi đi
+              placeholder="Nhập họ và tên" hiển thị nội dung gợi ý
+              id định danh để liên kết với thẻ label 
+              required thuộc tính bắt buộc phải nhập dữ liệu trước khi gửi góp ý
+              -->
               <input 
-                name="customername"
                 type="text"
+                name="customername"
                 id="fullname"
                 placeholder="Nhập họ và tên"  
                 required
@@ -114,9 +118,11 @@
             </div>
             <div class="form-group">
               <label for="email">Email <span class="required">*</span></label>
+              <!--input thuộc tính type="email" trình duyệt sẽ tự động kiểm trả dữ liệu nhập thiếu "@" hay tên miền (.com, .vn)
+              trước khi bấm gửi-->
               <input
-                name="emailname"
                 type="email"
+                name="emailname"
                 id="email"
                 placeholder="Nhập email"
                 required
@@ -135,7 +141,7 @@
               <label for="message"
                 >Nội dung <span class="required">*</span></label
               >
-              <!--tạo ra 1 ô nhập với nội dung dài=> dùng thẻ textarea-->
+              <!--tạo ra 1 ô nhập với văn bản nhiều dòng=> dùng thẻ textarea-->
               <textarea 
                 name="story"
                 id="message"
@@ -150,7 +156,7 @@
       </section>
       <div class="contact-map">
         <div class="container">
-            <!--Nhúng trang web từ bên ngoài vào trang liên hệ, nó sẽ hiển thị ra bản đồ
+            <!--Hiển thi trang web từ bên ngoài vào trang liên hệ, nó sẽ hiển thị ra bản đồ
             với src chứa địa chỉ trang web bản đồ. -->
             <iframe src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d8048644.357195309!2d106.238921!3d9.93378!3m2!1i1024!2i768!4f13.1!2m1!1sQ.1%2C%20TP.%20HCM!5e0!3m2!1svi!2sus!4v1784901996520!5m2!1svi!2sus"></iframe>
         </div>

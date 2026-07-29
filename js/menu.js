@@ -88,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gắn sự kiện bấm ♥: thêm/bớt món khỏi danh sách yêu thích rồi lưu lại
   document.querySelectorAll(".btn-favorite").forEach((btn) => {
     btn.addEventListener("click", (event) => {
-      event.stopPropagation();
 
       const menuItemEl = btn.closest(".menu-item");
       const favorites = getFavorites();
