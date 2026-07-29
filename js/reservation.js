@@ -3,57 +3,74 @@
  * MSSV: B2410751 - Họ tên: Võ Trọng Tình
  */
 
-// CHỨC NĂNG BỔ SUNG: Tự động lấy danh sách món ăn từ trang Yêu Thích truyền sang qua URL
+// Lấy món ăn từ trang yêu thích và kiểm tra đăng nhập khi DOM đã sẵn sàng
 window.addEventListener("DOMContentLoaded", () => {
-  // Đọc các tham số tìm kiếm từ URL (Ví dụ: reservation.html?dishes=Món%20Ăn%20A,%20Món%20B)
-  const urlParams = new URLSearchParams(window.location.search);
-  const items = urlParams.get("dishes"); // Nhận diện từ khóa 'dishes' được truyền qua (khớp với favorite.js)
+  // 1. Kiểm tra chính xác trạng thái đăng nhập dựa trên key 'vingon_logged_in' từ login.js
+  const isLoggedIn = localStorage.getItem("vingon_logged_in");
 
-  if (items) {
+  // Nếu chưa đăng nhập hoặc giá trị không phải là "true"
+  if (isLoggedIn !== "true") {
+    alert("Vui lòng đăng nhập để thực hiện đặt bàn!");
+    window.location.href = "login.html"; // Chuyển hướng sang trang đăng nhập
+    return;
+  }
+
+  // 2. Quét truy vấn trên thanh địa chỉ bằng URLSearchParams
+  const urlParams = new URLSearchParams(window.location.search);
+  // Lấy danh sách món ăn từ tham số 'dishes' 
+  const dishes = urlParams.get("dishes");
+
+  if (dishes) {
     const noteInput = document.querySelector("#note");
+    // Quét tìm ô có id="note" và điền danh sách món ăn (urlParams.get đã tự decode)
     if (noteInput) {
-      // Điền chuỗi theo định dạng yêu cầu vào ô ghi chú và giải mã ký tự đặc biệt (tiếng Việt có dấu)
-      noteInput.value = `Muốn đặt các món: ${decodeURIComponent(items)}`;
+      noteInput.value = `Muốn đặt các món: ${decodeURIComponent(dishes)}`;
     }
   }
 });
 
-// Lựa chọn form đặt bàn và nút xác nhận dựa trên ID và Class đã định nghĩa sẵn trong file HTML
+// Lựa chọn form đặt bàn và nút xác nhận dựa trên ID và Class
 const reservationForm = document.querySelector("#reservationForm");
-const submitBtn = reservationForm.querySelector(".btn-primary");
+const submitBtn = reservationForm
+  ? reservationForm.querySelector(".btn-primary")
+  : null;
 
 /**
- * Lắng nghe sự kiện 'submit' (gửi form). Khi người dùng nhấn nút hoặc nhấn Enter,
- * trình duyệt sẽ thực hiện kiểm tra tính hợp lệ tự động (Validation) trước khi kích hoạt callback này.
+ * Lắng nghe sự kiện 'submit' (gửi form).
  */
-reservationForm.addEventListener("submit", (e) => {
-  // Ngăn chặn hành vi mặc định của trình duyệt (Tải lại trang hoặc chuyển trang)
-  e.preventDefault();
+if (reservationForm) {
+  reservationForm.addEventListener("submit", (e) => {
+    // Ngăn chặn hành vi mặc định của trình duyệt (Tải lại trang)
+    e.preventDefault();
 
-  // Lưu lại các node con ban đầu của nút bấm ("Xác Nhận Đặt Bàn")
-  const originalChildren = Array.from(submitBtn.childNodes);
+    if (!submitBtn) return;
 
-  // Thay đổi nội dung hiển thị sang trạng thái thông báo thành công 
-  while (submitBtn.firstChild) submitBtn.removeChild(submitBtn.firstChild);
-  submitBtn.appendChild(document.createTextNode("Đặt Bàn Thành Công ✓"));
-  submitBtn.style.backgroundColor = "var(--color-muted)";
-  submitBtn.style.color = "var(--color-surface)";
+    // 1. Xóa danh sách món ăn yêu thích trong localStorage sau khi đã đặt thành công
+    localStorage.removeItem("vingon_favorites");
 
-  // Vô hiệu hóa khả năng tương tác chuột vào nút bấm
-  submitBtn.style.pointerEvents = "none";
+    // 2. Cập nhật badge trên Header về 0
+    if (typeof window.updateFavoriteBadge === "function") {
+      window.updateFavoriteBadge();
+    }
 
-  // Reset toàn bộ dữ liệu hiện tại đang có trong các ô input về giá trị mặc định ban đầu
-  reservationForm.reset();
+    // 3. Xử lý giao diện nút và Reset Form
+    const originalText = submitBtn.textContent;
 
-  /**
-   * Sử dụng hàm setTimeout để trì hoãn việc khôi phục trạng thái nút bấm sau 4000 mili-giây (4 giây)
-   */
-  setTimeout(() => {
-    // Xoá chữ vừa gán, gắn lại đúng các node con ban đầu 
-    while (submitBtn.firstChild) submitBtn.removeChild(submitBtn.firstChild);
-    originalChildren.forEach((node) => submitBtn.appendChild(node));
-    submitBtn.style.backgroundColor = ""; // Xóa inline style để CSS kế thừa lại định dạng gốc
-    submitBtn.style.color = "";
-    submitBtn.style.pointerEvents = "auto"; // Mở khóa cho phép tương tác chuột trở lại
-  }, 4000);
-});
+    // Thay đổi trạng thái hiển thị của nút bấm
+    submitBtn.textContent = "Đặt Bàn Thành Công ✓";
+    submitBtn.style.backgroundColor = "var(--color-muted)";
+    submitBtn.style.color = "var(--color-surface)";
+    submitBtn.style.pointerEvents = "none"; // Khóa tương tác tạm thời
+
+    // Reset toàn bộ dữ liệu trong các ô input về mặc định
+    reservationForm.reset();
+
+    // Khôi phục lại trạng thái nút bấm sau 4 giây
+    setTimeout(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.style.backgroundColor = "";
+      submitBtn.style.color = "";
+      submitBtn.style.pointerEvents = "auto";
+    }, 4000);
+  });
+}
