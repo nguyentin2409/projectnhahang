@@ -6,23 +6,23 @@
   padding: 45px 30px;
   margin-top: 40px;
   margin-bottom: 60px;
-  align-items: stretch;
+  align-items: stretch; /* Dãn rộng các khung bằng nhau */
 }
 
-/* KHỐI FORM ĐẶT BÀN (này bên trái nhó) */
+/* KHỐI FORM ĐẶT BÀN (Bên trái) */
 .information {
   background-color: var(--color-surface);
   padding: 35px;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border-radius: 8px; /* Bo góc */
+  border: 1px solid var(--color-border); /* Viền mỏng */
 }
 
 .information form p:first-child {
   font-family: var(--font-display);
   font-size: 1.4rem;
   color: var(--color-cream);
-  margin-bottom: 24px;
-  font-weight: bold;
+  margin-bottom: 24px; /* Cách các ô phía dưới 24px */
+  font-weight: bold; /* In đậm */
 }
 
 .information form p {
@@ -31,10 +31,10 @@
 
 .information label {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.95rem; /* Bằng 95% cỡ chữ mặc định (~15.2px) */
   font-weight: 500;
   color: var(--color-cream);
-  display: inline-block;
+  display: inline-block; /* Tách khối để chỉnh khoảng cách */
   margin-bottom: 8px;
 }
 
@@ -44,7 +44,7 @@
 .information input[type="date"],
 .information input[type="time"],
 .information input[type="number"] {
-  width: 100%;
+  width: 100%; /* Dãn ô nhập rộng = 100% chiều rộng khung form */
   padding: 12px 14px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
@@ -52,15 +52,15 @@
   color: var(--color-cream);
   font-family: var(--font-body);
   font-size: 1rem;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
+  transition: all 0.3s ease; /* Hiệu ứng đổi màu viền mượt mà */
+  box-sizing: border-box; /* Giữ ô nhập không bị vỡ/phình ra ngoài khung */
 }
 
 .information input:focus {
-  outline: none;
-  border-color: var(--color-gold);
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(184, 137, 58, 0.1);
+  outline: none; /* Bỏ viền mặc định của trình duyệt */
+  border-color: var(--color-gold); /* Đổi viền sang màu vàng kim */
+  background-color: #ffffff; /* Đổi nền sang màu trắng tinh */
+  box-shadow: 0 0 0 3px rgba(184, 137, 58, 0.1); /* Hào quang mờ màu vàng bao quanh */
 }
 
 .information button.btn-primary {
@@ -68,31 +68,28 @@
   padding: 14px;
   font-size: 1rem;
   font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  border: none; /* Bỏ viền nút */
+  border-radius: 6px; /* Bo tròn góc nút */
+  cursor: pointer; /* Đổi con trỏ chuột thành hình bàn tay */
   margin-top: 10px;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease; /* Hiệu ứng mờ dần mượt 0.2s */
 }
 
+/* ĐÃ SỬA: Thêm opacity: 0.9 vào đây */
 .information button.btn-primary:hover {
-  opacity: 0.9;
+  opacity: 0.9; /* Khi rê chuột vào, nút mờ nhẹ 10% để báo hiệu tương tác */
 }
 
-/* CÁI PHẦN LƯU Ý (CỘT BÊN PHẢI Ă) */
+/* CÁI PHẦN LƯU Ý (CỘT BÊN PHẢI) */
 .benphai {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* Căn giữa các thẻ ghi chú theo chiều cao */
   gap: 24px;
   padding: 30px;
   border-radius: 8px;
-  min-height: 450px; /* Đảm bảo đủ chiều cao hiển thị nền trên mobile */
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border: 1px solid var(--color-border);
+  min-height: 450px; /* Đảm bảo đủ chiều cao hiển thị trên mobile */
+  border: 1px solid var(--color-border); /* Đường viền khung */
 }
 
 /* Thẻ nổi mờ trên nền ảnh */
@@ -101,11 +98,14 @@
   backdrop-filter: blur(4px);
   padding: 24px;
   border-radius: 8px;
-  border-left: 4px solid var(--color-gold);
+  border-left: 4px solid var(--color-gold); /* Thanh điểm nhấn vàng bên trái */
+
+  /* ĐÃ SỬA CHÚ THÍCH: 3 đường viền màu kem nhạt mờ 50% cho 3 cạnh còn lại */
   border-top: 1px solid rgba(232, 221, 208, 0.5);
   border-right: 1px solid rgba(232, 221, 208, 0.5);
   border-bottom: 1px solid rgba(232, 221, 208, 0.5);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Đổ bóng nhẹ phía dưới */
 }
 
 .info p:first-child {
@@ -128,26 +128,26 @@
   margin-bottom: 0;
 }
 
-/* MEDIA QUERIES (Điều chỉnh responsive theo ảnh)  */
+/* MEDIA QUERIES (Điều chỉnh responsive) */
 
 /* Tablet trở lên (>= 600px): Chuyển thành 2 cột dàn hàng ngang */
 @media (min-width: 600px) {
   .reservation-container {
-    flex-direction: row;
+    flex-direction: row; /* Xếp hàng ngang */
   }
 
   .benphai {
-    flex: 0.8;
+    flex: 0.8; /* Cột bên phải nhỏ hơn chút */
   }
 
   .information {
-    flex: 1.2;
+    flex: 1.2; /* Cột form bên trái rộng hơn chút */
   }
 }
 
 /* Desktop trở lên (>= 900px): Tăng khoảng cách giữa 2 cột */
 @media (min-width: 900px) {
   .reservation-container {
-    gap: 50px;
+    gap: 50px; /* Khoảng cách giữa 2 cột dãn ra 50px */
   }
 }
